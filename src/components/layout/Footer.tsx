@@ -10,7 +10,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Information */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Meet The Mind Technologies</h3>
+            <div className="mb-4">
+              <img 
+                src="/lovable-uploads/284a223f-a649-48c8-adfb-b59481cce7ba.png" 
+                alt="Meet The Mind Technologies Logo" 
+                className="h-12 mb-4"
+              />
+            </div>
             <p className="text-gray-300 mb-6">Empowering businesses with smart Salesforce solutions that drive growth and innovation.</p>
             <div className="flex space-x-4">
               <a href="https://linkedin.com" aria-label="LinkedIn" className="hover:text-brand">

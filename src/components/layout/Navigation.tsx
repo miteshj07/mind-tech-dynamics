@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Home, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,9 +37,11 @@ const Navigation = () => {
     <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-3' : 'bg-transparent py-5'}`}>
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Link to="/" className="flex items-center">
-          <span className="text-2xl font-bold text-primary">
-            <span className="text-brand">MEET</span>THE<span className="text-brand">MIND</span>
-          </span>
+          <img 
+            src="/lovable-uploads/284a223f-a649-48c8-adfb-b59481cce7ba.png" 
+            alt="Meet The Mind Technologies Logo" 
+            className="h-12 md:h-14"
+          />
         </Link>
 
         {/* Desktop Menu */}
