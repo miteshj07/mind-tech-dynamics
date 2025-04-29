@@ -97,36 +97,36 @@ const Testimonials = () => {
                         : 'opacity-0 translate-x-full'
                   }`}
                 >
-                  <div className="bg-white rounded-xl shadow-lg p-12">
+                  <div className="bg-white rounded-xl shadow-lg p-6 md:p-12">
                     {/* Rating */}
-                    <div className="flex gap-1 mb-6">
+                    <div className="flex gap-1 mb-4 md:mb-6">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
-                          size={28}
+                          size={20}
+                          className="text-brand md:w-7 md:h-7"
                           fill="#50B848"
-                          className="text-brand"
                         />
                       ))}
                     </div>
                     
                     {/* Quote */}
-                    <p className="text-2xl text-gray-800 mb-8 relative">
+                    <p className="text-lg md:text-2xl text-gray-800 mb-6 md:mb-8 relative">
                       {testimonial.quote}
                     </p>
                     
                     {/* Author info */}
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3 md:gap-4">
                       {testimonial.image && (
                         <img 
                           src={testimonial.image} 
                           alt={testimonial.author} 
-                          className="w-12 h-12 rounded-full object-cover"
+                          className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
                         />
                       )}
                       <div>
-                        <h4 className="text-xl font-bold text-gray-900">{testimonial.author}</h4>
-                        <p className="text-gray-600">{testimonial.position}, {testimonial.company}</p>
+                        <h4 className="text-base md:text-xl font-bold text-gray-900">{testimonial.author}</h4>
+                        <p className="text-sm md:text-base text-gray-600">{testimonial.position}, {testimonial.company}</p>
                       </div>
                     </div>
                   </div>
