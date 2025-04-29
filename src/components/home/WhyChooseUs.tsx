@@ -38,13 +38,15 @@ const FeatureCard = ({ icon, title, description, delay }: FeatureCardProps) => {
   return (
     <div 
       ref={cardRef}
-      className="bg-white rounded-xl p-6 shadow-md border-l-4 border-brand opacity-0 translate-y-8 transition-all duration-700 ease-out"
+      className="bg-white rounded-xl p-6 shadow-md border-l-4 border-brand opacity-0 translate-y-8 transition-all duration-700 ease-out
+                hover:shadow-xl hover:-translate-y-2 hover:bg-gradient-to-tr hover:from-white hover:to-green-50 
+                group cursor-pointer"
     >
-      <div className="text-brand mb-4">
+      <div className="text-brand mb-4 transition-transform duration-500 group-hover:scale-110 group-hover:text-brand-dark">
         {icon}
       </div>
-      <h3 className="text-xl font-semibold mb-3">{title}</h3>
-      <p className="text-gray-600">{description}</p>
+      <h3 className="text-xl font-semibold mb-3 transition-colors group-hover:text-brand">{title}</h3>
+      <p className="text-gray-600 transition-colors group-hover:text-gray-700">{description}</p>
     </div>
   );
 };
