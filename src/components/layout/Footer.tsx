@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Linkedin, Facebook, Twitter } from 'lucide-react';
@@ -14,7 +13,7 @@ const Footer = () => {
               <img 
                 src="/lovable-uploads/284a223f-a649-48c8-adfb-b59481cce7ba.png" 
                 alt="Meet The Mind Technologies Logo" 
-                className="h-12 mb-4"
+                className="h-20 mb-4"
               />
             </div>
             <p className="text-gray-300 mb-6">Empowering businesses with smart Salesforce solutions that drive growth and innovation.</p>

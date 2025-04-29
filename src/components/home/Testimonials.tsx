@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
@@ -44,11 +43,13 @@ const Testimonials = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      goToNext();
-    }, 8000);
+      setActiveIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1));
+    }, 3000);
 
-    return () => clearInterval(interval);
-  }, [activeIndex]);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   const goToPrev = () => {
     if (isAnimating) return;
@@ -96,41 +97,36 @@ const Testimonials = () => {
                         : 'opacity-0 translate-x-full'
                   }`}
                 >
-                  <div className="bg-white rounded-xl shadow-lg p-8 md:p-10">
-                    {/* Quote icon */}
-                    <div className="text-brand/20 text-6xl font-serif leading-none mb-4">"</div>
-                    
+                  <div className="bg-white rounded-xl shadow-lg p-12">
                     {/* Rating */}
-                    <div className="flex mb-6">
+                    <div className="flex gap-1 mb-6">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
-                          size={20}
-                          fill={i < testimonial.rating ? "#50B848" : "none"}
-                          className={i < testimonial.rating ? "text-brand" : "text-gray-300"}
+                          size={28}
+                          fill="#50B848"
+                          className="text-brand"
                         />
                       ))}
                     </div>
                     
                     {/* Quote */}
-                    <p className="text-lg md:text-xl text-gray-700 italic mb-8">
-                      "{testimonial.quote}"
+                    <p className="text-2xl text-gray-800 mb-8 relative">
+                      {testimonial.quote}
                     </p>
                     
                     {/* Author info */}
-                    <div className="flex items-center">
+                    <div className="flex items-center gap-4">
                       {testimonial.image && (
-                        <div className="mr-4">
-                          <img 
-                            src={testimonial.image} 
-                            alt={testimonial.author} 
-                            className="w-12 h-12 rounded-full object-cover"
-                          />
-                        </div>
+                        <img 
+                          src={testimonial.image} 
+                          alt={testimonial.author} 
+                          className="w-12 h-12 rounded-full object-cover"
+                        />
                       )}
                       <div>
-                        <p className="font-semibold">{testimonial.author}</p>
-                        <p className="text-gray-600 text-sm">{testimonial.position}, {testimonial.company}</p>
+                        <h4 className="text-xl font-bold text-gray-900">{testimonial.author}</h4>
+                        <p className="text-gray-600">{testimonial.position}, {testimonial.company}</p>
                       </div>
                     </div>
                   </div>

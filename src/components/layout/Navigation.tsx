@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -40,7 +39,7 @@ const Navigation = () => {
           <img 
             src="/lovable-uploads/284a223f-a649-48c8-adfb-b59481cce7ba.png" 
             alt="Meet The Mind Technologies Logo" 
-            className="h-12 md:h-14"
+            className="h-20 md:h-24"
           />
         </Link>
 
