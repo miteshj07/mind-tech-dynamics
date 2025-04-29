@@ -1,9 +1,10 @@
 
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
@@ -22,28 +23,30 @@ import NotFound from "@/pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <Navigation />
-        <PageTransition>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/about-us" element={<AboutUsPage />} />
-            <Route path="/case-studies" element={<CaseStudiesPage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/careers" element={<CareersPage />} />
-            <Route path="/contact-us" element={<ContactUsPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </PageTransition>
-        <Footer />
+        <TooltipProvider>
+          <Navigation />
+          <PageTransition>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/about-us" element={<AboutUsPage />} />
+              <Route path="/case-studies" element={<CaseStudiesPage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/careers" element={<CareersPage />} />
+              <Route path="/contact-us" element={<ContactUsPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </PageTransition>
+          <Footer />
+          <Toaster />
+          <Sonner />
+        </TooltipProvider>
       </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+    </QueryClientProvider>
+  </React.StrictMode>
 );
 
 export default App;
