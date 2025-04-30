@@ -28,18 +28,16 @@ const App = () => (
       <BrowserRouter>
         <TooltipProvider>
           <Navigation />
-          <PageTransition>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/services" element={<ServicesPage />} />
-              <Route path="/about-us" element={<AboutUsPage />} />
-              <Route path="/case-studies" element={<CaseStudiesPage />} />
-              <Route path="/blog" element={<BlogPage />} />
-              <Route path="/careers" element={<CareersPage />} />
-              <Route path="/contact-us" element={<ContactUsPage />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </PageTransition>
+          <Routes>
+            <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
+            <Route path="/services" element={<PageTransition><ServicesPage /></PageTransition>} />
+            <Route path="/about-us" element={<PageTransition><AboutUsPage /></PageTransition>} />
+            <Route path="/case-studies" element={<PageTransition><CaseStudiesPreview /></PageTransition>} />
+            <Route path="/blog" element={<PageTransition><BlogPage /></PageTransition>} />
+            <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
+            <Route path="/contact-us" element={<PageTransition><ContactUsPage /></PageTransition>} />
+            <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+          </Routes>
           <Footer />
           <Toaster />
           <Sonner />
