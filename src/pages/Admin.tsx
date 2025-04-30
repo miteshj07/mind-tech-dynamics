@@ -1,14 +1,12 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useCms } from '@/cms/context/CmsContext';
 import PageHeader from '@/components/layout/PageHeader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Image, Upload } from 'lucide-react';
+import EditContentModal from '@/components/admin/EditContentModal';
+import ContentTab from '@/components/admin/ContentTab';
 
 const Admin = () => {
   const { data, updateContent, uploadImage } = useCms();
@@ -21,7 +19,6 @@ const Admin = () => {
     originalValue: string;
     type?: string;
   } | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleEdit = (section: string, path: string, value: any, type?: string) => {
     setEditing({
@@ -31,12 +28,6 @@ const Admin = () => {
       originalValue: typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value),
       type
     });
-  };
-
-  const handleImageClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
   };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,98 +92,6 @@ const Admin = () => {
     setEditing(null);
   };
 
-  // Helper to render editable fields recursively
-  const renderEditableFields = (obj: any, section: string, path = '') => {
-    if (!obj || typeof obj !== 'object') return null;
-    
-    return Object.entries(obj).map(([key, value]) => {
-      const currentPath = path ? `${path}.${key}` : key;
-      
-      // Skip rendering functions or React components
-      if (typeof value === 'function') return null;
-      
-      if (Array.isArray(value)) {
-        return (
-          <div key={currentPath} className="mb-6 border-l-2 border-gray-200 pl-4">
-            <div className="flex justify-between items-center mb-2">
-              <h3 className="text-lg font-medium text-gray-700">{key}</h3>
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => handleEdit(section, currentPath, value)}
-              >
-                Edit Array
-              </Button>
-            </div>
-            <div className="pl-4">
-              {(value as any[]).map((item, index) => (
-                <div key={index} className="mb-4 p-2 bg-gray-50 rounded-md">
-                  {typeof item === 'object' ? (
-                    renderEditableFields(item, section, `${currentPath}[${index}]`)
-                  ) : (
-                    <div className="flex justify-between items-center">
-                      <div className="text-sm text-gray-500">{String(item)}</div>
-                      <Button 
-                        variant="ghost" 
-                        size="sm"
-                        onClick={() => handleEdit(section, `${currentPath}[${index}]`, item)}
-                      >
-                        Edit
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      } else if (typeof value === 'object' && value !== null) {
-        return (
-          <div key={currentPath} className="mb-6 border-l-2 border-gray-200 pl-4">
-            <h3 className="text-lg font-medium text-gray-700 mb-2">{key}</h3>
-            {renderEditableFields(value, section, currentPath)}
-          </div>
-        );
-      } else {
-        // Detect if it's likely an image URL
-        const isImage = typeof value === 'string' && 
-          (value.match(/\.(jpeg|jpg|gif|png)$/) !== null || 
-          value.includes('unsplash.com') || 
-          value.includes('randomuser.me'));
-          
-        return (
-          <div key={currentPath} className="mb-4">
-            <div className="flex justify-between items-center">
-              <label className="block text-sm font-medium text-gray-700">{key}</label>
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => handleEdit(section, currentPath, value, isImage ? 'image' : undefined)}
-              >
-                {isImage ? 'Change Image' : 'Edit'}
-              </Button>
-            </div>
-            <div className="mt-1 mb-2 p-2 bg-gray-50 rounded-md">
-              {isImage ? (
-                <div className="relative h-40 bg-gray-100 rounded overflow-hidden">
-                  <img 
-                    src={value as string} 
-                    alt={key} 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ) : typeof value === 'string' && value.length > 100 ? (
-                <div className="text-sm text-gray-500">{value.substring(0, 100)}...</div>
-              ) : (
-                <div className="text-sm text-gray-500">{String(value)}</div>
-              )}
-            </div>
-          </div>
-        );
-      }
-    });
-  };
-
   return (
     <>
       <PageHeader 
@@ -220,108 +119,73 @@ const Admin = () => {
               <TabsTrigger value="contact">Contact</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="home" className="space-y-4">
-              <h2 className="text-xl font-bold">Home Page Content</h2>
-              {renderEditableFields(data.heroSection, 'heroSection')}
-              {renderEditableFields(data.servicesSection, 'servicesSection')}
-            </TabsContent>
+            <ContentTab
+              value="home"
+              title="Home Page Content"
+              data={data}
+              sectionKeys={['heroSection', 'servicesSection']}
+              handleEdit={handleEdit}
+            />
             
-            <TabsContent value="services" className="space-y-4">
-              <h2 className="text-xl font-bold">Services Page Content</h2>
-              {renderEditableFields(data.servicesSection, 'servicesSection')}
-              {renderEditableFields(data.sharedComponents.contactCTA.services, 'sharedComponents.contactCTA.services')}
-            </TabsContent>
+            <ContentTab
+              value="services"
+              title="Services Page Content"
+              data={data}
+              sectionKeys={['servicesSection', 'sharedComponents.contactCTA.services']}
+              handleEdit={handleEdit}
+            />
             
-            <TabsContent value="about" className="space-y-4">
-              <h2 className="text-xl font-bold">About Us Page Content</h2>
-              {renderEditableFields(data.aboutUsSection, 'aboutUsSection')}
-              {renderEditableFields(data.sharedComponents.contactCTA.aboutUs, 'sharedComponents.contactCTA.aboutUs')}
-            </TabsContent>
+            <ContentTab
+              value="about"
+              title="About Us Page Content"
+              data={data}
+              sectionKeys={['aboutUsSection', 'sharedComponents.contactCTA.aboutUs']}
+              handleEdit={handleEdit}
+            />
             
-            <TabsContent value="case-studies" className="space-y-4">
-              <h2 className="text-xl font-bold">Case Studies Page Content</h2>
-              {renderEditableFields(data.caseStudiesSection, 'caseStudiesSection')}
-              {renderEditableFields(data.sharedComponents.contactCTA.caseStudies, 'sharedComponents.contactCTA.caseStudies')}
-            </TabsContent>
+            <ContentTab
+              value="case-studies"
+              title="Case Studies Page Content"
+              data={data}
+              sectionKeys={['caseStudiesSection', 'sharedComponents.contactCTA.caseStudies']}
+              handleEdit={handleEdit}
+            />
             
-            <TabsContent value="blog" className="space-y-4">
-              <h2 className="text-xl font-bold">Blog Page Content</h2>
-              {renderEditableFields(data.blogSection, 'blogSection')}
-              {renderEditableFields(data.sharedComponents.contactCTA.blog, 'sharedComponents.contactCTA.blog')}
-            </TabsContent>
+            <ContentTab
+              value="blog"
+              title="Blog Page Content"
+              data={data}
+              sectionKeys={['blogSection', 'sharedComponents.contactCTA.blog']}
+              handleEdit={handleEdit}
+            />
             
-            <TabsContent value="careers" className="space-y-4">
-              <h2 className="text-xl font-bold">Careers Page Content</h2>
-              {renderEditableFields(data.careersSection, 'careersSection')}
-              {renderEditableFields(data.sharedComponents.contactCTA.careers, 'sharedComponents.contactCTA.careers')}
-            </TabsContent>
+            <ContentTab
+              value="careers"
+              title="Careers Page Content"
+              data={data}
+              sectionKeys={['careersSection', 'sharedComponents.contactCTA.careers']}
+              handleEdit={handleEdit}
+            />
             
-            <TabsContent value="contact" className="space-y-4">
-              <h2 className="text-xl font-bold">Contact Page Content</h2>
-              {renderEditableFields(data.contactSection, 'contactSection')}
-            </TabsContent>
+            <ContentTab
+              value="contact"
+              title="Contact Page Content"
+              data={data}
+              sectionKeys={['contactSection']}
+              handleEdit={handleEdit}
+            />
           </Tabs>
         </div>
       </section>
       
       {editing && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-8 rounded-lg max-w-3xl w-full max-h-[80vh] overflow-y-auto">
-            <h2 className="text-xl font-bold mb-4">Edit {editing.path}</h2>
-            
-            {editing.type === 'image' ? (
-              <div className="space-y-4">
-                <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center">
-                  <img 
-                    src={editing.value} 
-                    alt="Preview" 
-                    className="max-h-[200px] object-contain mb-4" 
-                  />
-                  <Button 
-                    onClick={handleImageClick} 
-                    className="flex items-center gap-2"
-                  >
-                    <Upload size={16} />
-                    Upload New Image
-                  </Button>
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleImageChange}
-                    accept="image/*"
-                    className="hidden"
-                  />
-                </div>
-                
-                <Input 
-                  value={editing.value}
-                  onChange={(e) => setEditing({...editing, value: e.target.value})}
-                  className="mb-4"
-                  placeholder="Or enter image URL directly"
-                />
-              </div>
-            ) : (
-              editing.value.length > 100 || editing.value.includes('\n') ? (
-                <Textarea 
-                  value={editing.value}
-                  onChange={(e) => setEditing({...editing, value: e.target.value})}
-                  className="min-h-[200px] mb-4"
-                />
-              ) : (
-                <Input 
-                  value={editing.value}
-                  onChange={(e) => setEditing({...editing, value: e.target.value})}
-                  className="mb-4"
-                />
-              )
-            )}
-            
-            <div className="flex justify-end space-x-2">
-              <Button variant="outline" onClick={handleCancel}>Cancel</Button>
-              <Button onClick={handleSave}>Save Changes</Button>
-            </div>
-          </div>
-        </div>
+        <EditContentModal
+          editing={editing}
+          setEditing={setEditing}
+          handleSave={handleSave}
+          handleCancel={handleCancel}
+          handleImageChange={handleImageChange}
+        />
       )}
     </>
   );
