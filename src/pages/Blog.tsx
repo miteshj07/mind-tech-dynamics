@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link, useNavigate } from 'react-router-dom';
 import PageHeader from '@/components/layout/PageHeader';
 import ContactCTA from '@/components/layout/ContactCTA';
 import { CalendarDays, Clock, Search, ArrowRight } from 'lucide-react';
@@ -22,8 +23,25 @@ interface BlogCardProps {
 }
 
 const BlogCard = ({ post }: BlogCardProps) => {
+  const navigate = useNavigate();
+  
+  // Generate a slug from a title
+  const generateSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9 ]/g, '')
+      .replace(/\s+/g, '-');
+  };
+  
+  const handleClick = () => {
+    navigate(`/blog/${generateSlug(post.title)}`);
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl">
+    <div 
+      className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer"
+      onClick={handleClick}
+    >
       <div className="relative h-48">
         <img 
           src={post.image} 
@@ -43,7 +61,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
       </div>
       <div className="p-6">
         <h3 className="text-xl font-bold mb-3 hover:text-brand transition-colors">
-          <a href="#">{post.title}</a>
+          {post.title}
         </h3>
         <p className="text-gray-600 mb-4">{post.excerpt}</p>
         <div className="flex items-center justify-between border-t border-gray-100 pt-4">
@@ -62,6 +80,20 @@ const BlogCard = ({ post }: BlogCardProps) => {
 };
 
 const FeaturedPost = ({ post }: BlogCardProps) => {
+  const navigate = useNavigate();
+  
+  // Generate a slug from a title
+  const generateSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9 ]/g, '')
+      .replace(/\s+/g, '-');
+  };
+  
+  const handleClick = () => {
+    navigate(`/blog/${generateSlug(post.title)}`);
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
@@ -85,7 +117,7 @@ const FeaturedPost = ({ post }: BlogCardProps) => {
         <div className="p-8 flex flex-col justify-center">
           <p className="text-brand font-medium mb-2">Featured Article</p>
           <h2 className="text-2xl font-bold mb-4 hover:text-brand transition-colors">
-            <a href="#">{post.title}</a>
+            {post.title}
           </h2>
           <p className="text-gray-600 mb-6">{post.excerpt}</p>
           <div className="flex items-center justify-between mb-4">
@@ -98,12 +130,12 @@ const FeaturedPost = ({ post }: BlogCardProps) => {
               {post.readTime}
             </div>
           </div>
-          <a 
-            href="#" 
+          <button 
+            onClick={handleClick}
             className="inline-flex items-center text-brand font-medium hover:text-brand-dark transition-colors"
           >
             Read Article <ArrowRight size={16} className="ml-1" />
-          </a>
+          </button>
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ interface CmsContextType {
   isLoading: boolean;
   error: Error | null;
   updateContent: (section: string, path: string, value: any) => void;
+  uploadImage: (file: File) => Promise<string>;
 }
 
 // Create the context
@@ -64,8 +65,34 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   };
 
+  // Function to upload images (in a real implementation, this would upload to a storage service)
+  const uploadImage = async (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      try {
+        const reader = new FileReader();
+        
+        reader.onload = () => {
+          // In a real implementation, we would upload the file to a storage service
+          // and return the URL. For this example, we're just returning the data URL.
+          const result = reader.result as string;
+          
+          console.log("Image uploaded successfully");
+          resolve(result);
+        };
+        
+        reader.onerror = (error) => {
+          reject(error);
+        };
+        
+        reader.readAsDataURL(file);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  };
+
   return (
-    <CmsContext.Provider value={{ data, isLoading, error, updateContent }}>
+    <CmsContext.Provider value={{ data, isLoading, error, updateContent, uploadImage }}>
       {children}
     </CmsContext.Provider>
   );

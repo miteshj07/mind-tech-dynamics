@@ -17,6 +17,7 @@ import ServicesPage from "@/pages/Services";
 import AboutUsPage from "@/pages/AboutUs";
 import CaseStudiesPage from "@/pages/CaseStudies";
 import BlogPage from "@/pages/Blog";
+import BlogPostPage from "@/pages/BlogPost";
 import CareersPage from "@/pages/Careers";
 import ContactUsPage from "@/pages/ContactUs";
 import AdminPage from "@/pages/Admin";
@@ -36,6 +37,7 @@ const App = () => (
             <Route path="/about-us" element={<PageTransition><AboutUsPage /></PageTransition>} />
             <Route path="/case-studies" element={<PageTransition><CaseStudiesPage /></PageTransition>} />
             <Route path="/blog" element={<PageTransition><BlogPage /></PageTransition>} />
+            <Route path="/blog/:slug" element={<PageTransition><BlogPostPage /></PageTransition>} />
             <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
             <Route path="/contact-us" element={<PageTransition><ContactUsPage /></PageTransition>} />
             <Route path="/admin" element={<PageTransition><AdminPage /></PageTransition>} />

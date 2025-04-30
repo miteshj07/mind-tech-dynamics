@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useCms } from '@/cms/context/CmsContext';
 import PageHeader from '@/components/layout/PageHeader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -8,9 +8,10 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { Image, Upload } from 'lucide-react';
 
 const Admin = () => {
-  const { data, updateContent } = useCms();
+  const { data, updateContent, uploadImage } = useCms();
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("home");
   const [editing, setEditing] = useState<{
@@ -18,15 +19,48 @@ const Admin = () => {
     path: string;
     value: string;
     originalValue: string;
+    type?: string;
   } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleEdit = (section: string, path: string, value: any) => {
+  const handleEdit = (section: string, path: string, value: any, type?: string) => {
     setEditing({
       section,
       path,
       value: typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value),
-      originalValue: typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value)
+      originalValue: typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value),
+      type
     });
+  };
+
+  const handleImageClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!editing) return;
+    
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    try {
+      const imageUrl = await uploadImage(file);
+      if (imageUrl) {
+        setEditing({...editing, value: imageUrl});
+        toast({
+          title: "Image uploaded",
+          description: "Image has been uploaded successfully",
+        });
+      }
+    } catch (err) {
+      toast({
+        title: "Error uploading image",
+        description: String(err),
+        variant: "destructive"
+      });
+    }
   };
 
   const handleSave = () => {
@@ -120,6 +154,12 @@ const Admin = () => {
           </div>
         );
       } else {
+        // Detect if it's likely an image URL
+        const isImage = typeof value === 'string' && 
+          (value.match(/\.(jpeg|jpg|gif|png)$/) !== null || 
+          value.includes('unsplash.com') || 
+          value.includes('randomuser.me'));
+          
         return (
           <div key={currentPath} className="mb-4">
             <div className="flex justify-between items-center">
@@ -127,13 +167,21 @@ const Admin = () => {
               <Button 
                 variant="ghost" 
                 size="sm"
-                onClick={() => handleEdit(section, currentPath, value)}
+                onClick={() => handleEdit(section, currentPath, value, isImage ? 'image' : undefined)}
               >
-                Edit
+                {isImage ? 'Change Image' : 'Edit'}
               </Button>
             </div>
             <div className="mt-1 mb-2 p-2 bg-gray-50 rounded-md">
-              {typeof value === 'string' && value.length > 100 ? (
+              {isImage ? (
+                <div className="relative h-40 bg-gray-100 rounded overflow-hidden">
+                  <img 
+                    src={value as string} 
+                    alt={key} 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : typeof value === 'string' && value.length > 100 ? (
                 <div className="text-sm text-gray-500">{value.substring(0, 100)}...</div>
               ) : (
                 <div className="text-sm text-gray-500">{String(value)}</div>
@@ -220,19 +268,54 @@ const Admin = () => {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-lg max-w-3xl w-full max-h-[80vh] overflow-y-auto">
             <h2 className="text-xl font-bold mb-4">Edit {editing.path}</h2>
-            {editing.value.length > 100 || editing.value.includes('\n') ? (
-              <Textarea 
-                value={editing.value}
-                onChange={(e) => setEditing({...editing, value: e.target.value})}
-                className="min-h-[200px] mb-4"
-              />
+            
+            {editing.type === 'image' ? (
+              <div className="space-y-4">
+                <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center">
+                  <img 
+                    src={editing.value} 
+                    alt="Preview" 
+                    className="max-h-[200px] object-contain mb-4" 
+                  />
+                  <Button 
+                    onClick={handleImageClick} 
+                    className="flex items-center gap-2"
+                  >
+                    <Upload size={16} />
+                    Upload New Image
+                  </Button>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleImageChange}
+                    accept="image/*"
+                    className="hidden"
+                  />
+                </div>
+                
+                <Input 
+                  value={editing.value}
+                  onChange={(e) => setEditing({...editing, value: e.target.value})}
+                  className="mb-4"
+                  placeholder="Or enter image URL directly"
+                />
+              </div>
             ) : (
-              <Input 
-                value={editing.value}
-                onChange={(e) => setEditing({...editing, value: e.target.value})}
-                className="mb-4"
-              />
+              editing.value.length > 100 || editing.value.includes('\n') ? (
+                <Textarea 
+                  value={editing.value}
+                  onChange={(e) => setEditing({...editing, value: e.target.value})}
+                  className="min-h-[200px] mb-4"
+                />
+              ) : (
+                <Input 
+                  value={editing.value}
+                  onChange={(e) => setEditing({...editing, value: e.target.value})}
+                  className="mb-4"
+                />
+              )
             )}
+            
             <div className="flex justify-end space-x-2">
               <Button variant="outline" onClick={handleCancel}>Cancel</Button>
               <Button onClick={handleSave}>Save Changes</Button>
