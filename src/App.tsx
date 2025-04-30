@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
+import { CmsProvider } from "@/cms/context/CmsContext";
 
 import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
@@ -18,13 +19,14 @@ import CaseStudiesPage from "@/pages/CaseStudies";
 import BlogPage from "@/pages/Blog";
 import CareersPage from "@/pages/Careers";
 import ContactUsPage from "@/pages/ContactUs";
+import AdminPage from "@/pages/Admin";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
+  <QueryClientProvider client={queryClient}>
+    <CmsProvider>
       <BrowserRouter>
         <TooltipProvider>
           <Navigation />
@@ -36,6 +38,7 @@ const App = () => (
             <Route path="/blog" element={<PageTransition><BlogPage /></PageTransition>} />
             <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
             <Route path="/contact-us" element={<PageTransition><ContactUsPage /></PageTransition>} />
+            <Route path="/admin" element={<PageTransition><AdminPage /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
           <Footer />
@@ -43,8 +46,8 @@ const App = () => (
           <Sonner />
         </TooltipProvider>
       </BrowserRouter>
-    </QueryClientProvider>
-  </React.StrictMode>
+    </CmsProvider>
+  </QueryClientProvider>
 );
 
 export default App;

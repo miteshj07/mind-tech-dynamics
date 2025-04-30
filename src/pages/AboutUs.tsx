@@ -1,8 +1,10 @@
 
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import PageHeader from '@/components/layout/PageHeader';
 import ContactCTA from '@/components/layout/ContactCTA';
 import { Award, Rocket, CircleCheck, Users, Code } from 'lucide-react';
+import { useCms } from '@/cms/context/CmsContext';
 
 interface TeamMemberProps {
   name: string;
@@ -43,63 +45,31 @@ const ValueCard = ({ icon, title, description }: ValueCardProps) => {
 };
 
 const AboutUs = () => {
-  const values = [
-    {
-      icon: <Award size={40} />,
-      title: "Excellence",
-      description: "We strive for excellence in everything we do, from solution design to implementation and support."
-    },
-    {
-      icon: <CircleCheck size={40} />,
-      title: "Client Success",
-      description: "Your success is our success. We measure our achievement through the tangible results we deliver."
-    },
-    {
-      icon: <Users size={40} />,
-      title: "Collaboration",
-      description: "We work as an extension of your team, with transparent communication every step of the way."
-    },
-    {
-      icon: <Rocket size={40} />,
-      title: "Innovation",
-      description: "We constantly explore new technologies and approaches to deliver cutting-edge solutions."
-    },
-    {
-      icon: <Code size={40} />,
-      title: "Expertise",
-      description: "Our team of certified professionals brings deep technical knowledge and industry best practices."
+  const { data, isLoading } = useCms();
+  const { aboutUsSection, seoMetadata, sharedComponents } = data;
+  
+  // Map icon strings to components
+  const getIconComponent = (iconName: string, size: number = 40) => {
+    switch (iconName) {
+      case 'Award': return <Award size={size} />;
+      case 'CircleCheck': return <CircleCheck size={size} />;
+      case 'Users': return <Users size={size} />;
+      case 'Rocket': return <Rocket size={size} />;
+      case 'Code': return <Code size={size} />;
+      default: return <Award size={size} />;
     }
-  ];
+  };
 
-  const team = [
-    {
-      name: "David Chen",
-      role: "Founder & CEO",
-      image: "https://randomuser.me/api/portraits/men/32.jpg",
-      bio: "Former Salesforce exec with 15+ years in CRM consulting and implementation."
-    },
-    {
-      name: "Sarah Johnson",
-      role: "CTO",
-      image: "https://randomuser.me/api/portraits/women/23.jpg",
-      bio: "Technical innovator with expertise in complex Salesforce integrations and custom development."
-    },
-    {
-      name: "Michael Rodriguez",
-      role: "Head of Consulting",
-      image: "https://randomuser.me/api/portraits/men/54.jpg",
-      bio: "Certified Salesforce architect with experience across multiple industries."
-    },
-    {
-      name: "Priya Sharma",
-      role: "Lead Solution Architect",
-      image: "https://randomuser.me/api/portraits/women/45.jpg",
-      bio: "Expert in designing scalable Salesforce solutions for enterprise organizations."
-    }
-  ];
+  if (isLoading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
 
   return (
     <>
+      <Helmet>
+        <title>{seoMetadata.aboutUs.title}</title>
+        <meta name="description" content={seoMetadata.aboutUs.description} />
+      </Helmet>
       <PageHeader 
         title="About Meet The Mind" 
         subtitle="We're a team of Salesforce experts dedicated to transforming how businesses leverage technology."
@@ -109,42 +79,38 @@ const AboutUs = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
             <div>
-              <h2 className="heading-md mb-6">Our Story</h2>
-              <p className="text-gray-700 mb-4">
-                Founded in 2015, Meet The Mind Technologies began with a simple mission: to help businesses harness the full potential of Salesforce through expert guidance and custom solutions.
-              </p>
-              <p className="text-gray-700 mb-4">
-                What started as a small team of passionate Salesforce consultants has grown into a comprehensive solutions provider trusted by companies across industries and continents.
-              </p>
-              <p className="text-gray-700">
-                Our journey has been defined by our commitment to client success, technical excellence, and continuous innovation. As Salesforce has evolved, so have we—constantly expanding our expertise to deliver cutting-edge solutions that drive measurable business outcomes.
-              </p>
+              <h2 className="heading-md mb-6">{aboutUsSection.story.title}</h2>
+              {aboutUsSection.story.content.map((paragraph, index) => (
+                <p key={index} className="text-gray-700 mb-4">
+                  {paragraph}
+                </p>
+              ))}
             </div>
             <div className="relative">
               <div className="absolute -inset-4 bg-gradient-to-r from-brand/30 to-blue-500/30 rounded-xl blur-xl opacity-50"></div>
               <img 
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                src={aboutUsSection.story.image}
                 alt="Meet The Mind Team" 
                 className="relative rounded-xl shadow-lg w-full h-auto"
               />
             </div>
           </div>
           
-          <h2 className="heading-md text-center mb-12">Our Values</h2>
+          <h2 className="heading-md text-center mb-12">{aboutUsSection.values.title}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-            {values.map((value, index) => (
+            {aboutUsSection.values.values.map((value, index) => (
               <ValueCard
                 key={index}
-                icon={value.icon}
+                icon={getIconComponent(value.icon)}
                 title={value.title}
                 description={value.description}
               />
             ))}
           </div>
           
-          <h2 className="heading-md text-center mb-12">Meet Our Leadership</h2>
+          <h2 className="heading-md text-center mb-12">{aboutUsSection.team.title}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {team.map((member, index) => (
+            {aboutUsSection.team.members.map((member, index) => (
               <TeamMember
                 key={index}
                 name={member.name}
@@ -158,8 +124,10 @@ const AboutUs = () => {
       </section>
       
       <ContactCTA
-        heading="Join Us on the Journey to Smarter Business Growth"
-        subheading="Let's work together to unlock the full potential of your Salesforce investment."
+        heading={sharedComponents.contactCTA.aboutUs.heading}
+        subheading={sharedComponents.contactCTA.aboutUs.subheading}
+        buttonText={sharedComponents.contactCTA.aboutUs.buttonText}
+        buttonLink={sharedComponents.contactCTA.aboutUs.buttonLink}
       />
     </>
   );

@@ -1,13 +1,17 @@
 
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import PageHeader from '@/components/layout/PageHeader';
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Select } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
+import { useCms } from '@/cms/context/CmsContext';
 
 const ContactUs = () => {
+  const { data, isLoading } = useCms();
+  const { contactSection, seoMetadata } = data;
+  
   const { toast } = useToast();
   const [formState, setFormState] = useState({
     name: '',
@@ -37,11 +41,19 @@ const ContactUs = () => {
     }, 1000);
   };
 
+  if (isLoading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
+
   return (
     <>
+      <Helmet>
+        <title>{seoMetadata.contactUs.title}</title>
+        <meta name="description" content={seoMetadata.contactUs.description} />
+      </Helmet>
       <PageHeader 
-        title="Contact Us" 
-        subtitle="Have questions or ready to start your Salesforce journey? Reach out to our team today."
+        title={contactSection.title}
+        subtitle={contactSection.subtitle}
       />
       
       <section className="py-16">
@@ -49,9 +61,9 @@ const ContactUs = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Information */}
             <div>
-              <h2 className="heading-md mb-6">Get In Touch</h2>
+              <h2 className="heading-md mb-6">{contactSection.intro.title}</h2>
               <p className="text-gray-600 mb-8">
-                Whether you're looking to implement Salesforce, optimize your current setup, or just have questions about our services, our team is here to help.
+                {contactSection.intro.description}
               </p>
               
               <div className="space-y-6 mb-8">
@@ -60,8 +72,8 @@ const ContactUs = () => {
                     <Mail className="text-brand" size={24} />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Email Us</h3>
-                    <p className="text-gray-600">info@meetthemind.tech</p>
+                    <h3 className="font-semibold mb-1">{contactSection.contactInfo.email.title}</h3>
+                    <p className="text-gray-600">{contactSection.contactInfo.email.value}</p>
                   </div>
                 </div>
                 
@@ -70,8 +82,8 @@ const ContactUs = () => {
                     <Phone className="text-brand" size={24} />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Call Us</h3>
-                    <p className="text-gray-600">(415) 555-1234</p>
+                    <h3 className="font-semibold mb-1">{contactSection.contactInfo.phone.title}</h3>
+                    <p className="text-gray-600">{contactSection.contactInfo.phone.value}</p>
                   </div>
                 </div>
                 
@@ -80,10 +92,9 @@ const ContactUs = () => {
                     <MapPin className="text-brand" size={24} />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Visit Us</h3>
-                    <p className="text-gray-600">
-                      1234 Tech Boulevard, Suite 500<br />
-                      San Francisco, CA 94107
+                    <h3 className="font-semibold mb-1">{contactSection.contactInfo.address.title}</h3>
+                    <p className="text-gray-600 whitespace-pre-line">
+                      {contactSection.contactInfo.address.value}
                     </p>
                   </div>
                 </div>
@@ -92,7 +103,7 @@ const ContactUs = () => {
               <div className="rounded-xl overflow-hidden h-72">
                 <iframe
                   title="Office Location"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50470.95133083794!2d-122.43913249016922!3d37.77054771385948!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80858082235da2e7%3A0xb67dd9edf81992a4!2sSan%20Francisco%2C%20CA%2094107!5e0!3m2!1sen!2sus!4v1683044897106!5m2!1sen!2sus"
+                  src={contactSection.contactInfo.address.mapUrl}
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -110,9 +121,9 @@ const ContactUs = () => {
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-6">
                     <CheckCircle className="text-green-500" size={32} />
                   </div>
-                  <h2 className="text-2xl font-bold mb-4">Thank You!</h2>
+                  <h2 className="text-2xl font-bold mb-4">{contactSection.form.successTitle}</h2>
                   <p className="text-gray-600 mb-6">
-                    Your message has been received. Our team will get back to you shortly.
+                    {contactSection.form.successMessage}
                   </p>
                   <button 
                     className="btn-primary"
@@ -123,7 +134,7 @@ const ContactUs = () => {
                 </div>
               ) : (
                 <>
-                  <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
+                  <h2 className="text-2xl font-bold mb-6">{contactSection.form.title}</h2>
                   <form onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                       <div>
@@ -197,13 +208,9 @@ const ContactUs = () => {
                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
                       >
                         <option value="">Select a service</option>
-                        <option value="Implementation">Salesforce Implementation</option>
-                        <option value="Customization">Customization</option>
-                        <option value="Integration">Integration</option>
-                        <option value="Migration">Migration</option>
-                        <option value="Support">Support & Maintenance</option>
-                        <option value="Training">Training</option>
-                        <option value="Other">Other</option>
+                        {contactSection.form.services.map((service, index) => (
+                          <option key={index} value={service}>{service}</option>
+                        ))}
                       </select>
                     </div>
                     
@@ -232,9 +239,9 @@ const ContactUs = () => {
           </div>
           
           <div className="bg-gray-50 rounded-xl p-8 mt-16 text-center">
-            <h3 className="text-2xl font-semibold mb-4">Schedule a Consultation</h3>
+            <h3 className="text-2xl font-semibold mb-4">{contactSection.consultation.title}</h3>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Prefer to talk directly? Schedule a free 30-minute consultation with one of our Salesforce experts.
+              {contactSection.consultation.description}
             </p>
             <button className="btn-secondary">
               Book a Time Slot

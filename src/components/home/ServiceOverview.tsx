@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Database, Code, Link2, FileSearch, ShieldCheck, Lightbulb } from 'lucide-react';
+import { useCms } from '@/cms/context/CmsContext';
 
 interface ServiceCardProps {
   icon: React.ReactNode;
@@ -57,6 +58,9 @@ const ServiceCard = ({ icon, title, description, index }: ServiceCardProps) => {
 };
 
 const ServiceOverview = () => {
+  const { data } = useCms();
+  const { servicesSection } = data;
+  
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -79,39 +83,19 @@ const ServiceOverview = () => {
       }
     };
   }, []);
-
-  const services = [
-    {
-      icon: <Database size={48} />,
-      title: "Salesforce Implementation",
-      description: "End-to-end deployment of Salesforce CRM tailored to your specific business requirements."
-    },
-    {
-      icon: <Code size={48} />,
-      title: "Customization",
-      description: "Custom development to extend Salesforce functionality beyond out-of-the-box capabilities."
-    },
-    {
-      icon: <Link2 size={48} />,
-      title: "Integration",
-      description: "Seamless connectivity between Salesforce and your existing business systems."
-    },
-    {
-      icon: <FileSearch size={48} />,
-      title: "Migration",
-      description: "Risk-free data migration from legacy systems to Salesforce with zero data loss."
-    },
-    {
-      icon: <ShieldCheck size={48} />,
-      title: "Support & Maintenance",
-      description: "Ongoing assistance to ensure your Salesforce instance runs optimally and securely."
-    },
-    {
-      icon: <Lightbulb size={48} />,
-      title: "Training",
-      description: "Comprehensive training programs to empower your team to leverage Salesforce effectively."
+  
+  // Map icon strings to components
+  const getIconComponent = (iconName: string) => {
+    switch (iconName) {
+      case 'Database': return <Database size={48} />;
+      case 'Code': return <Code size={48} />;
+      case 'Link': return <Link2 size={48} />;
+      case 'FileSearch': return <FileSearch size={48} />;
+      case 'ShieldCheck': return <ShieldCheck size={48} />;
+      case 'Lightbulb': return <Lightbulb size={48} />;
+      default: return <Database size={48} />;
     }
-  ];
+  };
 
   return (
     <section className="py-20">
@@ -122,15 +106,15 @@ const ServiceOverview = () => {
         >
           <h2 className="heading-lg mb-4">Our <span className="text-brand">Services</span></h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Comprehensive Salesforce solutions to power your business growth and digital transformation journey.
+            {servicesSection.subtitle}
           </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
+          {servicesSection.services.map((service, index) => (
             <ServiceCard
               key={index}
-              icon={service.icon}
+              icon={getIconComponent(service.icon)}
               title={service.title}
               description={service.description}
               index={index}

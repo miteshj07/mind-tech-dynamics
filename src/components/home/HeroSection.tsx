@@ -4,8 +4,12 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import { useCms } from '@/cms/context/CmsContext';
 
 const HeroSection = () => {
+  const { data } = useCms();
+  const { heroSection } = data;
+  
   const [isLoaded, setIsLoaded] = useState(false);
   const parallaxRef = useRef<HTMLDivElement>(null);
   const [scrollY, setScrollY] = useState(0);
@@ -112,9 +116,8 @@ const HeroSection = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.8 }}
             >
-              Empowering Businesses with{" "}
               <span className="relative">
-                <span className="relative z-10 text-brand">Smart Salesforce Solutions</span>
+                <span className="relative z-10 text-brand">{heroSection.headline}</span>
                 <span className="absolute -bottom-2 left-0 w-full h-3 bg-brand/10 rounded-full -z-0"></span>
               </span>
             </motion.h1>
@@ -125,7 +128,7 @@ const HeroSection = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7, duration: 0.8 }}
             >
-              Unlock new growth with customized CRM experiences tailored to your business needs. Leverage the power of Salesforce with expert guidance.
+              {heroSection.subheadline}
             </motion.p>
             
             <motion.div 
@@ -136,13 +139,13 @@ const HeroSection = () => {
             >
               <Button asChild className="btn-primary text-lg group" size="lg">
                 <Link to="/contact-us" className="group">
-                  Book a Free Consultation{" "} 
+                  {heroSection.ctaPrimary}{" "} 
                   <ArrowRight className="ml-2 transition-transform duration-300 group-hover:translate-x-1" size={20} />
                 </Link>
               </Button>
               <Button asChild className="btn-secondary text-lg" size="lg">
                 <Link to="/services">
-                  Explore Our Services
+                  {heroSection.ctaSecondary}
                 </Link>
               </Button>
             </motion.div>
@@ -171,7 +174,7 @@ const HeroSection = () => {
                 <div className="absolute -inset-1 bg-gradient-to-r from-brand/70 to-brand/30 rounded-xl blur-md opacity-70"></div>
                 <div className="relative bg-white rounded-xl p-6 shadow-2xl">
                   <img 
-                    src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                    src={heroSection.image} 
                     alt="Salesforce Dashboard" 
                     className="w-full h-auto rounded-lg shadow-lg" 
                   />
@@ -188,7 +191,7 @@ const HeroSection = () => {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 1.5, duration: 0.5 }}
                     >
-                      98%
+                      {heroSection.stats.satisfaction}
                     </motion.div>
                     <div className="text-xs text-gray-600">Client Satisfaction</div>
                   </motion.div>
@@ -205,7 +208,7 @@ const HeroSection = () => {
                       animate={{ opacity: 1 }}
                       transition={{ delay: 1.7, duration: 0.5 }}
                     >
-                      100+
+                      {heroSection.stats.clients}
                     </motion.div>
                     <div className="text-xs text-white/80">Clients Worldwide</div>
                   </motion.div>
