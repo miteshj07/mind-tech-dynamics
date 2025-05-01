@@ -20,7 +20,6 @@ const ContactCTA = ({
 }: ContactCTAProps) => {
   const location = useLocation();
   const { data } = useCms();
-  const { sharedComponents } = data;
   
   // Determine which page we're on to get the appropriate CTA content
   const currentPath = location.pathname;
@@ -33,7 +32,7 @@ const ContactCTA = ({
   else if (currentPath.includes('/careers')) pageName = 'careers';
   
   // Get the dynamic content for this page, or use props if provided
-  const ctaContent = sharedComponents?.contactCTA?.[pageName] || {};
+  const ctaContent = data.sharedComponents?.contactCTA?.[pageName] || {};
   
   const displayHeading = heading || ctaContent.heading || "Let's Transform Your Salesforce Journey";
   const displaySubheading = subheading || ctaContent.subheading || "Ready to unlock the full potential of Salesforce? Our experts are here to guide you every step of the way.";

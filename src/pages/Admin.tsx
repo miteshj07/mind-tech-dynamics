@@ -4,13 +4,12 @@ import { useCms } from '@/cms/context/CmsContext';
 import PageHeader from '@/components/layout/PageHeader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from '@/components/ui/sonner';
 import EditContentModal from '@/components/admin/EditContentModal';
 import ContentTab from '@/components/admin/ContentTab';
 
 const Admin = () => {
-  const { data, updateContent, uploadImage } = useCms();
-  const { toast } = useToast();
+  const { data, updateContent, uploadImage, refreshData } = useCms();
   const [activeTab, setActiveTab] = useState("home");
   const [editing, setEditing] = useState<{
     section: string;
@@ -40,21 +39,14 @@ const Admin = () => {
       const imageUrl = await uploadImage(file);
       if (imageUrl) {
         setEditing({...editing, value: imageUrl});
-        toast({
-          title: "Image uploaded",
-          description: "Image has been uploaded successfully",
-        });
+        toast.success("Image uploaded successfully");
       }
     } catch (err) {
-      toast({
-        title: "Error uploading image",
-        description: String(err),
-        variant: "destructive"
-      });
+      toast.error(`Error uploading image: ${err instanceof Error ? err.message : String(err)}`);
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!editing) return;
     
     try {
@@ -64,27 +56,19 @@ const Admin = () => {
         try {
           value = JSON.parse(editing.value);
         } catch (e) {
-          toast({
-            title: "Invalid JSON",
-            description: "Please check your formatting",
-            variant: "destructive"
-          });
+          toast.error("Invalid JSON. Please check your formatting.");
           return;
         }
       }
       
-      updateContent(editing.section, editing.path, value);
-      toast({
-        title: "Content updated",
-        description: `Updated ${editing.path} successfully`,
-      });
+      await updateContent(editing.section, editing.path, value);
+      toast.success(`Updated ${editing.path} successfully`);
       setEditing(null);
+      
+      // Refresh data to ensure we have the latest
+      await refreshData();
     } catch (err) {
-      toast({
-        title: "Error updating content",
-        description: String(err),
-        variant: "destructive"
-      });
+      toast.error(`Error updating content: ${err instanceof Error ? err.message : String(err)}`);
     }
   };
 

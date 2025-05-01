@@ -20,7 +20,7 @@ interface EditContentModalProps {
     originalValue: string;
     type?: string;
   } | null>>;
-  handleSave: () => void;
+  handleSave: () => Promise<void>;
   handleCancel: () => void;
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
 }
@@ -33,10 +33,20 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
   handleImageChange
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isSaving, setIsSaving] = React.useState(false);
 
   const handleImageClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
+    }
+  };
+
+  const onSave = async () => {
+    setIsSaving(true);
+    try {
+      await handleSave();
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -48,11 +58,13 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
         {editing.type === 'image' ? (
           <div className="space-y-4">
             <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center">
-              <img 
-                src={editing.value} 
-                alt="Preview" 
-                className="max-h-[200px] object-contain mb-4" 
-              />
+              {editing.value && (
+                <img 
+                  src={editing.value} 
+                  alt="Preview" 
+                  className="max-h-[200px] object-contain mb-4" 
+                />
+              )}
               <Button 
                 onClick={handleImageClick} 
                 className="flex items-center gap-2"
@@ -93,8 +105,10 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
         )}
         
         <div className="flex justify-end space-x-2">
-          <Button variant="outline" onClick={handleCancel}>Cancel</Button>
-          <Button onClick={handleSave}>Save Changes</Button>
+          <Button variant="outline" onClick={handleCancel} disabled={isSaving}>Cancel</Button>
+          <Button onClick={onSave} disabled={isSaving}>
+            {isSaving ? 'Saving...' : 'Save Changes'}
+          </Button>
         </div>
       </div>
     </div>

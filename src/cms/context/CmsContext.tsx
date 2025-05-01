@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { toast } from "sonner";
-import { supabase } from '@/integrations/supabase/client';
+import { toast } from "@/components/ui/sonner";
+import { supabaseService } from '@/services/supabase-service';
 import * as cmsDefaultData from '../data';
 
 // Define the shape of our context
@@ -9,7 +9,7 @@ interface CmsContextType {
   data: typeof cmsDefaultData;
   isLoading: boolean;
   error: Error | null;
-  updateContent: (section: string, path: string, value: any) => void;
+  updateContent: (section: string, path: string, value: any) => Promise<void>;
   uploadImage: (file: File) => Promise<string>;
   refreshData: () => Promise<void>;
 }
@@ -18,7 +18,7 @@ interface CmsContextType {
 const CmsContext = createContext<CmsContextType | undefined>(undefined);
 
 export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [data, setData] = useState(cmsDefaultData);
+  const [data, setData] = useState<typeof cmsDefaultData>(cmsDefaultData);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -28,18 +28,12 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setIsLoading(true);
       setError(null);
       
-      const { data: cmsContent, error: fetchError } = await supabase
-        .from('cms_content')
-        .select('section, data');
+      const cmsContent = await supabaseService.fetchCmsContent();
         
-      if (fetchError) {
-        throw new Error(`Error fetching CMS content: ${fetchError.message}`);
-      }
-
       // Transform the fetched data to match our expected structure
       const transformedData: any = { ...cmsDefaultData };
       
-      cmsContent.forEach((item) => {
+      cmsContent.forEach((item: any) => {
         transformedData[item.section] = item.data;
       });
 
@@ -69,7 +63,6 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       const pathArray = path.split('.');
       
       // Navigate to the correct location in the object
-      let current = newData;
       let sectionData = newData[section];
       const last = pathArray.pop();
       
@@ -89,18 +82,7 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setData(newData);
       
       // Save to Supabase
-      const { error: upsertError } = await supabase
-        .from('cms_content')
-        .upsert({
-          section,
-          data: newData[section]
-        }, {
-          onConflict: 'section'
-        });
-      
-      if (upsertError) {
-        throw new Error(`Error updating CMS content: ${upsertError.message}`);
-      }
+      await supabaseService.updateCmsContent(section, newData[section]);
       
       toast.success(`Content updated successfully`);
       console.log(`CMS: Updated ${section}.${path} to:`, value);
@@ -118,50 +100,14 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Function to upload images (to Supabase Storage)
   const uploadImage = async (file: File): Promise<string> => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
-        const filePath = `${fileName}`;
-        
-        // Upload to Supabase Storage
-        const { error: uploadError, data: uploadData } = await supabase
-          .storage
-          .from('cms')
-          .upload(filePath, file);
-
-        if (uploadError) {
-          throw new Error(`Error uploading image: ${uploadError.message}`);
-        }
-
-        // Get public URL
-        const { data: urlData } = supabase
-          .storage
-          .from('cms')
-          .getPublicUrl(filePath);
-          
-        // Store record in images table
-        const { error: dbError } = await supabase
-          .from('images')
-          .insert({
-            path: filePath,
-            filename: file.name,
-            mimetype: file.type,
-            size: file.size
-          });
-          
-        if (dbError) {
-          console.error("Error recording image metadata:", dbError);
-        }
-
-        console.log("Image uploaded successfully");
-        resolve(urlData.publicUrl);
-      } catch (err) {
-        console.error("Error uploading image:", err);
-        toast.error("Failed to upload image");
-        reject(err);
-      }
-    });
+    try {
+      const result = await supabaseService.uploadImage(file);
+      return result.publicUrl;
+    } catch (err) {
+      console.error("Error uploading image:", err);
+      toast.error("Failed to upload image");
+      throw err;
+    }
   };
 
   return (
