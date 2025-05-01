@@ -57,9 +57,11 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white p-8 rounded-lg max-w-3xl w-full max-h-[80vh] overflow-y-auto">
-        <h2 className="text-xl font-bold mb-4">Edit {editing.path}</h2>
+    <Dialog open={true} onOpenChange={() => handleCancel()}>
+      <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Edit {editing.path}</DialogTitle>
+        </DialogHeader>
         
         {editing.type === 'image' ? (
           <div className="space-y-4">
@@ -116,8 +118,8 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
             {isSaving ? 'Saving...' : 'Save Changes'}
           </Button>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 

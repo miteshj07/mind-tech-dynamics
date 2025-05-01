@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from "@/components/ui/sonner";
 import { supabaseService } from '@/services/supabase-service';
@@ -79,6 +80,55 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     fetchCmsContent();
   }, []);
 
+  // Helper function to set a value at a specific path in an object
+  const setValueAtPath = (obj: any, path: string[], value: any): any => {
+    // If we've reached the end of the path, return the value
+    if (path.length === 0) return value;
+    
+    // Clone the object or array to avoid mutating the original
+    const result = Array.isArray(obj) ? [...obj] : { ...obj };
+    
+    // Get the current path segment
+    const key = path[0];
+    
+    // Check for array index pattern like "items[3]"
+    const arrayMatch = typeof key === 'string' && key.match(/^(.+)\[(\d+)\]$/);
+    
+    if (arrayMatch) {
+      // Handle array index notation
+      const arrayName = arrayMatch[1];
+      const index = parseInt(arrayMatch[2], 10);
+      
+      if (!result[arrayName]) {
+        result[arrayName] = [];
+      }
+      
+      // Make sure array has enough elements
+      while (result[arrayName].length <= index) {
+        result[arrayName].push(null);
+      }
+      
+      // Set value at the specified index
+      result[arrayName][index] = setValueAtPath(result[arrayName][index] || {}, path.slice(1), value);
+    } else {
+      // Handle regular object property
+      if (path.length === 1) {
+        // Last level, just set the value
+        result[key] = value;
+      } else {
+        // Initialize the next level if needed
+        if (result[key] === undefined || result[key] === null) {
+          result[key] = {};
+        }
+        
+        // Continue recursion
+        result[key] = setValueAtPath(result[key], path.slice(1), value);
+      }
+    }
+    
+    return result;
+  };
+
   // Function to update CMS content (for admin purposes)
   const updateContent = async (section: string, path: string, value: any) => {
     try {
@@ -87,86 +137,34 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       // Create a deep copy of the current data
       const newData = JSON.parse(JSON.stringify(data));
       
-      // Split the path into an array
-      const pathArray = path.split('.');
-      
-      // Get a reference to the section data
-      let sectionData = newData[section];
-      if (!sectionData) {
-        console.error(`Section ${section} not found in data`);
-        toast.error("Failed to update content: Section not found");
-        return;
+      // If the section doesn't exist in our data, create it
+      if (!newData[section]) {
+        console.log(`Creating new section: ${section}`);
+        newData[section] = {};
       }
       
-      // Keep a reference to the top-level section data for saving later
-      const originalSectionData = sectionData;
-      
-      // Handle array indices in the path
-      let current = sectionData;
-      const lastKey = pathArray[pathArray.length - 1];
-      
-      if (pathArray.length > 1) {
-        // Navigate to the parent object of the property we want to update
-        for (let i = 0; i < pathArray.length - 1; i++) {
-          const key = pathArray[i];
-          
-          // Check if this is an array index notation like items[0]
-          const arrayMatch = key.match(/(\w+)\[(\d+)\]/);
-          if (arrayMatch) {
-            const arrayName = arrayMatch[1];
-            const index = parseInt(arrayMatch[2], 10);
-            
-            if (!current[arrayName] || !Array.isArray(current[arrayName])) {
-              console.error(`Array ${arrayName} not found or not an array`);
-              toast.error("Failed to update: Invalid path");
-              return;
-            }
-            
-            current = current[arrayName][index];
-          } else {
-            // Regular object property
-            if (current[key] === undefined) {
-              current[key] = {};
-            }
-            current = current[key];
-          }
-          
-          if (current === undefined || current === null) {
-            console.error(`Path segment ${key} not found in data`);
-            toast.error("Failed to update: Path not found");
-            return;
-          }
+      // Split the path into an array and handle array indices
+      const pathParts = path.split('.').map(part => {
+        // Check for array notation like items[0]
+        const arrayMatch = part.match(/^(.+)\[(\d+)\]$/);
+        if (arrayMatch) {
+          return arrayMatch[1] + '[' + arrayMatch[2] + ']';
         }
-      }
+        return part;
+      });
       
-      // Check if the last part is an array index notation
-      const lastArrayMatch = lastKey.match(/(\w+)\[(\d+)\]/);
-      if (lastArrayMatch) {
-        const arrayName = lastArrayMatch[1];
-        const index = parseInt(lastArrayMatch[2], 10);
-        
-        if (!current[arrayName] || !Array.isArray(current[arrayName])) {
-          console.error(`Array ${arrayName} not found or not an array`);
-          toast.error("Failed to update: Invalid path");
-          return;
-        }
-        
-        current[arrayName][index] = value;
-      } else {
-        // Update the value at the target path
-        current[lastKey] = value;
-      }
+      // Update the value at the specified path
+      newData[section] = setValueAtPath(newData[section], pathParts, value);
       
       // Update the local state first for immediate UI feedback
       setData(newData);
       
       console.log(`Saving section data to Supabase for section: ${section}`);
-      console.log("Updated section data:", originalSectionData);
+      console.log("Updated section data:", newData[section]);
       
       // Save to Supabase - make sure we're sending the entire section data
-      await supabaseService.updateCmsContent(section, originalSectionData);
+      await supabaseService.updateCmsContent(section, newData[section]);
       
-      toast.success("Content updated successfully");
       console.log(`CMS: Updated ${section}.${path} successfully`);
     } catch (err) {
       console.error("Error updating CMS content:", err);
@@ -175,6 +173,9 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       
       // Refresh data to ensure consistency after error
       await fetchCmsContent();
+      
+      // Re-throw the error so it can be caught by the component
+      throw err;
     }
   };
 

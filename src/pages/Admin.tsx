@@ -53,10 +53,11 @@ const Admin = () => {
     try {
       // For arrays or objects, parse the JSON
       let value = editing.value;
-      if (editing.value.startsWith('[') || editing.value.startsWith('{')) {
+      if (typeof editing.value === 'string' && (editing.value.startsWith('[') || editing.value.startsWith('{'))) {
         try {
           value = JSON.parse(editing.value);
         } catch (e) {
+          console.error("JSON parse error:", e);
           toast.error("Invalid JSON. Please check your formatting.");
           return;
         }
@@ -64,7 +65,7 @@ const Admin = () => {
       
       console.log(`Saving content update for ${editing.section}.${editing.path}:`, value);
       await updateContent(editing.section, editing.path, value);
-      
+      toast.success("Content updated successfully");
       setEditing(null);
       
       // Refresh data to ensure we have the latest
