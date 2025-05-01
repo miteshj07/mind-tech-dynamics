@@ -1,76 +1,10 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import * as cmsData from '../data';
 
-// Define interfaces for our CMS data structure
-interface BlogPost {
-  title: string;
-  excerpt: string;
-  date: string;
-  readTime: string;
-  author: string;
-  image: string;
-  tags: string[];
-}
-
-interface NewsletterSignup {
-  title: string;
-  description: string;
-}
-
-interface BlogSection {
-  title?: string;
-  subtitle?: string;
-  posts?: BlogPost[];
-  featuredPost?: BlogPost;
-  newsletterSignup?: NewsletterSignup;
-}
-
-interface SeoMetadata {
-  home?: {
-    title: string;
-    description: string;
-  };
-  blog?: {
-    title: string;
-    description: string;
-  };
-  // Other pages can be added as needed
-}
-
-interface ContactCTA {
-  heading?: string;
-  subheading?: string;
-  buttonText?: string;
-  buttonLink?: string;
-}
-
-interface SharedComponents {
-  contactCTA?: {
-    home?: ContactCTA;
-    blog?: ContactCTA;
-    services?: ContactCTA;
-    aboutUs?: ContactCTA;
-    caseStudies?: ContactCTA;
-    careers?: ContactCTA;
-  };
-}
-
-// Define the shape of our CMS data
-interface CmsData {
-  heroSection?: any;
-  servicesSection?: any;
-  aboutUsSection?: any;
-  caseStudiesSection?: any;
-  blogSection?: BlogSection;
-  careersSection?: any;
-  contactSection?: any;
-  seoMetadata?: SeoMetadata;
-  sharedComponents?: SharedComponents;
-}
-
 // Define the shape of our context
 interface CmsContextType {
-  data: CmsData;
+  data: typeof cmsData;
   isLoading: boolean;
   error: Error | null;
   updateContent: (section: string, path: string, value: any) => void;
@@ -80,34 +14,19 @@ interface CmsContextType {
 // Create the context
 const CmsContext = createContext<CmsContextType | undefined>(undefined);
 
-// Storage key for localStorage
-const STORAGE_KEY = 'cms_content_data';
-
 export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [data, setData] = useState<CmsData>(cmsData);
+  const [data, setData] = useState(cmsData);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  // Load data from localStorage on component mount
   useEffect(() => {
-    try {
-      const savedData = localStorage.getItem(STORAGE_KEY);
-      
-      if (savedData) {
-        const parsedData = JSON.parse(savedData);
-        setData(parsedData);
-      }
-      
-      // Simulate API loading time
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-      }, 200);
-      
-      return () => clearTimeout(timer);
-    } catch (err) {
-      console.error("Error loading CMS data from localStorage:", err);
+    // In a real implementation, this would fetch from an API
+    // Simulate API loading time
+    const timer = setTimeout(() => {
       setIsLoading(false);
-    }
+    }, 200);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   // Function to update CMS content (for admin purposes)
@@ -138,9 +57,7 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       // Set the new data
       setData(newData);
       
-      // Save to localStorage
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
-      
+      // In a real implementation, this would save to an API
       console.log(`CMS: Updated ${section}.${path} to:`, value);
     } catch (err) {
       console.error("Error updating CMS content:", err);

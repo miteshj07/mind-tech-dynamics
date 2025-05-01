@@ -76,7 +76,7 @@ const Admin = () => {
       updateContent(editing.section, editing.path, value);
       toast({
         title: "Content updated",
-        description: "Changes saved and will persist even after page refresh",
+        description: `Updated ${editing.path} successfully`,
       });
       setEditing(null);
     } catch (err) {
@@ -104,7 +104,7 @@ const Admin = () => {
           <Alert className="mb-6">
             <AlertTitle>CMS Admin Interface</AlertTitle>
             <AlertDescription>
-              This interface allows you to edit content on your website. Changes will be immediately visible on the site and persist after page refresh.
+              This interface allows you to edit content on your website. Changes will be immediately visible on the site.
             </AlertDescription>
           </Alert>
           
