@@ -1,15 +1,19 @@
-
 import React, { useState } from 'react';
 import { useCms } from '@/cms/context/CmsContext';
+import { useAuth } from '@/cms/context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import PageHeader from '@/components/layout/PageHeader';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { toast } from '@/components/ui/sonner';
+import { Button } from '@/components/ui/button';
 import EditContentModal from '@/components/admin/EditContentModal';
 import ContentTab from '@/components/admin/ContentTab';
 
 const Admin = () => {
   const { data, updateContent, uploadImage, refreshData } = useCms();
+  const { logout } = useAuth();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("home");
   const [editing, setEditing] = useState<{
     section: string;
@@ -18,6 +22,11 @@ const Admin = () => {
     originalValue: string;
     type?: string;
   } | null>(null);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/admin/login');
+  };
 
   const handleEdit = (section: string, path: string, value: any, type?: string) => {
     console.log("Editing:", { section, path, value, type });
@@ -89,6 +98,21 @@ const Admin = () => {
       
       <section className="py-10">
         <div className="container mx-auto px-4">
+          <div className="flex justify-end gap-4 mb-6">
+            <Button
+              variant="outline"
+              onClick={() => navigate('/admin/change-password')}
+            >
+              Change Password
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleLogout}
+            >
+              Logout
+            </Button>
+          </div>
+
           <Alert className="mb-6">
             <AlertTitle>CMS Admin Interface</AlertTitle>
             <AlertDescription>
