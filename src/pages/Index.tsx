@@ -22,14 +22,14 @@ const Index = () => {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
 
-  const seoMetadata = data?.seoMetadata || {};
-  const sharedComponents = data?.sharedComponents || {};
+  const seoMetadata = data.seoMetadata || {};
+  const sharedComponents = data.sharedComponents || {};
 
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>{seoMetadata.home?.title || "Meet The Mind Technologies"}</title>
-        <meta name="description" content={seoMetadata.home?.description || "Salesforce Consulting & Integration Services"} />
+        <title>{seoMetadata?.home?.title || "Meet The Mind Technologies"}</title>
+        <meta name="description" content={seoMetadata?.home?.description || "Salesforce Consulting & Integration Services"} />
       </Helmet>
       <HeroSection />
       <WhyChooseUs />
@@ -38,10 +38,10 @@ const Index = () => {
       <Testimonials />
       <CaseStudiesPreview />
       <ContactCTA 
-        heading={sharedComponents.contactCTA?.home?.heading}
-        subheading={sharedComponents.contactCTA?.home?.subheading}
-        buttonText={sharedComponents.contactCTA?.home?.buttonText}
-        buttonLink={sharedComponents.contactCTA?.home?.buttonLink}
+        heading={sharedComponents?.contactCTA?.home?.heading}
+        subheading={sharedComponents?.contactCTA?.home?.subheading}
+        buttonText={sharedComponents?.contactCTA?.home?.buttonText}
+        buttonLink={sharedComponents?.contactCTA?.home?.buttonLink}
       />
     </div>
   );

@@ -1,10 +1,76 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import * as cmsData from '../data';
 
+// Define interfaces for our CMS data structure
+interface BlogPost {
+  title: string;
+  excerpt: string;
+  date: string;
+  readTime: string;
+  author: string;
+  image: string;
+  tags: string[];
+}
+
+interface NewsletterSignup {
+  title: string;
+  description: string;
+}
+
+interface BlogSection {
+  title?: string;
+  subtitle?: string;
+  posts?: BlogPost[];
+  featuredPost?: BlogPost;
+  newsletterSignup?: NewsletterSignup;
+}
+
+interface SeoMetadata {
+  home?: {
+    title: string;
+    description: string;
+  };
+  blog?: {
+    title: string;
+    description: string;
+  };
+  // Other pages can be added as needed
+}
+
+interface ContactCTA {
+  heading?: string;
+  subheading?: string;
+  buttonText?: string;
+  buttonLink?: string;
+}
+
+interface SharedComponents {
+  contactCTA?: {
+    home?: ContactCTA;
+    blog?: ContactCTA;
+    services?: ContactCTA;
+    aboutUs?: ContactCTA;
+    caseStudies?: ContactCTA;
+    careers?: ContactCTA;
+  };
+}
+
+// Define the shape of our CMS data
+interface CmsData {
+  heroSection?: any;
+  servicesSection?: any;
+  aboutUsSection?: any;
+  caseStudiesSection?: any;
+  blogSection?: BlogSection;
+  careersSection?: any;
+  contactSection?: any;
+  seoMetadata?: SeoMetadata;
+  sharedComponents?: SharedComponents;
+}
+
 // Define the shape of our context
 interface CmsContextType {
-  data: typeof cmsData;
+  data: CmsData;
   isLoading: boolean;
   error: Error | null;
   updateContent: (section: string, path: string, value: any) => void;
@@ -18,7 +84,7 @@ const CmsContext = createContext<CmsContextType | undefined>(undefined);
 const STORAGE_KEY = 'cms_content_data';
 
 export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [data, setData] = useState<typeof cmsData>(cmsData);
+  const [data, setData] = useState<CmsData>(cmsData);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 

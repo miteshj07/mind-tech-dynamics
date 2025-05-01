@@ -19,23 +19,23 @@ const Blog = () => {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
   
-  const blogSection = data?.blogSection || {};
-  const seoMetadata = data?.seoMetadata || {};
-  const sharedComponents = data?.sharedComponents || {};
+  const blogSection = data.blogSection || {};
+  const seoMetadata = data.seoMetadata || {};
+  const sharedComponents = data.sharedComponents || {};
   
   // Ensure posts is always an array even if undefined
-  const posts = blogSection.posts || [];
+  const posts = blogSection?.posts || [];
   const filteredPosts = filterPosts(posts, searchTerm);
 
   return (
     <>
       <Helmet>
-        <title>{seoMetadata.blog?.title || "Blog - Meet The Mind Technologies"}</title>
-        <meta name="description" content={seoMetadata.blog?.description || "Read the latest insights on Salesforce"} />
+        <title>{seoMetadata?.blog?.title || "Blog - Meet The Mind Technologies"}</title>
+        <meta name="description" content={seoMetadata?.blog?.description || "Read the latest insights on Salesforce"} />
       </Helmet>
       <PageHeader 
-        title={blogSection.title || "Blog"} 
-        subtitle={blogSection.subtitle || "Insights and updates from our team"}
+        title={blogSection?.title || "Blog"} 
+        subtitle={blogSection?.subtitle || "Insights and updates from our team"}
       />
       
       <section className="py-16">
@@ -45,7 +45,7 @@ const Blog = () => {
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           </div>
           
-          {blogSection.featuredPost && <FeaturedPost post={blogSection.featuredPost} />}
+          {blogSection?.featuredPost && <FeaturedPost post={blogSection.featuredPost} />}
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
             {filteredPosts.map((post, index) => (
@@ -64,17 +64,17 @@ const Blog = () => {
           </div>
           
           <NewsletterSignup 
-            title={blogSection.newsletterSignup?.title || "Subscribe to Our Newsletter"}
-            description={blogSection.newsletterSignup?.description || "Get the latest Salesforce insights delivered to your inbox"}
+            title={blogSection?.newsletterSignup?.title || "Subscribe to Our Newsletter"}
+            description={blogSection?.newsletterSignup?.description || "Get the latest Salesforce insights delivered to your inbox"}
           />
         </div>
       </section>
       
       <ContactCTA
-        heading={sharedComponents.contactCTA?.blog?.heading}
-        subheading={sharedComponents.contactCTA?.blog?.subheading}
-        buttonText={sharedComponents.contactCTA?.blog?.buttonText}
-        buttonLink={sharedComponents.contactCTA?.blog?.buttonLink}
+        heading={sharedComponents?.contactCTA?.blog?.heading}
+        subheading={sharedComponents?.contactCTA?.blog?.subheading}
+        buttonText={sharedComponents?.contactCTA?.blog?.buttonText}
+        buttonLink={sharedComponents?.contactCTA?.blog?.buttonLink}
       />
     </>
   );
