@@ -14,19 +14,34 @@ interface CmsContextType {
 // Create the context
 const CmsContext = createContext<CmsContextType | undefined>(undefined);
 
+// Storage key for localStorage
+const STORAGE_KEY = 'cms_content_data';
+
 export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [data, setData] = useState(cmsData);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
+  // Load data from localStorage on component mount
   useEffect(() => {
-    // In a real implementation, this would fetch from an API
-    // Simulate API loading time
-    const timer = setTimeout(() => {
+    try {
+      const savedData = localStorage.getItem(STORAGE_KEY);
+      
+      if (savedData) {
+        const parsedData = JSON.parse(savedData);
+        setData(parsedData);
+      }
+      
+      // Simulate API loading time
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 200);
+      
+      return () => clearTimeout(timer);
+    } catch (err) {
+      console.error("Error loading CMS data from localStorage:", err);
       setIsLoading(false);
-    }, 200);
-    
-    return () => clearTimeout(timer);
+    }
   }, []);
 
   // Function to update CMS content (for admin purposes)
@@ -57,7 +72,9 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       // Set the new data
       setData(newData);
       
-      // In a real implementation, this would save to an API
+      // Save to localStorage
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
+      
       console.log(`CMS: Updated ${section}.${path} to:`, value);
     } catch (err) {
       console.error("Error updating CMS content:", err);
