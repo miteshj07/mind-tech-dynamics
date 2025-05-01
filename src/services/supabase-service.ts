@@ -35,22 +35,56 @@ export const supabaseService = {
   async updateCmsContent(section: string, content: any) {
     try {
       console.log(`Updating CMS content for section: ${section}`);
-      const { error } = await supabase
+      console.log("Content to update:", content);
+      
+      // Check if content with this section exists
+      const { data: existingContent, error: checkError } = await supabase
         .from('cms_content')
-        .upsert({
-          section: section,
-          data: content
-        }, {
-          onConflict: 'section'
-        });
+        .select('id')
+        .eq('section', section)
+        .maybeSingle();
         
-      if (error) {
-        console.error("Supabase error updating content:", error);
-        throw error;
+      if (checkError) {
+        console.error("Error checking existing content:", checkError);
+        throw checkError;
+      }
+      
+      let result;
+      
+      if (existingContent?.id) {
+        // Update existing content
+        console.log(`Found existing content for section ${section}, updating...`);
+        const { data, error } = await supabase
+          .from('cms_content')
+          .update({ data: content })
+          .eq('section', section)
+          .select();
+          
+        if (error) {
+          console.error("Supabase error updating content:", error);
+          throw error;
+        }
+        
+        result = data;
+      } else {
+        // Insert new content
+        console.log(`No existing content for section ${section}, inserting new record...`);
+        const { data, error } = await supabase
+          .from('cms_content')
+          .insert({ section: section, data: content })
+          .select();
+          
+        if (error) {
+          console.error("Supabase error inserting content:", error);
+          throw error;
+        }
+        
+        result = data;
       }
       
       console.log(`Successfully updated CMS content for section: ${section}`);
-      return true;
+      console.log("Updated data:", result);
+      return result;
     } catch (error) {
       console.error('Failed to update content:', error);
       toast.error('Failed to update content');

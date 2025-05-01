@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Upload } from 'lucide-react';
+import { toast } from "@/components/ui/sonner";
 
 interface EditContentModalProps {
   editing: {
@@ -45,6 +46,10 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
     setIsSaving(true);
     try {
       await handleSave();
+      toast.success("Content saved successfully");
+    } catch (error) {
+      console.error("Error saving content:", error);
+      toast.error("Failed to save content");
     } finally {
       setIsSaving(false);
     }

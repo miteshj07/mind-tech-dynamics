@@ -83,6 +83,8 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Function to update CMS content (for admin purposes)
   const updateContent = async (section: string, path: string, value: any) => {
     try {
+      console.log(`Updating content for ${section}.${path} to:`, value);
+      
       // Create a deep copy of the current data
       const newData = JSON.parse(JSON.stringify(data));
       
@@ -91,6 +93,7 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       
       // Navigate to the correct location in the object
       let sectionData = newData[section];
+      let originalSectionData = sectionData; // Keep reference to the top level section data
       const last = pathArray.pop();
       
       if (!last) return;
@@ -108,15 +111,21 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       // Update the local state first for immediate UI feedback
       setData(newData);
       
-      // Save to Supabase
-      await supabaseService.updateCmsContent(section, newData[section]);
+      console.log(`Saving section data to Supabase for section: ${section}`);
+      console.log("Updated section data:", originalSectionData);
+      
+      // Save to Supabase - make sure we're sending the entire section data
+      await supabaseService.updateCmsContent(section, originalSectionData);
       
       toast.success(`Content updated successfully`);
-      console.log(`CMS: Updated ${section}.${path} to:`, value);
+      console.log(`CMS: Updated ${section}.${path} successfully`);
     } catch (err) {
       console.error("Error updating CMS content:", err);
       setError(err instanceof Error ? err : new Error(String(err)));
       toast.error("Failed to update content");
+      
+      // Refresh data to ensure consistency after error
+      await fetchCmsContent();
     }
   };
 
