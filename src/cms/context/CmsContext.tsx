@@ -18,7 +18,7 @@ const CmsContext = createContext<CmsContextType | undefined>(undefined);
 const STORAGE_KEY = 'cms_content_data';
 
 export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [data, setData] = useState(cmsData);
+  const [data, setData] = useState<typeof cmsData>(cmsData);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 

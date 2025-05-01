@@ -23,7 +23,7 @@ const ContactCTA = ({
         <h2 className="heading-lg mb-6 max-w-3xl mx-auto">{heading}</h2>
         <p className="text-xl mb-10 text-gray-300 max-w-2xl mx-auto">{subheading}</p>
         <Button asChild className="btn-primary text-lg px-8 py-6">
-          <Link to={buttonLink}>
+          <Link to={buttonLink || "/contact-us"}>
             {buttonText} <ArrowRight className="ml-2" size={20} />
           </Link>
         </Button>
