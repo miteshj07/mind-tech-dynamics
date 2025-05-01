@@ -5,6 +5,7 @@ import PageHeader from '@/components/layout/PageHeader';
 import ContactCTA from '@/components/layout/ContactCTA';
 import { ArrowRight } from 'lucide-react';
 import { useCms } from '@/cms/context/CmsContext';
+import { Link } from 'react-router-dom';
 
 interface CaseStudy {
   title: string;
@@ -16,6 +17,7 @@ interface CaseStudy {
   image: string;
   logo?: string;
   tags: string[];
+  fullCaseStudyLink?: string;
 }
 
 interface CaseStudyCardProps {
@@ -25,7 +27,7 @@ interface CaseStudyCardProps {
 
 const CaseStudyCard = ({ study, index }: CaseStudyCardProps) => {
   return (
-    <div className="case-study-card overflow-hidden">
+    <div className="case-study-card overflow-hidden shadow-md rounded-lg">
       <div className="relative h-60">
         <img 
           src={study.image} 
@@ -71,9 +73,18 @@ const CaseStudyCard = ({ study, index }: CaseStudyCardProps) => {
             ))}
           </ul>
           
-          <button className="inline-flex items-center text-brand font-medium hover:text-brand-dark transition-colors">
-            Full Case Study <ArrowRight size={16} className="ml-1" />
-          </button>
+          {study.fullCaseStudyLink ? (
+            <Link 
+              to={study.fullCaseStudyLink} 
+              className="inline-flex items-center text-brand font-medium hover:text-brand-dark transition-colors"
+            >
+              Full Case Study <ArrowRight size={16} className="ml-1" />
+            </Link>
+          ) : (
+            <button className="inline-flex items-center text-brand font-medium hover:text-brand-dark transition-colors">
+              Full Case Study <ArrowRight size={16} className="ml-1" />
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { CheckCircle, Users, Award, Rocket, Code, Database } from 'lucide-react';
+import { useCms } from '@/cms/context/CmsContext';
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -53,6 +54,8 @@ const FeatureCard = ({ icon, title, description, delay }: FeatureCardProps) => {
 
 const WhyChooseUs = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const { data } = useCms();
+  const { whyChooseUsSection } = data;
   
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -75,44 +78,18 @@ const WhyChooseUs = () => {
     };
   }, []);
 
-  const features = [
-    {
-      icon: <Award size={40} />,
-      title: "10+ Years of Experience",
-      description: "A decade of delivering exceptional Salesforce solutions to businesses worldwide.",
-      delay: 100
-    },
-    {
-      icon: <Users size={40} />,
-      title: "Expert Team",
-      description: "Certified Salesforce consultants with deep domain expertise across industries.",
-      delay: 200
-    },
-    {
-      icon: <Rocket size={40} />,
-      title: "Innovation-Driven",
-      description: "Constantly evolving our approach with the latest Salesforce technologies and best practices.",
-      delay: 300
-    },
-    {
-      icon: <CheckCircle size={40} />,
-      title: "Guaranteed Results",
-      description: "We're committed to your success with measurable outcomes and ROI.",
-      delay: 400
-    },
-    {
-      icon: <Code size={40} />,
-      title: "Custom Solutions",
-      description: "Tailored implementations that address your unique business challenges.",
-      delay: 500
-    },
-    {
-      icon: <Database size={40} />,
-      title: "Data-Driven Approach",
-      description: "Strategic insights backed by analytics to optimize your Salesforce ecosystem.",
-      delay: 600
-    },
-  ];
+  const getIconComponent = (iconName: string, size: number = 40) => {
+    const icons: {[key: string]: React.ReactNode} = {
+      "Award": <Award size={size} />,
+      "Users": <Users size={size} />,
+      "Rocket": <Rocket size={size} />,
+      "CheckCircle": <CheckCircle size={size} />,
+      "Code": <Code size={size} />,
+      "Database": <Database size={size} />
+    };
+    
+    return icons[iconName] || <Award size={size} />;
+  };
 
   return (
     <section className="py-20 bg-gray-50">
@@ -121,17 +98,17 @@ const WhyChooseUs = () => {
           ref={sectionRef}
           className="text-center mb-16 opacity-0 translate-y-8 transition-all duration-700 ease-out"
         >
-          <h2 className="heading-lg mb-4">Why Choose <span className="text-brand">Meet The Mind</span></h2>
+          <h2 className="heading-lg mb-4" dangerouslySetInnerHTML={{ __html: whyChooseUsSection.title }} />
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We deliver customized Salesforce solutions that drive tangible business outcomes and elevate your CRM experience.
+            {whyChooseUsSection.subtitle}
           </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
+          {whyChooseUsSection.features.map((feature, index) => (
             <FeatureCard
               key={index}
-              icon={feature.icon}
+              icon={getIconComponent(feature.icon)}
               title={feature.title}
               description={feature.description}
               delay={feature.delay}

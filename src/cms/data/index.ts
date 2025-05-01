@@ -13,6 +13,9 @@ import { contactSection } from './contact';
 import { seoMetadata } from './seo';
 import { sharedComponents } from './shared';
 import { footerSection } from './footer';
+import { whyChooseUsSection } from './why-choose-us';
+import { successMetricsSection } from './success-metrics';
+import { testimonialsSection } from './testimonials';
 
 // Export all sections
 export {
@@ -25,5 +28,8 @@ export {
   contactSection,
   seoMetadata,
   sharedComponents,
-  footerSection
+  footerSection,
+  whyChooseUsSection,
+  successMetricsSection,
+  testimonialsSection
 };

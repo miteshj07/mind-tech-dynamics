@@ -1,5 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { useCms } from '@/cms/context/CmsContext';
 
 interface Testimonial {
   quote: string;
@@ -13,33 +15,10 @@ interface Testimonial {
 const Testimonials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const { data } = useCms();
+  const { testimonialsSection } = data;
 
-  const testimonials: Testimonial[] = [
-    {
-      quote: "Meet The Mind transformed our Salesforce implementation from a complex challenge to a strategic advantage. Their team's expertise and attention to detail were exceptional.",
-      author: "Sarah Johnson",
-      position: "CTO",
-      company: "TechStart Solutions",
-      rating: 5,
-      image: "https://randomuser.me/api/portraits/women/23.jpg"
-    },
-    {
-      quote: "The customized Salesforce solution developed by Meet The Mind has streamlined our sales processes and provided unprecedented visibility into our pipeline.",
-      author: "Michael Chen",
-      position: "VP of Sales",
-      company: "Global Innovations Inc.",
-      rating: 5,
-      image: "https://randomuser.me/api/portraits/men/54.jpg"
-    },
-    {
-      quote: "Working with Meet The Mind was refreshingly efficient. They understood our unique needs and delivered a tailored solution that increased our team's productivity by 40%.",
-      author: "Jessica Martinez",
-      position: "Operations Director",
-      company: "Elevate Marketing Group",
-      rating: 5,
-      image: "https://randomuser.me/api/portraits/women/45.jpg"
-    }
-  ];
+  const testimonials: Testimonial[] = testimonialsSection.testimonials;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -49,7 +28,7 @@ const Testimonials = () => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [testimonials.length]);
 
   const goToPrev = () => {
     if (isAnimating) return;
@@ -76,9 +55,9 @@ const Testimonials = () => {
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="heading-lg mb-4">What Our <span className="text-brand">Clients Say</span></h2>
+          <h2 className="heading-lg mb-4" dangerouslySetInnerHTML={{ __html: testimonialsSection.title }} />
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Don't just take our word for it. Here's what our clients have to say about working with Meet The Mind.
+            {testimonialsSection.subtitle}
           </p>
         </div>
 
@@ -100,7 +79,7 @@ const Testimonials = () => {
                   <div className="bg-white rounded-xl shadow-lg p-6 md:p-12">
                     {/* Rating */}
                     <div className="flex gap-1 mb-4 md:mb-6">
-                      {[...Array(5)].map((_, i) => (
+                      {[...Array(testimonial.rating || 5)].map((_, i) => (
                         <Star
                           key={i}
                           size={20}

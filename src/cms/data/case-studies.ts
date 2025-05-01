@@ -17,7 +17,8 @@ export const caseStudiesSection = {
         "Real-time visibility across all territories"
       ],
       image: "https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Retail", "Sales Cloud", "Territory Management", "Analytics"]
+      tags: ["Retail", "Sales Cloud", "Territory Management", "Analytics"],
+      fullCaseStudyLink: "/case-studies/retail-sales-efficiency"
     },
     {
       title: "Streamlined Customer Service Operations",
@@ -32,7 +33,8 @@ export const caseStudiesSection = {
         "Customer satisfaction score increased from 7.2 to 9.1"
       ],
       image: "https://images.unsplash.com/photo-1560264280-88b68371db39?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Technology", "Service Cloud", "Automation", "Knowledge Base"]
+      tags: ["Technology", "Service Cloud", "Automation", "Knowledge Base"],
+      fullCaseStudyLink: "/case-studies/tech-customer-service"
     },
     {
       title: "Data Migration & CRM Transformation",
@@ -47,7 +49,8 @@ export const caseStudiesSection = {
         "Enhanced HIPAA compliance and data security"
       ],
       image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Healthcare", "Health Cloud", "Migration", "Integration"]
+      tags: ["Healthcare", "Health Cloud", "Migration", "Integration"],
+      fullCaseStudyLink: "/case-studies/healthcare-data-migration"
     },
     {
       title: "Marketing Automation Revolution",
@@ -62,7 +65,8 @@ export const caseStudiesSection = {
         "Real-time campaign performance tracking"
       ],
       image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Financial Services", "Marketing Cloud", "Personalization", "Analytics"]
+      tags: ["Financial Services", "Marketing Cloud", "Personalization", "Analytics"],
+      fullCaseStudyLink: "/case-studies/financial-marketing-automation"
     },
     {
       title: "Field Service Transformation",
@@ -77,7 +81,8 @@ export const caseStudiesSection = {
         "Real-time visibility into field operations"
       ],
       image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Energy", "Field Service", "Mobile", "Scheduling"]
+      tags: ["Energy", "Field Service", "Mobile", "Scheduling"],
+      fullCaseStudyLink: "/case-studies/utilities-field-service"
     },
     {
       title: "Non-Profit Donor Management",
@@ -92,7 +97,8 @@ export const caseStudiesSection = {
         "Comprehensive donor relationship tracking"
       ],
       image: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Non-Profit", "Donor Management", "Fundraising", "Analytics"]
+      tags: ["Non-Profit", "Donor Management", "Fundraising", "Analytics"],
+      fullCaseStudyLink: "/case-studies/nonprofit-donor-management"
     }
   ]
 };

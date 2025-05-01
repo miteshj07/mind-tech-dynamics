@@ -112,7 +112,14 @@ const Admin = () => {
               value="home"
               title="Home Page Content"
               data={data}
-              sectionKeys={['heroSection', 'servicesSection', 'seoMetadata.home']}
+              sectionKeys={[
+                'heroSection', 
+                'whyChooseUsSection',
+                'servicesSection', 
+                'successMetricsSection',
+                'testimonialsSection',
+                'seoMetadata.home'
+              ]}
               handleEdit={handleEdit}
             />
             
