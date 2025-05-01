@@ -20,6 +20,7 @@ const Admin = () => {
   } | null>(null);
 
   const handleEdit = (section: string, path: string, value: any, type?: string) => {
+    console.log("Editing:", { section, path, value, type });
     setEditing({
       section,
       path,
@@ -61,13 +62,15 @@ const Admin = () => {
         }
       }
       
+      console.log(`Saving content update for ${editing.section}.${editing.path}:`, value);
       await updateContent(editing.section, editing.path, value);
-      toast.success(`Updated ${editing.path} successfully`);
+      
       setEditing(null);
       
       // Refresh data to ensure we have the latest
       await refreshData();
     } catch (err) {
+      console.error("Save error:", err);
       toast.error(`Error updating content: ${err instanceof Error ? err.message : String(err)}`);
     }
   };

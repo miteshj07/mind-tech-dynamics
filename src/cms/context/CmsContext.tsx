@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from "@/components/ui/sonner";
 import { supabaseService } from '@/services/supabase-service';
@@ -91,22 +90,72 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       // Split the path into an array
       const pathArray = path.split('.');
       
-      // Navigate to the correct location in the object
+      // Get a reference to the section data
       let sectionData = newData[section];
-      let originalSectionData = sectionData; // Keep reference to the top level section data
-      const last = pathArray.pop();
-      
-      if (!last) return;
-      
-      for (const key of pathArray) {
-        if (sectionData[key] === undefined) {
-          sectionData[key] = {};
-        }
-        sectionData = sectionData[key];
+      if (!sectionData) {
+        console.error(`Section ${section} not found in data`);
+        toast.error("Failed to update content: Section not found");
+        return;
       }
       
-      // Update the value
-      sectionData[last] = value;
+      // Keep a reference to the top-level section data for saving later
+      const originalSectionData = sectionData;
+      
+      // Handle array indices in the path
+      let current = sectionData;
+      const lastKey = pathArray[pathArray.length - 1];
+      
+      if (pathArray.length > 1) {
+        // Navigate to the parent object of the property we want to update
+        for (let i = 0; i < pathArray.length - 1; i++) {
+          const key = pathArray[i];
+          
+          // Check if this is an array index notation like items[0]
+          const arrayMatch = key.match(/(\w+)\[(\d+)\]/);
+          if (arrayMatch) {
+            const arrayName = arrayMatch[1];
+            const index = parseInt(arrayMatch[2], 10);
+            
+            if (!current[arrayName] || !Array.isArray(current[arrayName])) {
+              console.error(`Array ${arrayName} not found or not an array`);
+              toast.error("Failed to update: Invalid path");
+              return;
+            }
+            
+            current = current[arrayName][index];
+          } else {
+            // Regular object property
+            if (current[key] === undefined) {
+              current[key] = {};
+            }
+            current = current[key];
+          }
+          
+          if (current === undefined || current === null) {
+            console.error(`Path segment ${key} not found in data`);
+            toast.error("Failed to update: Path not found");
+            return;
+          }
+        }
+      }
+      
+      // Check if the last part is an array index notation
+      const lastArrayMatch = lastKey.match(/(\w+)\[(\d+)\]/);
+      if (lastArrayMatch) {
+        const arrayName = lastArrayMatch[1];
+        const index = parseInt(lastArrayMatch[2], 10);
+        
+        if (!current[arrayName] || !Array.isArray(current[arrayName])) {
+          console.error(`Array ${arrayName} not found or not an array`);
+          toast.error("Failed to update: Invalid path");
+          return;
+        }
+        
+        current[arrayName][index] = value;
+      } else {
+        // Update the value at the target path
+        current[lastKey] = value;
+      }
       
       // Update the local state first for immediate UI feedback
       setData(newData);
@@ -117,7 +166,7 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       // Save to Supabase - make sure we're sending the entire section data
       await supabaseService.updateCmsContent(section, originalSectionData);
       
-      toast.success(`Content updated successfully`);
+      toast.success("Content updated successfully");
       console.log(`CMS: Updated ${section}.${path} successfully`);
     } catch (err) {
       console.error("Error updating CMS content:", err);
