@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useCms } from '@/cms/context/CmsContext';
 import PageHeader from '@/components/layout/PageHeader';
@@ -96,7 +97,7 @@ const Admin = () => {
           </Alert>
           
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-            <TabsList className="grid grid-cols-7 w-full">
+            <TabsList className="grid grid-cols-8 w-full">
               <TabsTrigger value="home">Home</TabsTrigger>
               <TabsTrigger value="services">Services</TabsTrigger>
               <TabsTrigger value="about">About Us</TabsTrigger>
@@ -104,13 +105,14 @@ const Admin = () => {
               <TabsTrigger value="blog">Blog</TabsTrigger>
               <TabsTrigger value="careers">Careers</TabsTrigger>
               <TabsTrigger value="contact">Contact</TabsTrigger>
+              <TabsTrigger value="footer">Footer</TabsTrigger>
             </TabsList>
             
             <ContentTab
               value="home"
               title="Home Page Content"
               data={data}
-              sectionKeys={['heroSection', 'servicesSection']}
+              sectionKeys={['heroSection', 'servicesSection', 'seoMetadata.home']}
               handleEdit={handleEdit}
             />
             
@@ -118,7 +120,7 @@ const Admin = () => {
               value="services"
               title="Services Page Content"
               data={data}
-              sectionKeys={['servicesSection', 'sharedComponents.contactCTA.services']}
+              sectionKeys={['servicesSection', 'seoMetadata.services', 'sharedComponents.contactCTA.services']}
               handleEdit={handleEdit}
             />
             
@@ -126,7 +128,7 @@ const Admin = () => {
               value="about"
               title="About Us Page Content"
               data={data}
-              sectionKeys={['aboutUsSection', 'sharedComponents.contactCTA.aboutUs']}
+              sectionKeys={['aboutUsSection', 'seoMetadata.aboutUs', 'sharedComponents.contactCTA.aboutUs']}
               handleEdit={handleEdit}
             />
             
@@ -134,7 +136,7 @@ const Admin = () => {
               value="case-studies"
               title="Case Studies Page Content"
               data={data}
-              sectionKeys={['caseStudiesSection', 'sharedComponents.contactCTA.caseStudies']}
+              sectionKeys={['caseStudiesSection', 'seoMetadata.caseStudies', 'sharedComponents.contactCTA.caseStudies']}
               handleEdit={handleEdit}
             />
             
@@ -142,7 +144,7 @@ const Admin = () => {
               value="blog"
               title="Blog Page Content"
               data={data}
-              sectionKeys={['blogSection', 'sharedComponents.contactCTA.blog']}
+              sectionKeys={['blogSection', 'seoMetadata.blog', 'sharedComponents.contactCTA.blog']}
               handleEdit={handleEdit}
             />
             
@@ -150,7 +152,7 @@ const Admin = () => {
               value="careers"
               title="Careers Page Content"
               data={data}
-              sectionKeys={['careersSection', 'sharedComponents.contactCTA.careers']}
+              sectionKeys={['careersSection', 'seoMetadata.careers', 'sharedComponents.contactCTA.careers']}
               handleEdit={handleEdit}
             />
             
@@ -158,7 +160,15 @@ const Admin = () => {
               value="contact"
               title="Contact Page Content"
               data={data}
-              sectionKeys={['contactSection']}
+              sectionKeys={['contactSection', 'seoMetadata.contactUs']}
+              handleEdit={handleEdit}
+            />
+            
+            <ContentTab
+              value="footer"
+              title="Footer Content"
+              data={data}
+              sectionKeys={['footerSection']}
               handleEdit={handleEdit}
             />
           </Tabs>

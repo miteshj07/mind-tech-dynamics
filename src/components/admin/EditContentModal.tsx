@@ -1,3 +1,4 @@
+
 import React, { useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -36,6 +37,12 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isSaving, setIsSaving] = React.useState(false);
   const [currentValue, setCurrentValue] = React.useState(editing.value);
+  const [validationError, setValidationError] = React.useState<string | null>(null);
+
+  // Reset validation error when value changes
+  React.useEffect(() => {
+    setValidationError(null);
+  }, [currentValue]);
 
   const handleImageClick = () => {
     if (fileInputRef.current) {
@@ -49,7 +56,25 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
     setEditing({...editing, value: newValue});
   };
 
+  const validateJSON = (jsonString: string): boolean => {
+    if (jsonString.startsWith('[') || jsonString.startsWith('{')) {
+      try {
+        JSON.parse(jsonString);
+        return true;
+      } catch (e) {
+        setValidationError("Invalid JSON format. Please check your syntax.");
+        return false;
+      }
+    }
+    return true;
+  };
+
   const onSave = async () => {
+    // Validate JSON if applicable
+    if (!validateJSON(currentValue)) {
+      return;
+    }
+
     setIsSaving(true);
     try {
       await handleSave(currentValue);
@@ -63,11 +88,21 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
     }
   };
 
+  // Determine if we're editing a section title or important field to show a warning
+  const isImportantField = editing.path.includes('title') || 
+                          editing.path.includes('heading') || 
+                          editing.path.includes('name') || 
+                          editing.path.endsWith('email') ||
+                          editing.path.endsWith('phone');
+
   return (
     <Dialog open={true} onOpenChange={() => handleCancel()}>
       <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Edit {editing.path}</DialogTitle>
+          <DialogTitle>
+            Edit {editing.path}
+            {isImportantField && " (Important Field)"}
+          </DialogTitle>
         </DialogHeader>
         
         {editing.type === 'image' ? (
@@ -104,12 +139,22 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
             />
           </div>
         ) : (
-          currentValue.length > 100 || currentValue.includes('\n') ? (
-            <Textarea 
-              value={currentValue}
-              onChange={handleValueChange}
-              className="min-h-[200px] mb-4"
-            />
+          currentValue.length > 100 || currentValue.includes('\n') || currentValue.startsWith('{') || currentValue.startsWith('[') ? (
+            <>
+              <Textarea 
+                value={currentValue}
+                onChange={handleValueChange}
+                className="min-h-[300px] font-mono text-sm mb-4"
+              />
+              {validationError && (
+                <div className="text-red-500 text-sm mb-4">{validationError}</div>
+              )}
+              {(currentValue.startsWith('{') || currentValue.startsWith('[')) && (
+                <div className="text-amber-600 text-sm mb-4">
+                  <p>Editing JSON content. Please maintain valid JSON format.</p>
+                </div>
+              )}
+            </>
           ) : (
             <Input 
               value={currentValue}
@@ -119,11 +164,20 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
           )
         )}
         
-        <div className="flex justify-end space-x-2">
-          <Button variant="outline" onClick={handleCancel} disabled={isSaving}>Cancel</Button>
-          <Button onClick={onSave} disabled={isSaving}>
-            {isSaving ? 'Saving...' : 'Save Changes'}
-          </Button>
+        <div className="flex justify-between space-x-2">
+          <div>
+            {isImportantField && (
+              <div className="text-amber-600 text-sm">
+                ⚠️ This is a key field that appears prominently on the site
+              </div>
+            )}
+          </div>
+          <div className="flex space-x-2">
+            <Button variant="outline" onClick={handleCancel} disabled={isSaving}>Cancel</Button>
+            <Button onClick={onSave} disabled={isSaving || !!validationError}>
+              {isSaving ? 'Saving...' : 'Save Changes'}
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
