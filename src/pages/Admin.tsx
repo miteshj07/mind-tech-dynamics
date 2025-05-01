@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useCms } from '@/cms/context/CmsContext';
 import PageHeader from '@/components/layout/PageHeader';
@@ -47,15 +46,15 @@ const Admin = () => {
     }
   };
 
-  const handleSave = async () => {
+  const handleSave = async (currentValue: string) => {
     if (!editing) return;
     
     try {
       // For arrays or objects, parse the JSON
-      let value = editing.value;
-      if (typeof editing.value === 'string' && (editing.value.startsWith('[') || editing.value.startsWith('{'))) {
+      let value = currentValue;
+      if (typeof currentValue === 'string' && (currentValue.startsWith('[') || currentValue.startsWith('{'))) {
         try {
-          value = JSON.parse(editing.value);
+          value = JSON.parse(currentValue);
         } catch (e) {
           console.error("JSON parse error:", e);
           toast.error("Invalid JSON. Please check your formatting.");

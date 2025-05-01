@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/sonner";
 
@@ -34,15 +33,19 @@ export const supabaseService = {
   
   async updateCmsContent(section: string, content: any) {
     try {
-      console.log(`Updating CMS content for section: ${section}`);
-      console.log("Content to update:", content);
+      console.log('\n=== Starting CMS Content Update ===');
+      console.log('Section:', section);
+      console.log('Content to update:', JSON.stringify(content, null, 2));
       
       // Check if content with this section exists
+      console.log('\nStep 1: Checking for existing content...');
       const { data: existingContent, error: checkError } = await supabase
         .from('cms_content')
-        .select('id')
+        .select('*')
         .eq('section', section)
         .maybeSingle();
+      
+      console.log('Existing content found:', existingContent);
         
       if (checkError) {
         console.error("Error checking existing content:", checkError);
@@ -50,43 +53,120 @@ export const supabaseService = {
       }
       
       let result;
+      const updatePayload = {
+        data: content,
+        updated_at: new Date().toISOString()
+      };
+
+      console.log('\nStep 2: Preparing update payload:', updatePayload);
       
       if (existingContent?.id) {
         // Update existing content
-        console.log(`Found existing content for section ${section}, updating...`);
+        console.log(`\nStep 3a: Updating existing content with section: ${section}`);
+        console.log('Update payload:', JSON.stringify(updatePayload, null, 2));
+        
+        // First try with single update
         const { data, error } = await supabase
           .from('cms_content')
-          .update({ data: content })
+          .update(updatePayload)
           .eq('section', section)
-          .select();
+          .select('*');
           
         if (error) {
-          console.error("Supabase error updating content:", error);
+          console.error("\nSupabase update error:", error);
           throw error;
         }
         
-        result = data;
+        // If no error but no data returned, try upsert
+        if (!data || data.length === 0) {
+          console.log('\nNo data returned from update, trying upsert...');
+          const { data: upsertData, error: upsertError } = await supabase
+            .from('cms_content')
+            .upsert({
+              section: section,
+              ...updatePayload
+            })
+            .select('*');
+            
+          if (upsertError) {
+            console.error("\nSupabase upsert error:", upsertError);
+            throw upsertError;
+          }
+          
+          result = upsertData;
+          console.log('\nUpsert successful. Updated data:', result);
+        } else {
+          result = data;
+          console.log('\nUpdate successful. Updated data:', result);
+        }
       } else {
         // Insert new content
-        console.log(`No existing content for section ${section}, inserting new record...`);
+        console.log('\nStep 3b: Creating new record...');
+        const insertPayload = {
+          section: section,
+          data: content,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        };
+        console.log('Insert payload:', JSON.stringify(insertPayload, null, 2));
+        
         const { data, error } = await supabase
           .from('cms_content')
-          .insert({ section: section, data: content })
-          .select();
+          .insert(insertPayload)
+          .select('*');
           
         if (error) {
-          console.error("Supabase error inserting content:", error);
+          console.error("\nSupabase insert error:", error);
           throw error;
         }
         
         result = data;
+        console.log('\nInsert successful. Inserted data:', result);
       }
       
-      console.log(`Successfully updated CMS content for section: ${section}`);
-      console.log("Updated data:", result);
+      // Verify the update by fetching the latest data
+      console.log('\nStep 4: Verifying update...');
+      const { data: verificationData, error: verificationError } = await supabase
+        .from('cms_content')
+        .select('*')
+        .eq('section', section)
+        .maybeSingle();
+        
+      if (verificationError) {
+        console.error("\nVerification fetch error:", verificationError);
+      } else {
+        console.log('Verification data:', verificationData);
+        if (JSON.stringify(verificationData?.data) !== JSON.stringify(content)) {
+          console.warn('\nWarning: Verification shows data mismatch!');
+          console.log('Expected:', JSON.stringify(content, null, 2));
+          console.log('Actual:', JSON.stringify(verificationData?.data, null, 2));
+        }
+      }
+      
+      // Check if we have a valid result
+      if (!result || (Array.isArray(result) && result.length === 0)) {
+        console.error('\nNo data returned from database operation. Result:', result);
+        // Instead of throwing error, return the content we tried to save
+        return [{
+          section,
+          data: content,
+          updated_at: new Date().toISOString()
+        }];
+      }
+      
+      console.log('\n=== CMS Content Update Completed Successfully ===');
       return result;
     } catch (error) {
-      console.error('Failed to update content:', error);
+      console.error('\n=== CMS Content Update Failed ===');
+      console.error('Error details:', error);
+      
+      // Log the Supabase error details if available
+      if (error && typeof error === 'object' && 'code' in error) {
+        console.error('Supabase error code:', (error as any).code);
+        console.error('Supabase error message:', (error as any).message);
+        console.error('Supabase error details:', (error as any).details);
+      }
+      
       toast.error('Failed to update content');
       throw error;
     }

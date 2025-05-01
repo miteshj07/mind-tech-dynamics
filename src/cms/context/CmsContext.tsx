@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from "@/components/ui/sonner";
 import { supabaseService } from '@/services/supabase-service';
@@ -132,10 +131,14 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Function to update CMS content (for admin purposes)
   const updateContent = async (section: string, path: string, value: any) => {
     try {
-      console.log(`Updating content for ${section}.${path} to:`, value);
+      console.log('=== CMS Context: Starting Content Update ===');
+      console.log(`Section: ${section}`);
+      console.log(`Path: ${path}`);
+      console.log('New Value:', value);
       
       // Create a deep copy of the current data
       const newData = JSON.parse(JSON.stringify(data));
+      console.log('Current Data State:', newData);
       
       // If the section doesn't exist in our data, create it
       if (!newData[section]) {
@@ -153,28 +156,33 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         return part;
       });
       
+      console.log('Path parts:', pathParts);
+      
       // Update the value at the specified path
       newData[section] = setValueAtPath(newData[section], pathParts, value);
+      console.log('Updated section data:', newData[section]);
       
-      // Update the local state first for immediate UI feedback
+      // Save to Supabase
+      console.log('Saving to Supabase...');
+      const result = await supabaseService.updateCmsContent(section, newData[section]);
+      
+      if (!result) {
+        console.error('No result returned from Supabase update');
+        throw new Error('Failed to update content in database');
+      }
+      
+      console.log('Supabase update successful:', result);
+      
+      // Update local state
+      console.log('Updating local state...');
       setData(newData);
       
-      console.log(`Saving section data to Supabase for section: ${section}`);
-      console.log("Updated section data:", newData[section]);
-      
-      // Save to Supabase - make sure we're sending the entire section data
-      await supabaseService.updateCmsContent(section, newData[section]);
-      
-      console.log(`CMS: Updated ${section}.${path} successfully`);
+      console.log('=== CMS Context: Content Update Completed Successfully ===');
     } catch (err) {
-      console.error("Error updating CMS content:", err);
+      console.error('=== CMS Context: Content Update Failed ===');
+      console.error('Error details:', err);
       setError(err instanceof Error ? err : new Error(String(err)));
       toast.error("Failed to update content");
-      
-      // Refresh data to ensure consistency after error
-      await fetchCmsContent();
-      
-      // Re-throw the error so it can be caught by the component
       throw err;
     }
   };

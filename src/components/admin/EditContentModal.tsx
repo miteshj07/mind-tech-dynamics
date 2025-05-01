@@ -1,4 +1,3 @@
-
 import React, { useRef } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -22,7 +21,7 @@ interface EditContentModalProps {
     originalValue: string;
     type?: string;
   } | null>>;
-  handleSave: () => Promise<void>;
+  handleSave: (currentValue: string) => Promise<void>;
   handleCancel: () => void;
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
 }
@@ -36,6 +35,7 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isSaving, setIsSaving] = React.useState(false);
+  const [currentValue, setCurrentValue] = React.useState(editing.value);
 
   const handleImageClick = () => {
     if (fileInputRef.current) {
@@ -43,14 +43,21 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
     }
   };
 
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const newValue = e.target.value;
+    setCurrentValue(newValue);
+    setEditing({...editing, value: newValue});
+  };
+
   const onSave = async () => {
     setIsSaving(true);
     try {
-      await handleSave();
+      await handleSave(currentValue);
       toast.success("Content saved successfully");
+      handleCancel();
     } catch (error) {
       console.error("Error saving content:", error);
-      toast.error("Failed to save content");
+      toast.error("Failed to save content. Please try again.");
     } finally {
       setIsSaving(false);
     }
@@ -66,9 +73,9 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
         {editing.type === 'image' ? (
           <div className="space-y-4">
             <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center">
-              {editing.value && (
+              {currentValue && (
                 <img 
-                  src={editing.value} 
+                  src={currentValue} 
                   alt="Preview" 
                   className="max-h-[200px] object-contain mb-4" 
                 />
@@ -90,23 +97,23 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
             </div>
             
             <Input 
-              value={editing.value}
-              onChange={(e) => setEditing({...editing, value: e.target.value})}
+              value={currentValue}
+              onChange={handleValueChange}
               className="mb-4"
               placeholder="Or enter image URL directly"
             />
           </div>
         ) : (
-          editing.value.length > 100 || editing.value.includes('\n') ? (
+          currentValue.length > 100 || currentValue.includes('\n') ? (
             <Textarea 
-              value={editing.value}
-              onChange={(e) => setEditing({...editing, value: e.target.value})}
+              value={currentValue}
+              onChange={handleValueChange}
               className="min-h-[200px] mb-4"
             />
           ) : (
             <Input 
-              value={editing.value}
-              onChange={(e) => setEditing({...editing, value: e.target.value})}
+              value={currentValue}
+              onChange={handleValueChange}
               className="mb-4"
             />
           )
