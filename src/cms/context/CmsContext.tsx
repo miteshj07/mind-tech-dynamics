@@ -28,17 +28,44 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       setIsLoading(true);
       setError(null);
       
+      console.log("Attempting to fetch CMS content from Supabase...");
       const cmsContent = await supabaseService.fetchCmsContent();
+      console.log("Fetched CMS content:", cmsContent);
         
-      // Transform the fetched data to match our expected structure
-      const transformedData: any = { ...cmsDefaultData };
-      
-      cmsContent.forEach((item: any) => {
-        transformedData[item.section] = item.data;
-      });
-
-      setData(transformedData);
-      console.log('Loaded CMS content from Supabase');
+      // If no content is returned, we'll use the default data
+      if (!cmsContent || cmsContent.length === 0) {
+        console.log("No CMS content found in Supabase. Initializing with default data...");
+        // Initialize the database with our default content
+        for (const [section, sectionData] of Object.entries(cmsDefaultData)) {
+          console.log(`Initializing section: ${section}`);
+          await supabaseService.updateCmsContent(section, sectionData);
+        }
+        
+        // Now try to fetch the content again
+        const refreshedContent = await supabaseService.fetchCmsContent();
+        console.log("Refreshed CMS content after initialization:", refreshedContent);
+        
+        if (refreshedContent && refreshedContent.length > 0) {
+          // Transform the fetched data to match our expected structure
+          const transformedData: any = { ...cmsDefaultData };
+          refreshedContent.forEach((item: any) => {
+            transformedData[item.section] = item.data;
+          });
+          setData(transformedData);
+          console.log('Initialized CMS content in Supabase and loaded it');
+        } else {
+          console.error("Failed to initialize CMS content");
+          throw new Error("Failed to initialize CMS content");
+        }
+      } else {
+        // Transform the fetched data to match our expected structure
+        const transformedData: any = { ...cmsDefaultData };
+        cmsContent.forEach((item: any) => {
+          transformedData[item.section] = item.data;
+        });
+        setData(transformedData);
+        console.log('Loaded CMS content from Supabase');
+      }
     } catch (err) {
       console.error('Error loading CMS content:', err);
       setError(err instanceof Error ? err : new Error(String(err)));

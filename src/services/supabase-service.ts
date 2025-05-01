@@ -13,14 +13,17 @@ export const supabaseService = {
   // Content Management
   async fetchCmsContent() {
     try {
+      console.log("Fetching CMS content from Supabase...");
       const { data, error } = await supabase
         .from('cms_content')
         .select('*');
         
       if (error) {
+        console.error("Supabase error fetching content:", error);
         throw error;
       }
       
+      console.log(`Fetched ${data?.length || 0} CMS content items`);
       return data || [];
     } catch (error) {
       console.error('Failed to fetch content:', error);
@@ -31,6 +34,7 @@ export const supabaseService = {
   
   async updateCmsContent(section: string, content: any) {
     try {
+      console.log(`Updating CMS content for section: ${section}`);
       const { error } = await supabase
         .from('cms_content')
         .upsert({
@@ -41,9 +45,11 @@ export const supabaseService = {
         });
         
       if (error) {
+        console.error("Supabase error updating content:", error);
         throw error;
       }
       
+      console.log(`Successfully updated CMS content for section: ${section}`);
       return true;
     } catch (error) {
       console.error('Failed to update content:', error);
@@ -59,6 +65,7 @@ export const supabaseService = {
     const filePath = `${fileName}`;
     
     try {
+      console.log(`Uploading file: ${file.name} to Supabase storage...`);
       // Upload to storage
       const { error: uploadError } = await supabase
         .storage
@@ -66,6 +73,7 @@ export const supabaseService = {
         .upload(filePath, file);
         
       if (uploadError) {
+        console.error("Supabase storage upload error:", uploadError);
         throw uploadError;
       }
       
@@ -89,6 +97,8 @@ export const supabaseService = {
         console.error("Error recording image metadata:", dbError);
       }
       
+      console.log(`Successfully uploaded image. Public URL: ${urlData.publicUrl}`);
+      
       return {
         publicUrl: urlData.publicUrl,
         path: filePath
@@ -102,15 +112,18 @@ export const supabaseService = {
   
   async listImages() {
     try {
+      console.log("Fetching images from Supabase...");
       const { data, error } = await supabase
         .from('images')
         .select('*')
         .order('uploaded_at', { ascending: false });
         
       if (error) {
+        console.error("Supabase error listing images:", error);
         throw error;
       }
       
+      console.log(`Fetched ${data?.length || 0} images`);
       return data || [];
     } catch (error) {
       console.error('Failed to load images:', error);
@@ -121,6 +134,7 @@ export const supabaseService = {
   
   async deleteImage(id: string, path: string) {
     try {
+      console.log(`Deleting image with ID: ${id}, path: ${path}`);
       // Delete from storage
       const { error: storageError } = await supabase
         .storage
@@ -128,6 +142,7 @@ export const supabaseService = {
         .remove([path]);
         
       if (storageError) {
+        console.error("Supabase storage delete error:", storageError);
         throw storageError;
       }
       
@@ -141,6 +156,7 @@ export const supabaseService = {
         console.error("Error deleting image record:", dbError);
       }
       
+      console.log(`Successfully deleted image with ID: ${id}`);
       return true;
     } catch (error) {
       console.error('Failed to delete image:', error);
