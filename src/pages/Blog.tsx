@@ -19,7 +19,11 @@ const Blog = () => {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
   
-  const { blogSection = {}, seoMetadata = {}, sharedComponents = {} } = data || {};
+  const blogSection = data?.blogSection || {};
+  const seoMetadata = data?.seoMetadata || {};
+  const sharedComponents = data?.sharedComponents || {};
+  
+  // Ensure posts is always an array even if undefined
   const posts = blogSection.posts || [];
   const filteredPosts = filterPosts(posts, searchTerm);
 

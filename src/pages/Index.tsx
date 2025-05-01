@@ -22,7 +22,8 @@ const Index = () => {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
 
-  const { seoMetadata = {}, sharedComponents = {} } = data || {};
+  const seoMetadata = data?.seoMetadata || {};
+  const sharedComponents = data?.sharedComponents || {};
 
   return (
     <div className="min-h-screen">
