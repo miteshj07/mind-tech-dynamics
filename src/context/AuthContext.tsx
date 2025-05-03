@@ -75,6 +75,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Check if user has admin role
   const checkIsAdmin = async (): Promise<boolean> => {
+    console.log("==== Ankit ", user);
     if (!user) return false;
     
     try {
