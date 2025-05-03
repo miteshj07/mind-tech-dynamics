@@ -12,7 +12,7 @@ interface AuthContextType {
   isAdmin: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
-  checkIsAdmin: () => Promise<boolean>;
+  checkIsAdmin: (userId: string) => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Check admin status when session changes
         if (currentSession?.user) {
           setTimeout(() => {
-            checkIsAdmin().then(adminStatus => {
+            checkIsAdmin(currentSession.user.id).then(adminStatus => {
               console.log('Admin check result:', adminStatus);
               setIsAdmin(adminStatus);
             });
@@ -58,7 +58,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(currentSession?.user ?? null);
       
       if (currentSession?.user) {
-        checkIsAdmin().then(adminStatus => {
+        checkIsAdmin(currentSession.user.id).then(adminStatus => {
           console.log('Initial admin check result:', adminStatus);
           setIsAdmin(adminStatus);
           setIsLoading(false);
