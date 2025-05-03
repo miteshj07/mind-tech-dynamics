@@ -7,6 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { toast } from '@/components/ui/sonner';
 import EditContentModal from '@/components/admin/EditContentModal';
 import ContentTab from '@/components/admin/ContentTab';
+import LogoutButton from '@/components/auth/LogoutButton';
 
 const Admin = () => {
   const { data, updateContent, uploadImage, refreshData } = useCms();
@@ -89,12 +90,15 @@ const Admin = () => {
       
       <section className="py-10">
         <div className="container mx-auto px-4">
-          <Alert className="mb-6">
-            <AlertTitle>CMS Admin Interface</AlertTitle>
-            <AlertDescription>
-              This interface allows you to edit content on your website. Changes will be immediately visible on the site.
-            </AlertDescription>
-          </Alert>
+          <div className="flex justify-between items-center mb-6">
+            <Alert className="flex-grow mr-4">
+              <AlertTitle>CMS Admin Interface</AlertTitle>
+              <AlertDescription>
+                This interface allows you to edit content on your website. Changes will be immediately visible on the site.
+              </AlertDescription>
+            </Alert>
+            <LogoutButton />
+          </div>
           
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
             <TabsList className="grid grid-cols-8 w-full">
