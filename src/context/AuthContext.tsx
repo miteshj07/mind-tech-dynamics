@@ -74,16 +74,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   // Check if user has admin role
-  const checkIsAdmin = async (): Promise<boolean> => {
-    console.log("==== Ankit ", user);
-    if (!user) return false;
+  const checkIsAdmin = async (userId: string): Promise<boolean> => {
+    console.log("==== Ankit ", userId);
+    if (!userId) return false;
     
     try {
-      console.log('Checking admin status for user:', user.id);
+      console.log('Checking admin status for user:', userId);
       const { data, error } = await supabase
         .from('user_roles')
         .select('role')
-        .eq('user_id', user.id)
+        .eq('user_id', userId)
         .eq('role', 'admin')
         .maybeSingle();
       
@@ -119,9 +119,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Verify user is an admin
       if (data.user) {
         // update user in state
-        await setUser(data.user ?? null);
+        setUser(data.user ?? null);
         
-        const isUserAdmin = await checkIsAdmin();
+        const isUserAdmin = await checkIsAdmin(data.user.id);
         console.log('Is user admin?', isUserAdmin);
         
         if (!isUserAdmin) {
