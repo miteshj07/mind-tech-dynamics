@@ -6,6 +6,7 @@ import ContactCTA from '@/components/layout/ContactCTA';
 import { ArrowRight } from 'lucide-react';
 import { useCms } from '@/cms/context/CmsContext';
 import { Link } from 'react-router-dom';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 interface CaseStudy {
   title: string;
@@ -23,9 +24,10 @@ interface CaseStudy {
 interface CaseStudyCardProps {
   study: CaseStudy;
   index: number;
+  onViewDetails: (study: CaseStudy) => void;
 }
 
-const CaseStudyCard = ({ study, index }: CaseStudyCardProps) => {
+const CaseStudyCard = ({ study, index, onViewDetails }: CaseStudyCardProps) => {
   return (
     <div className="case-study-card overflow-hidden shadow-md rounded-lg">
       <div className="relative h-60">
@@ -73,21 +75,69 @@ const CaseStudyCard = ({ study, index }: CaseStudyCardProps) => {
             ))}
           </ul>
           
-          {study.fullCaseStudyLink ? (
-            <Link 
-              to={study.fullCaseStudyLink} 
-              className="inline-flex items-center text-brand font-medium hover:text-brand-dark transition-colors"
-            >
-              Full Case Study <ArrowRight size={16} className="ml-1" />
-            </Link>
-          ) : (
-            <button className="inline-flex items-center text-brand font-medium hover:text-brand-dark transition-colors">
-              Full Case Study <ArrowRight size={16} className="ml-1" />
-            </button>
-          )}
+          <button 
+            onClick={() => onViewDetails(study)}
+            className="inline-flex items-center text-brand font-medium hover:text-brand-dark transition-colors"
+          >
+            Full Case Study <ArrowRight size={16} className="ml-1" />
+          </button>
         </div>
       </div>
     </div>
+  );
+};
+
+const CaseStudyDialog = ({ study, open, onOpenChange }: { 
+  study: CaseStudy | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) => {
+  if (!study) return null;
+  
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-bold">{study.title}</DialogTitle>
+          <DialogDescription className="text-brand font-medium">{study.client} | {study.industry}</DialogDescription>
+        </DialogHeader>
+        
+        <div className="mt-4">
+          <div className="mb-6">
+            <img src={study.image} alt={study.title} className="w-full h-64 object-cover rounded-md" />
+          </div>
+          
+          <div className="flex flex-wrap gap-2 mb-6">
+            {study.tags.map((tag, i) => (
+              <span key={i} className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full">
+                {tag}
+              </span>
+            ))}
+          </div>
+          
+          <div className="space-y-6">
+            <section>
+              <h3 className="text-xl font-semibold mb-2">Challenge</h3>
+              <p className="text-gray-700">{study.challenge}</p>
+            </section>
+            
+            <section>
+              <h3 className="text-xl font-semibold mb-2">Solution</h3>
+              <p className="text-gray-700">{study.solution}</p>
+            </section>
+            
+            <section>
+              <h3 className="text-xl font-semibold mb-2">Results</h3>
+              <ul className="list-disc pl-5 space-y-2">
+                {study.results.map((result, i) => (
+                  <li key={i} className="text-gray-700">{result}</li>
+                ))}
+              </ul>
+            </section>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
@@ -96,6 +146,8 @@ const CaseStudies = () => {
   const { caseStudiesSection, seoMetadata, sharedComponents } = data;
   
   const [filter, setFilter] = useState<string>("all");
+  const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
   
   // Extract unique industries from case studies for filter options
   const industries = Array.from(new Set(caseStudiesSection.studies.map(study => study.industry)));
@@ -108,6 +160,11 @@ const CaseStudies = () => {
   const filteredStudies = filter === "all" 
     ? caseStudiesSection.studies 
     : caseStudiesSection.studies.filter(study => study.industry.includes(filter) || study.tags.includes(filter));
+
+  const handleViewDetails = (study: CaseStudy) => {
+    setSelectedStudy(study);
+    setDialogOpen(true);
+  };
 
   if (isLoading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
@@ -144,7 +201,12 @@ const CaseStudies = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredStudies.map((study, index) => (
-              <CaseStudyCard key={index} study={study} index={index} />
+              <CaseStudyCard 
+                key={index} 
+                study={study} 
+                index={index} 
+                onViewDetails={handleViewDetails}
+              />
             ))}
           </div>
           
@@ -159,6 +221,12 @@ const CaseStudies = () => {
               </button>
             </div>
           )}
+          
+          <CaseStudyDialog 
+            study={selectedStudy}
+            open={dialogOpen}
+            onOpenChange={setDialogOpen}
+          />
         </div>
       </section>
       

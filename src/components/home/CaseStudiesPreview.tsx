@@ -1,7 +1,9 @@
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { caseStudiesSection } from '@/cms/data';
 
 interface CaseStudyCardProps {
   title: string;
@@ -11,9 +13,23 @@ interface CaseStudyCardProps {
   tags: string[];
   link: string;
   index: number;
+  onViewFull: () => void;
 }
 
-const CaseStudyCard = ({ title, client, description, image, tags, link, index }: CaseStudyCardProps) => {
+interface CaseStudy {
+  title: string;
+  client: string;
+  industry: string;
+  challenge: string;
+  solution: string;
+  results: string[];
+  image: string;
+  logo?: string;
+  tags: string[];
+  fullCaseStudyLink?: string;
+}
+
+const CaseStudyCard = ({ title, client, description, image, tags, index, onViewFull }: CaseStudyCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -69,19 +85,75 @@ const CaseStudyCard = ({ title, client, description, image, tags, link, index }:
           ))}
         </div>
         <p className="text-gray-600 mb-6">{description}</p>
-        <Link 
-          to={link}
+        <button 
+          onClick={onViewFull}
           className="inline-flex items-center text-brand font-medium hover:text-brand-dark transition-colors"
         >
           Read Case Study <ArrowRight size={16} className="ml-1 transition-transform duration-300 group-hover:translate-x-1" />
-        </Link>
+        </button>
       </div>
     </div>
   );
 };
 
+const CaseStudyDialog = ({ study, open, onOpenChange }: { 
+  study: CaseStudy | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) => {
+  if (!study) return null;
+  
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-bold">{study.title}</DialogTitle>
+          <DialogDescription className="text-brand font-medium">{study.client} | {study.industry}</DialogDescription>
+        </DialogHeader>
+        
+        <div className="mt-4">
+          <div className="mb-6">
+            <img src={study.image} alt={study.title} className="w-full h-64 object-cover rounded-md" />
+          </div>
+          
+          <div className="flex flex-wrap gap-2 mb-6">
+            {study.tags.map((tag, i) => (
+              <span key={i} className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full">
+                {tag}
+              </span>
+            ))}
+          </div>
+          
+          <div className="space-y-6">
+            <section>
+              <h3 className="text-xl font-semibold mb-2">Challenge</h3>
+              <p className="text-gray-700">{study.challenge}</p>
+            </section>
+            
+            <section>
+              <h3 className="text-xl font-semibold mb-2">Solution</h3>
+              <p className="text-gray-700">{study.solution}</p>
+            </section>
+            
+            <section>
+              <h3 className="text-xl font-semibold mb-2">Results</h3>
+              <ul className="list-disc pl-5 space-y-2">
+                {study.results.map((result, i) => (
+                  <li key={i} className="text-gray-700">{result}</li>
+                ))}
+              </ul>
+            </section>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
 const CaseStudiesPreview = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -103,6 +175,19 @@ const CaseStudiesPreview = () => {
       }
     };
   }, []);
+
+  // Find the matching full case study from the data
+  const findFullCaseStudy = (title: string): CaseStudy | null => {
+    return caseStudiesSection.studies.find(study => study.title === title) || null;
+  };
+
+  const handleViewFull = (title: string) => {
+    const fullStudy = findFullCaseStudy(title);
+    if (fullStudy) {
+      setSelectedStudy(fullStudy);
+      setDialogOpen(true);
+    }
+  };
 
   const caseStudies = [
     {
@@ -155,6 +240,7 @@ const CaseStudiesPreview = () => {
               tags={study.tags}
               link={study.link}
               index={index}
+              onViewFull={() => handleViewFull(study.title)}
             />
           ))}
         </div>
@@ -167,6 +253,12 @@ const CaseStudiesPreview = () => {
             View All Case Studies <ArrowRight size={20} className="ml-2" />
           </Link>
         </div>
+
+        <CaseStudyDialog 
+          study={selectedStudy}
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+        />
       </div>
     </section>
   );
