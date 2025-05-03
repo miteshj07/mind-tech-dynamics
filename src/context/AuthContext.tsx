@@ -119,7 +119,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Verify user is an admin
       if (data.user) {
         // update user in state
-        setUser(data.user ?? null);
+        await setUser(data.user ?? null);
         
         const isUserAdmin = await checkIsAdmin();
         console.log('Is user admin?', isUserAdmin);
