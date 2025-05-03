@@ -24,17 +24,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const navigate = useNavigate();
 
+  // Debug logging
+  useEffect(() => {
+    console.log('Auth state:', { session, user, isAdmin });
+  }, [session, user, isAdmin]);
+
   useEffect(() => {
     // Set up the auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, currentSession) => {
+        console.log('Auth state changed:', event, currentSession?.user?.email);
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         
         // Check admin status when session changes
         if (currentSession?.user) {
           setTimeout(() => {
-            checkIsAdmin().then(adminStatus => setIsAdmin(adminStatus));
+            checkIsAdmin().then(adminStatus => {
+              console.log('Admin check result:', adminStatus);
+              setIsAdmin(adminStatus);
+            });
           }, 0);
         } else {
           setIsAdmin(false);
@@ -44,11 +53,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
+      console.log('Initial session check:', currentSession?.user?.email);
       setSession(currentSession);
       setUser(currentSession?.user ?? null);
       
       if (currentSession?.user) {
         checkIsAdmin().then(adminStatus => {
+          console.log('Initial admin check result:', adminStatus);
           setIsAdmin(adminStatus);
           setIsLoading(false);
         });
@@ -67,6 +78,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!user) return false;
     
     try {
+      console.log('Checking admin status for user:', user.id);
       const { data, error } = await supabase
         .from('user_roles')
         .select('role')
@@ -79,6 +91,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return false;
       }
       
+      console.log('Admin check data:', data);
       return !!data;
     } catch (error) {
       console.error('Error checking admin status:', error);
@@ -89,18 +102,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signIn = async (email: string, password: string) => {
     setIsLoading(true);
     try {
+      console.log('Attempting to sign in with email:', email);
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (error) {
+        console.error('Sign in error:', error);
         throw error;
       }
+
+      console.log('Sign in successful:', data);
 
       // Verify user is an admin
       if (data.user) {
         const isUserAdmin = await checkIsAdmin();
+        console.log('Is user admin?', isUserAdmin);
+        
         if (!isUserAdmin) {
           await supabase.auth.signOut();
           throw new Error('Access denied. You do not have admin privileges.');
@@ -120,6 +139,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signOut = async () => {
     try {
+      console.log('Signing out');
       await supabase.auth.signOut();
       setIsAdmin(false);
       navigate('/admin-login');

@@ -9,8 +9,12 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { isAdmin, isLoading } = useAuth();
+  const { isAdmin, isLoading, user } = useAuth();
   const location = useLocation();
+
+  useEffect(() => {
+    console.log('ProtectedRoute state:', { isAdmin, isLoading, user, path: location.pathname });
+  }, [isAdmin, isLoading, user, location]);
 
   // If still checking authentication status, show loading spinner
   if (isLoading) {
@@ -23,11 +27,13 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
   // If not admin, redirect to login page
   if (!isAdmin) {
+    console.log('Not admin, redirecting to login');
     // Save the location they were trying to go to
     return <Navigate to="/admin-login" state={{ from: location }} replace />;
   }
 
   // If they are an admin, render the child components
+  console.log('User is admin, rendering protected content');
   return <>{children}</>;
 };
 

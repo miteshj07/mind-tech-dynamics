@@ -5,12 +5,17 @@ import { LogOut } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
 const LogoutButton: React.FC = () => {
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
+
+  const handleLogout = () => {
+    console.log('Logout clicked for user:', user?.email);
+    signOut();
+  };
 
   return (
     <Button 
       variant="outline" 
-      onClick={signOut} 
+      onClick={handleLogout} 
       className="flex items-center gap-2"
     >
       <LogOut className="h-4 w-4" />

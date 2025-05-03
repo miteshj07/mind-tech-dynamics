@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/form';
 import { Loader2 } from 'lucide-react';
 import PageHeader from '@/components/layout/PageHeader';
+import { toast } from '@/components/ui/sonner';
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -26,13 +27,19 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 const AdminLogin: React.FC = () => {
-  const { signIn, isLoading, isAdmin } = useAuth();
+  const { signIn, isLoading, isAdmin, user } = useAuth();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Debug logging
+  useEffect(() => {
+    console.log('AdminLogin component state:', { isAdmin, isLoading, user });
+  }, [isAdmin, isLoading, user]);
+  
   // Redirect if already logged in as admin
   useEffect(() => {
     if (isAdmin) {
+      console.log('Already admin, redirecting to admin panel');
       navigate('/admin');
     }
   }, [isAdmin, navigate]);
@@ -46,9 +53,13 @@ const AdminLogin: React.FC = () => {
   });
 
   const onSubmit = async (data: LoginFormValues) => {
+    console.log('Login form submitted:', { email: data.email });
     setIsSubmitting(true);
     try {
       await signIn(data.email, data.password);
+    } catch (error) {
+      console.error('Login submission error:', error);
+      toast.error('Login failed. Please check your credentials.');
     } finally {
       setIsSubmitting(false);
     }
@@ -117,6 +128,10 @@ const AdminLogin: React.FC = () => {
               </Button>
             </form>
           </Form>
+          
+          <div className="mt-4 text-sm text-center text-gray-500">
+            <p>If you're having trouble logging in, check the console for debugging information.</p>
+          </div>
         </div>
       </div>
     </>
