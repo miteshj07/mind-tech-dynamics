@@ -5,14 +5,15 @@ import PageHeader from '@/components/layout/PageHeader';
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
 import { useCms } from '@/cms/context/CmsContext';
+import { useContactForm } from '@/hooks/useContactForm';
 
 const ContactUs = () => {
   const { data, isLoading } = useCms();
   const { contactSection, seoMetadata } = data;
   
-  const { toast } = useToast();
+  const { handleSubmit, isSubmitting, formSuccess, setFormSuccess } = useContactForm();
+
   const [formState, setFormState] = useState({
     name: '',
     company: '',
@@ -20,7 +21,6 @@ const ContactUs = () => {
     phone: '',
     service: '',
     message: '',
-    submitted: false
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -28,17 +28,9 @@ const ContactUs = () => {
     setFormState(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const onSubmitForm = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    setTimeout(() => {
-      setFormState(prev => ({ ...prev, submitted: true }));
-      toast({
-        title: "Message sent!",
-        description: "Thank you! Our team will get back to you shortly.",
-        variant: "default",
-      });
-    }, 1000);
+    handleSubmit(formState);
   };
 
   if (isLoading) {
@@ -116,7 +108,7 @@ const ContactUs = () => {
             
             {/* Contact Form */}
             <div className="bg-white rounded-xl shadow-lg p-8">
-              {formState.submitted ? (
+              {formSuccess ? (
                 <div className="text-center py-12">
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-6">
                     <CheckCircle className="text-green-500" size={32} />
@@ -127,7 +119,10 @@ const ContactUs = () => {
                   </p>
                   <button 
                     className="btn-primary"
-                    onClick={() => setFormState(prev => ({ ...prev, submitted: false, name: '', company: '', email: '', phone: '', service: '', message: '' }))}
+                    onClick={() => {
+                      setFormSuccess(false);
+                      setFormState({ name: '', company: '', email: '', phone: '', service: '', message: '' });
+                    }}
                   >
                     Send Another Message
                   </button>
@@ -135,7 +130,7 @@ const ContactUs = () => {
               ) : (
                 <>
                   <h2 className="text-2xl font-bold mb-6">{contactSection.form.title}</h2>
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={onSubmitForm}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -229,8 +224,12 @@ const ContactUs = () => {
                       />
                     </div>
                     
-                    <button type="submit" className="btn-primary w-full flex items-center justify-center">
-                      Send Message <Send size={18} className="ml-2" />
+                    <button 
+                      type="submit" 
+                      className="btn-primary w-full flex items-center justify-center"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? 'Sending...' : 'Send Message'} {!isSubmitting && <Send size={18} className="ml-2" />}
                     </button>
                   </form>
                 </>
