@@ -1,30 +1,45 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '@/components/layout/PageHeader';
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
 import { useCms } from '@/cms/context/CmsContext';
-import { useContactForm } from '@/hooks/use-contact-form';
-import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Label } from '@/components/ui/label';
 
 const ContactUs = () => {
   const { data, isLoading } = useCms();
   const { contactSection, seoMetadata } = data;
   
-  const {
-    formState,
-    handleChange,
-    submitForm,
-    resetForm,
-    submitted,
-    isLoading: formLoading,
-    webhookUrl,
-    setWebhookUrl
-  } = useContactForm();
+  const { toast } = useToast();
+  const [formState, setFormState] = useState({
+    name: '',
+    company: '',
+    email: '',
+    phone: '',
+    service: '',
+    message: '',
+    submitted: false
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormState(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simulate form submission
+    setTimeout(() => {
+      setFormState(prev => ({ ...prev, submitted: true }));
+      toast({
+        title: "Message sent!",
+        description: "Thank you! Our team will get back to you shortly.",
+        variant: "default",
+      });
+    }, 1000);
+  };
 
   if (isLoading) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
@@ -97,41 +112,11 @@ const ContactUs = () => {
                   referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
               </div>
-              
-              {/* Admin section for Zapier webhook setup */}
-              <div className="mt-8">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant="outline" size="sm" className="text-xs">Admin: Setup Webhook</Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-80">
-                    <div className="space-y-4">
-                      <h4 className="font-medium text-sm">Setup Zapier Webhook</h4>
-                      <p className="text-xs text-gray-500">
-                        Enter your Zapier webhook URL to receive form submissions via email.
-                      </p>
-                      <div className="space-y-2">
-                        <Label htmlFor="webhook" className="text-xs">Zapier Webhook URL</Label>
-                        <Input 
-                          id="webhook"
-                          value={webhookUrl}
-                          onChange={(e) => setWebhookUrl(e.target.value)}
-                          placeholder="https://hooks.zapier.com/hooks/catch/..."
-                          className="text-xs"
-                        />
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        <p>Create a "Catch Hook" trigger in Zapier and paste the URL here.</p>
-                      </div>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              </div>
             </div>
             
             {/* Contact Form */}
             <div className="bg-white rounded-xl shadow-lg p-8">
-              {submitted ? (
+              {formState.submitted ? (
                 <div className="text-center py-12">
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-6">
                     <CheckCircle className="text-green-500" size={32} />
@@ -142,7 +127,7 @@ const ContactUs = () => {
                   </p>
                   <button 
                     className="btn-primary"
-                    onClick={resetForm}
+                    onClick={() => setFormState(prev => ({ ...prev, submitted: false, name: '', company: '', email: '', phone: '', service: '', message: '' }))}
                   >
                     Send Another Message
                   </button>
@@ -150,7 +135,7 @@ const ContactUs = () => {
               ) : (
                 <>
                   <h2 className="text-2xl font-bold mb-6">{contactSection.form.title}</h2>
-                  <form onSubmit={submitForm}>
+                  <form onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -244,12 +229,8 @@ const ContactUs = () => {
                       />
                     </div>
                     
-                    <button 
-                      type="submit" 
-                      className="btn-primary w-full flex items-center justify-center"
-                      disabled={formLoading}
-                    >
-                      {formLoading ? 'Sending...' : 'Send Message'} <Send size={18} className="ml-2" />
+                    <button type="submit" className="btn-primary w-full flex items-center justify-center">
+                      Send Message <Send size={18} className="ml-2" />
                     </button>
                   </form>
                 </>
