@@ -21,6 +21,8 @@ export const useContactForm = () => {
     setIsSubmitting(true);
     
     try {
+      console.log("Submitting form data:", formData);
+      
       // 1. Insert data into Supabase inquiries table
       const { error: dbError } = await supabase
         .from('inquiries')
@@ -33,6 +35,7 @@ export const useContactForm = () => {
           description: "Failed to submit your message. Please try again later.",
           variant: "destructive",
         });
+        setIsSubmitting(false);
         return;
       }
 

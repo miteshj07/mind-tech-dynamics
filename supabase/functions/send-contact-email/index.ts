@@ -18,7 +18,7 @@ serve(async (req) => {
   try {
     const { name, email, phone, company, service, message } = await req.json();
     
-    console.log("Received contact form submission:", { name, email, company, service });
+    console.log("Received contact form submission:", { name, email, phone, company, service, message });
 
     // Send email using Resend
     const { data, error } = await resend.emails.send({
