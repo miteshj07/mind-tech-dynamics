@@ -9,24 +9,21 @@ export const testimonialsSection = {
       author: "Sarah Johnson",
       position: "CTO",
       company: "TechStart Solutions",
-      rating: 5,
-      image: "https://randomuser.me/api/portraits/women/23.jpg"
+      rating: 5
     },
     {
       quote: "The customized Salesforce solution developed by Meet The Mind has streamlined our sales processes and provided unprecedented visibility into our pipeline.",
       author: "Michael Chen",
       position: "VP of Sales",
       company: "Global Innovations Inc.",
-      rating: 5,
-      image: "https://randomuser.me/api/portraits/men/54.jpg"
+      rating: 5
     },
     {
       quote: "Working with Meet The Mind was refreshingly efficient. They understood our unique needs and delivered a tailored solution that increased our team's productivity by 40%.",
       author: "Jessica Martinez",
       position: "Operations Director",
       company: "Elevate Marketing Group",
-      rating: 5,
-      image: "https://randomuser.me/api/portraits/women/45.jpg"
+      rating: 5
     }
   ]
 };

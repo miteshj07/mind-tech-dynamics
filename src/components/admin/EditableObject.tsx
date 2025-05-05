@@ -24,6 +24,11 @@ const EditableObject: React.FC<EditableObjectProps> = ({
     // Skip rendering functions or React components
     if (typeof value === 'function') return null;
     
+    // Skip testimonials array from testimonialSection as it's handled separately
+    if (section === 'testimonialsSection' && key === 'testimonials') {
+      return null;
+    }
+    
     if (Array.isArray(value)) {
       return (
         <div key={currentPath} className="mb-6 border-l-2 border-gray-200 pl-4">

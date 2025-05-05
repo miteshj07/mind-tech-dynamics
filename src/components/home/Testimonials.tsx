@@ -9,7 +9,6 @@ interface Testimonial {
   position: string;
   company: string;
   rating: number;
-  image?: string;
 }
 
 const Testimonials = () => {
