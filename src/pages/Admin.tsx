@@ -38,12 +38,27 @@ const Admin = () => {
     if (!file) return;
     
     try {
-      const imageUrl = await uploadImage(file);
-      if (imageUrl) {
-        setEditing({...editing, value: imageUrl});
+      console.log("Starting image upload process");
+      toast.info("Uploading image...");
+      
+      const result = await uploadImage(file);
+      console.log("Upload result:", result);
+      
+      if (result && result.publicUrl) {
+        // Update the editing state with the new image URL
+        setEditing({...editing, value: result.publicUrl});
         toast.success("Image uploaded successfully");
+        
+        // Immediately save the change to update the content
+        await updateContent(editing.section, editing.path, result.publicUrl);
+        await refreshData();
+        
+        console.log("Image URL saved to content:", result.publicUrl);
+      } else {
+        throw new Error("No public URL returned from upload");
       }
     } catch (err) {
+      console.error("Image upload error:", err);
       toast.error(`Error uploading image: ${err instanceof Error ? err.message : String(err)}`);
     }
   };

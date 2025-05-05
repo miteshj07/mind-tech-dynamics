@@ -36,6 +36,7 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isSaving, setIsSaving] = React.useState(false);
+  const [isUploading, setIsUploading] = React.useState(false);
   const [currentValue, setCurrentValue] = React.useState(editing.value);
   const [validationError, setValidationError] = React.useState<string | null>(null);
 
@@ -54,6 +55,19 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
     const newValue = e.target.value;
     setCurrentValue(newValue);
     setEditing({...editing, value: newValue});
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsUploading(true);
+    try {
+      await handleImageChange(e);
+      // The actual value update is handled in the parent component's handleImageChange function
+    } catch (error) {
+      console.error("Error during file upload:", error);
+      toast.error("Failed to upload image. Please try again.");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const validateJSON = (jsonString: string): boolean => {
@@ -118,14 +132,15 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
               <Button 
                 onClick={handleImageClick} 
                 className="flex items-center gap-2"
+                disabled={isUploading}
               >
                 <Upload size={16} />
-                Upload New Image
+                {isUploading ? 'Uploading...' : 'Upload New Image'}
               </Button>
               <input
                 type="file"
                 ref={fileInputRef}
-                onChange={handleImageChange}
+                onChange={handleFileChange}
                 accept="image/*"
                 className="hidden"
               />
@@ -173,8 +188,8 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
             )}
           </div>
           <div className="flex space-x-2">
-            <Button variant="outline" onClick={handleCancel} disabled={isSaving}>Cancel</Button>
-            <Button onClick={onSave} disabled={isSaving || !!validationError}>
+            <Button variant="outline" onClick={handleCancel} disabled={isSaving || isUploading}>Cancel</Button>
+            <Button onClick={onSave} disabled={isSaving || isUploading || !!validationError}>
               {isSaving ? 'Saving...' : 'Save Changes'}
             </Button>
           </div>
