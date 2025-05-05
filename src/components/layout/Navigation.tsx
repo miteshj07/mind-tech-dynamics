@@ -55,8 +55,11 @@ const Navigation = () => {
             </Link>
           ))}
           <Button className="btn-primary">
+            <Link to="/contact-us" className="group">
             Book a Free Consultation
+            </Link>
           </Button>
+          {/* Book a Free Consultation */}
         </div>
 
         {/* Mobile Menu Button */}
@@ -82,7 +85,10 @@ const Navigation = () => {
               </Link>
             ))}
             <Button className="btn-primary mt-4">
-              Book a Free Consultation
+              {/* Book a Free Consultation */}
+              <Link to="/contact-us" className="group">
+            Book a Free Consultation
+            </Link>
             </Button>
           </div>
         </div>
