@@ -95,14 +95,7 @@ const Testimonials = () => {
                     </p>
                     
                     {/* Author info */}
-                    <div className="flex items-center gap-3 md:gap-4">
-                      {testimonial.image && (
-                        <img 
-                          src={testimonial.image} 
-                          alt={testimonial.author} 
-                          className="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover"
-                        />
-                      )}
+                    <div className="flex items-center">
                       <div>
                         <h4 className="text-base md:text-xl font-bold text-gray-900">{testimonial.author}</h4>
                         <p className="text-sm md:text-base text-gray-600">{testimonial.position}, {testimonial.company}</p>
