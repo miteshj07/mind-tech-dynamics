@@ -86,7 +86,7 @@ const Navigation = () => {
             ))}
             <Button className="btn-primary mt-4">
               {/* Book a Free Consultation */}
-              <Link to="/contact-us" className="group">
+              <Link to="/contact-us" className="group" onClick={() => setIsOpen(false)>
             Book a Free Consultation
             </Link>
             </Button>
