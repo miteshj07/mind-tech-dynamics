@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Upload } from 'lucide-react';
 import { toast } from "@/components/ui/sonner";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 interface EditContentModalProps {
   editing: {
@@ -37,6 +38,7 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isSaving, setIsSaving] = React.useState(false);
   const [currentValue, setCurrentValue] = React.useState(editing.value);
+  const [isUploading, setIsUploading] = React.useState(false);
   const [validationError, setValidationError] = React.useState<string | null>(null);
 
   // Reset validation error when value changes
@@ -54,6 +56,19 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
     const newValue = e.target.value;
     setCurrentValue(newValue);
     setEditing({...editing, value: newValue});
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsUploading(true);
+    try {
+      await handleImageChange(e);
+      // Note: The updating of the value is handled in the parent component
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast.error("Failed to upload image. Please try again.");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   const validateJSON = (jsonString: string): boolean => {
@@ -108,24 +123,40 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
         {editing.type === 'image' ? (
           <div className="space-y-4">
             <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 flex flex-col items-center justify-center">
-              {currentValue && (
-                <img 
-                  src={currentValue} 
-                  alt="Preview" 
-                  className="max-h-[200px] object-contain mb-4" 
-                />
+              {currentValue ? (
+                <div className="relative mb-4">
+                  <img 
+                    src={currentValue} 
+                    alt="Preview" 
+                    className="max-h-[200px] object-contain rounded-md" 
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/placeholder.svg';
+                      console.error("Failed to load image:", currentValue);
+                    }}
+                  />
+                  {isUploading && (
+                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center rounded-md">
+                      <div className="animate-spin w-8 h-8 border-4 border-white border-t-transparent rounded-full"></div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="w-full h-[200px] bg-gray-200 flex items-center justify-center mb-4 rounded-md">
+                  <p className="text-gray-500">No image selected</p>
+                </div>
               )}
               <Button 
                 onClick={handleImageClick} 
                 className="flex items-center gap-2"
+                disabled={isUploading}
               >
                 <Upload size={16} />
-                Upload New Image
+                {isUploading ? 'Uploading...' : 'Upload New Image'}
               </Button>
               <input
                 type="file"
                 ref={fileInputRef}
-                onChange={handleImageChange}
+                onChange={handleFileChange}
                 accept="image/*"
                 className="hidden"
               />
@@ -136,6 +167,7 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
               onChange={handleValueChange}
               className="mb-4"
               placeholder="Or enter image URL directly"
+              disabled={isUploading}
             />
           </div>
         ) : (
@@ -173,8 +205,8 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
             )}
           </div>
           <div className="flex space-x-2">
-            <Button variant="outline" onClick={handleCancel} disabled={isSaving}>Cancel</Button>
-            <Button onClick={onSave} disabled={isSaving || !!validationError}>
+            <Button variant="outline" onClick={handleCancel} disabled={isSaving || isUploading}>Cancel</Button>
+            <Button onClick={onSave} disabled={isSaving || isUploading || !!validationError}>
               {isSaving ? 'Saving...' : 'Save Changes'}
             </Button>
           </div>

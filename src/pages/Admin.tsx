@@ -38,12 +38,19 @@ const Admin = () => {
     if (!file) return;
     
     try {
+      // Upload the image and get the URL
       const imageUrl = await uploadImage(file);
-      if (imageUrl) {
-        setEditing({...editing, value: imageUrl});
-        toast.success("Image uploaded successfully");
-      }
+      console.log("Image uploaded successfully:", imageUrl);
+      
+      // Update the editing state with the new URL
+      setEditing(prev => {
+        if (!prev) return null;
+        return {...prev, value: imageUrl};
+      });
+      
+      toast.success("Image uploaded successfully");
     } catch (err) {
+      console.error("Error uploading image:", err);
       toast.error(`Error uploading image: ${err instanceof Error ? err.message : String(err)}`);
     }
   };
@@ -112,6 +119,7 @@ const Admin = () => {
               <TabsTrigger value="footer">Footer</TabsTrigger>
             </TabsList>
             
+            {/* ContentTab renders each section in the CMS */}
             <ContentTab
               value="home"
               title="Home Page Content"

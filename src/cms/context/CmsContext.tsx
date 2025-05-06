@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from "@/components/ui/sonner";
 import { supabaseService } from '@/services/supabase-service';
@@ -195,7 +196,11 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   // Function to upload images (to Supabase Storage)
   const uploadImage = async (file: File): Promise<string> => {
     try {
+      console.log("Starting image upload for file:", file.name);
       const result = await supabaseService.uploadImage(file);
+      console.log("Image upload successful:", result);
+      
+      // Return the public URL directly as a string
       return result.publicUrl;
     } catch (err) {
       console.error("Error uploading image:", err);
