@@ -38,7 +38,7 @@ const Admin = () => {
     if (!file) return;
     
     try {
-      // Upload the image and get the URL
+      // Upload the image and get the result
       const imageResult = await uploadImage(file);
       console.log("Image uploaded successfully:", imageResult);
       

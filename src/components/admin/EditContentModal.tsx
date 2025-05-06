@@ -52,6 +52,11 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
     setImageLoadError(false);
   }, [currentValue]);
 
+  // Update currentValue when editing.value changes
+  React.useEffect(() => {
+    setCurrentValue(editing.value);
+  }, [editing.value]);
+
   const handleImageClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -74,7 +79,7 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
     
     try {
       await handleImageChange(e);
-      // Note: The updating of the value is handled in the parent component
+      // Note: The updating of the value is handled in the parent component (Admin.tsx)
     } catch (error) {
       console.error("Error uploading image:", error);
       toast.error("Failed to upload image. Please try again.");
