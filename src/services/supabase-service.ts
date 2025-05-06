@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/sonner";
 
@@ -175,51 +174,17 @@ export const supabaseService = {
   
   // Image Management
   async uploadImage(file: File): Promise<UploadImageResult> {
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
+    const filePath = `${fileName}`;
+    
     try {
-      // Create a unique filename
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
-      const filePath = `${fileName}`;
-      
-      console.log(`Uploading file: ${file.name} (${file.size} bytes) to Supabase storage...`);
-      console.log(`Generated unique file path: ${filePath}`);
-      
-      // First check if bucket exists, if not create it
-      const { data: buckets, error: bucketsError } = await supabase
-        .storage
-        .listBuckets();
-        
-      if (bucketsError) {
-        console.error("Error checking buckets:", bucketsError);
-        throw bucketsError;
-      }
-      
-      const cmsBucketExists = buckets?.some(bucket => bucket.name === 'cms');
-      if (!cmsBucketExists) {
-        console.log("CMS bucket doesn't exist, creating it...");
-        const { error: createBucketError } = await supabase
-          .storage
-          .createBucket('cms', {
-            public: true,
-            fileSizeLimit: 10485760 // 10MB
-          });
-          
-        if (createBucketError) {
-          console.error("Error creating cms bucket:", createBucketError);
-          throw createBucketError;
-        }
-        console.log("CMS bucket created successfully");
-      }
-      
+      console.log(`Uploading file: ${file.name} to Supabase storage...`);
       // Upload to storage
-      console.log("Uploading file to storage...");
       const { error: uploadError } = await supabase
         .storage
         .from('cms')
-        .upload(filePath, file, {
-          cacheControl: '3600',
-          upsert: true
-        });
+        .upload(filePath, file);
         
       if (uploadError) {
         console.error("Supabase storage upload error:", uploadError);
@@ -227,20 +192,12 @@ export const supabaseService = {
       }
       
       // Get public URL
-      console.log("Getting public URL for uploaded file...");
-      const { data: urlData } = await supabase
+      const { data: urlData } = supabase
         .storage
         .from('cms')
         .getPublicUrl(filePath);
         
-      if (!urlData || !urlData.publicUrl) {
-        throw new Error("Failed to get public URL for uploaded file");
-      }
-      
-      console.log(`Public URL: ${urlData.publicUrl}`);
-      
       // Record in database
-      console.log("Recording image metadata in database...");
       const { error: dbError } = await supabase
         .from('images')
         .insert({
@@ -252,9 +209,6 @@ export const supabaseService = {
         
       if (dbError) {
         console.error("Error recording image metadata:", dbError);
-        // Continue even if metadata recording fails
-      } else {
-        console.log("Image metadata recorded successfully");
       }
       
       console.log(`Successfully uploaded image. Public URL: ${urlData.publicUrl}`);
