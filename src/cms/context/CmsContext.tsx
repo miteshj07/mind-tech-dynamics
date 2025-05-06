@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from "@/components/ui/sonner";
-import { supabaseService } from '@/services/supabase-service';
+import { supabaseService, UploadImageResult } from '@/services/supabase-service';
 import * as cmsDefaultData from '../data';
 
 // Define the shape of our context
@@ -10,7 +10,7 @@ interface CmsContextType {
   isLoading: boolean;
   error: Error | null;
   updateContent: (section: string, path: string, value: any) => Promise<void>;
-  uploadImage: (file: File) => Promise<string>;
+  uploadImage: (file: File) => Promise<UploadImageResult>;
   refreshData: () => Promise<void>;
 }
 
@@ -194,14 +194,14 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   // Function to upload images (to Supabase Storage)
-  const uploadImage = async (file: File): Promise<string> => {
+  const uploadImage = async (file: File): Promise<UploadImageResult> => {
     try {
       console.log("Starting image upload for file:", file.name);
       const result = await supabaseService.uploadImage(file);
       console.log("Image upload successful:", result);
       
       // Return the public URL directly as a string
-      return result.publicUrl;
+      return result;
     } catch (err) {
       console.error("Error uploading image:", err);
       toast.error("Failed to upload image");
