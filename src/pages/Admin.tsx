@@ -44,16 +44,16 @@ const Admin = () => {
       const result = await uploadImage(file);
       console.log("Upload result:", result);
       
-      if (result && result.publicUrl) {
+      if (result) {
         // Update the editing state with the new image URL
-        setEditing({...editing, value: result.publicUrl});
+        setEditing({...editing, value: result});
         toast.success("Image uploaded successfully");
         
         // Immediately save the change to update the content
-        await updateContent(editing.section, editing.path, result.publicUrl);
+        await updateContent(editing.section, editing.path, result);
         await refreshData();
         
-        console.log("Image URL saved to content:", result.publicUrl);
+        console.log("Image URL saved to content:", result);
       } else {
         throw new Error("No public URL returned from upload");
       }
