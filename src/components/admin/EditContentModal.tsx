@@ -40,10 +40,16 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
   const [currentValue, setCurrentValue] = React.useState(editing.value);
   const [isUploading, setIsUploading] = React.useState(false);
   const [validationError, setValidationError] = React.useState<string | null>(null);
+  const [imageLoadError, setImageLoadError] = React.useState(false);
 
   // Reset validation error when value changes
   React.useEffect(() => {
     setValidationError(null);
+  }, [currentValue]);
+
+  // Reset image load error when value changes
+  React.useEffect(() => {
+    setImageLoadError(false);
   }, [currentValue]);
 
   const handleImageClick = () => {
@@ -59,15 +65,26 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      return;
+    }
+    
     setIsUploading(true);
+    setImageLoadError(false);
+    
     try {
       await handleImageChange(e);
       // Note: The updating of the value is handled in the parent component
     } catch (error) {
       console.error("Error uploading image:", error);
       toast.error("Failed to upload image. Please try again.");
+      setImageLoadError(true);
     } finally {
       setIsUploading(false);
+      // Clear the input so the same file can be selected again if needed
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
     }
   };
 
@@ -129,11 +146,17 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
                     src={currentValue} 
                     alt="Preview" 
                     className="max-h-[200px] object-contain rounded-md" 
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = '/placeholder.svg';
+                    onError={() => {
+                      setImageLoadError(true);
                       console.error("Failed to load image:", currentValue);
                     }}
+                    style={{ display: imageLoadError ? 'none' : 'block' }}
                   />
+                  {imageLoadError && (
+                    <div className="w-full h-[200px] bg-gray-200 flex items-center justify-center rounded-md">
+                      <p className="text-red-500">Failed to load image</p>
+                    </div>
+                  )}
                   {isUploading && (
                     <div className="absolute inset-0 bg-black/30 flex items-center justify-center rounded-md">
                       <div className="animate-spin w-8 h-8 border-4 border-white border-t-transparent rounded-full"></div>

@@ -39,13 +39,13 @@ const Admin = () => {
     
     try {
       // Upload the image and get the URL
-      const imageUrl = await uploadImage(file);
-      console.log("Image uploaded successfully:", imageUrl);
+      const imageResult = await uploadImage(file);
+      console.log("Image uploaded successfully:", imageResult);
       
       // Update the editing state with the new URL
       setEditing(prev => {
         if (!prev) return null;
-        return {...prev, value: imageUrl};
+        return {...prev, value: imageResult.publicUrl};
       });
       
       toast.success("Image uploaded successfully");

@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/sonner";
 
@@ -182,23 +181,7 @@ export const supabaseService = {
     try {
       console.log(`Uploading file: ${file.name} to Supabase storage...`);
       
-      // Check if the 'cms' bucket exists
-      const { data: buckets } = await supabase.storage.listBuckets();
-      const cmsBucketExists = buckets?.some(bucket => bucket.name === 'cms');
-      
-      // Create the bucket if it doesn't exist
-      if (!cmsBucketExists) {
-        console.log("CMS bucket doesn't exist, creating it...");
-        const { error: createBucketError } = await supabase.storage.createBucket('cms', { public: true });
-        
-        if (createBucketError) {
-          console.error("Error creating CMS bucket:", createBucketError);
-          throw createBucketError;
-        }
-        console.log("CMS bucket created successfully");
-      }
-      
-      // Upload to storage
+      // Upload to storage - we no longer try to create the bucket as it's now created via SQL
       const { error: uploadError } = await supabase
         .storage
         .from('cms')
