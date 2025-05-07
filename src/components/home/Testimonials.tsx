@@ -1,8 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { useCms } from '@/cms/context/CmsContext';
-
 interface Testimonial {
   quote: string;
   author: string;
@@ -10,51 +8,49 @@ interface Testimonial {
   company: string;
   rating: number;
 }
-
 const Testimonials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const { data } = useCms();
-  const { testimonialsSection } = data;
-
+  const {
+    data
+  } = useCms();
+  const {
+    testimonialsSection
+  } = data;
   const testimonials: Testimonial[] = testimonialsSection.testimonials;
-
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1));
+      setActiveIndex(prevIndex => prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1);
     }, 8000); // Increased timer to allow reading longer testimonials
 
     return () => {
       clearInterval(interval);
     };
   }, [testimonials.length]);
-
   const goToPrev = () => {
     if (isAnimating) return;
     setIsAnimating(true);
-    setActiveIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+    setActiveIndex(prev => prev === 0 ? testimonials.length - 1 : prev - 1);
     setTimeout(() => setIsAnimating(false), 500);
   };
-
   const goToNext = () => {
     if (isAnimating) return;
     setIsAnimating(true);
-    setActiveIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+    setActiveIndex(prev => prev === testimonials.length - 1 ? 0 : prev + 1);
     setTimeout(() => setIsAnimating(false), 500);
   };
-
   const goToSlide = (index: number) => {
     if (isAnimating || index === activeIndex) return;
     setIsAnimating(true);
     setActiveIndex(index);
     setTimeout(() => setIsAnimating(false), 500);
   };
-
-  return (
-    <section className="py-20 bg-gray-50">
+  return <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="heading-lg mb-4" dangerouslySetInnerHTML={{ __html: testimonialsSection.title }} />
+          <h2 className="heading-lg mb-4" dangerouslySetInnerHTML={{
+          __html: testimonialsSection.title
+        }} />
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             {testimonialsSection.subtitle}
           </p>
@@ -64,28 +60,11 @@ const Testimonials = () => {
           {/* Testimonial Slider with updated min-height to auto */}
           <div className="overflow-hidden">
             <div className="relative">
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={index}
-                  className={`absolute w-full transition-all duration-500 ease-in-out ${
-                    index === activeIndex 
-                      ? 'opacity-100 translate-x-0 relative' 
-                      : index < activeIndex 
-                        ? 'opacity-0 -translate-x-full absolute' 
-                        : 'opacity-0 translate-x-full absolute'
-                  }`}
-                >
+              {testimonials.map((testimonial, index) => <div key={index} className={`absolute w-full transition-all duration-500 ease-in-out ${index === activeIndex ? 'opacity-100 translate-x-0 relative' : index < activeIndex ? 'opacity-0 -translate-x-full absolute' : 'opacity-0 translate-x-full absolute'}`}>
                   <div className="bg-white rounded-xl shadow-lg p-6 md:p-12 mb-12">
                     {/* Rating */}
                     <div className="flex gap-1 mb-4 md:mb-6">
-                      {[...Array(testimonial.rating || 5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          size={20}
-                          className="text-brand md:w-7 md:h-7"
-                          fill="#50B848"
-                        />
-                      ))}
+                      {[...Array(testimonial.rating || 5)].map((_, i) => <Star key={i} size={20} className="text-brand md:w-7 md:h-7" fill="#50B848" />)}
                     </div>
                     
                     {/* Quote with better handling for long content */}
@@ -101,44 +80,20 @@ const Testimonials = () => {
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
           
           {/* Navigation arrows positioned differently to avoid content overlap */}
-          <button 
-            className="absolute top-1/2 -left-5 -translate-y-1/2 bg-white rounded-full p-2 shadow-md hover:bg-gray-50 transition-colors text-gray-700 hidden md:block"
-            onClick={goToPrev}
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft size={24} />
-          </button>
-          <button 
-            className="absolute top-1/2 -right-5 -translate-y-1/2 bg-white rounded-full p-2 shadow-md hover:bg-gray-50 transition-colors text-gray-700 hidden md:block"
-            onClick={goToNext}
-            aria-label="Next testimonial"
-          >
-            <ChevronRight size={24} />
-          </button>
+          
+          
           
           {/* Dots moved below with more margin to avoid overlapping with content */}
           <div className="flex justify-center space-x-2 mt-4">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === activeIndex ? 'bg-brand w-6' : 'bg-gray-300'
-                }`}
-                aria-label={`Go to testimonial ${index + 1}`}
-              />
-            ))}
+            {testimonials.map((_, index) => <button key={index} onClick={() => goToSlide(index)} className={`w-3 h-3 rounded-full transition-all duration-300 ${index === activeIndex ? 'bg-brand w-6' : 'bg-gray-300'}`} aria-label={`Go to testimonial ${index + 1}`} />)}
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default Testimonials;
