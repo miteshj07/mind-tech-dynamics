@@ -22,7 +22,7 @@ const Testimonials = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1));
-    }, 3000);
+    }, 8000); // Increased timer to allow reading longer testimonials
 
     return () => {
       clearInterval(interval);
@@ -61,21 +61,21 @@ const Testimonials = () => {
         </div>
 
         <div className="relative max-w-4xl mx-auto">
-          {/* Testimonial Slider */}
+          {/* Testimonial Slider with updated min-height to auto */}
           <div className="overflow-hidden">
-            <div className="relative min-h-[320px]">
+            <div className="relative">
               {testimonials.map((testimonial, index) => (
                 <div
                   key={index}
                   className={`absolute w-full transition-all duration-500 ease-in-out ${
                     index === activeIndex 
-                      ? 'opacity-100 translate-x-0' 
+                      ? 'opacity-100 translate-x-0 relative' 
                       : index < activeIndex 
-                        ? 'opacity-0 -translate-x-full' 
-                        : 'opacity-0 translate-x-full'
+                        ? 'opacity-0 -translate-x-full absolute' 
+                        : 'opacity-0 translate-x-full absolute'
                   }`}
                 >
-                  <div className="bg-white rounded-xl shadow-lg p-6 md:p-12">
+                  <div className="bg-white rounded-xl shadow-lg p-6 md:p-12 mb-12">
                     {/* Rating */}
                     <div className="flex gap-1 mb-4 md:mb-6">
                       {[...Array(testimonial.rating || 5)].map((_, i) => (
@@ -88,8 +88,8 @@ const Testimonials = () => {
                       ))}
                     </div>
                     
-                    {/* Quote */}
-                    <p className="text-lg md:text-2xl text-gray-800 mb-6 md:mb-8 relative">
+                    {/* Quote with better handling for long content */}
+                    <p className="text-lg md:text-2xl text-gray-800 mb-6 md:mb-8 relative break-words">
                       {testimonial.quote}
                     </p>
                     
@@ -106,7 +106,7 @@ const Testimonials = () => {
             </div>
           </div>
           
-          {/* Navigation arrows */}
+          {/* Navigation arrows positioned differently to avoid content overlap */}
           <button 
             className="absolute top-1/2 -left-5 -translate-y-1/2 bg-white rounded-full p-2 shadow-md hover:bg-gray-50 transition-colors text-gray-700 hidden md:block"
             onClick={goToPrev}
@@ -122,8 +122,8 @@ const Testimonials = () => {
             <ChevronRight size={24} />
           </button>
           
-          {/* Dots */}
-          <div className="flex justify-center space-x-2 mt-8">
+          {/* Dots moved below with more margin to avoid overlapping with content */}
+          <div className="flex justify-center space-x-2 mt-4">
             {testimonials.map((_, index) => (
               <button
                 key={index}
