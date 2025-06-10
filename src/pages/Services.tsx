@@ -153,26 +153,6 @@ const Services = () => {
         "Expert assistance available when you need it",
         "Cost-effective maintenance to protect your investment"
       ]
-    },
-    {
-      title: "Training",
-      description: "We empower your team with comprehensive Salesforce training programs designed to build confidence and maximize adoption across your organization.",
-      icon: <Lightbulb size={48} />,
-      features: [
-        "Role-based training curriculum",
-        "Custom training materials and documentation",
-        "Hands-on workshops and demonstrations",
-        "Administrator and developer training",
-        "Best practice guidance",
-        "Ongoing education and knowledge transfer"
-      ],
-      benefits: [
-        "Accelerated user adoption and proficiency",
-        "Reduced dependency on external support",
-        "Empowered team to leverage full Salesforce capabilities",
-        "Increased return on your Salesforce investment",
-        "Consistent usage across departments"
-      ]
     }
   ];
 
