@@ -16,16 +16,7 @@ const TeamMember = ({
   image,
   bio
 }: TeamMemberProps) => {
-  return <div className="flex flex-col">
-      <div className="relative overflow-hidden rounded-xl mb-4 aspect-square">
-        <img src={image} alt={name} className="object-cover w-full h-full" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center p-6">
-          <p className="text-white text-center">{bio}</p>
-        </div>
-      </div>
-      <h3 className="text-xl font-semibold">{name}</h3>
-      <p className="text-gray-600">{role}</p>
-    </div>;
+  return;
 };
 interface ValueCardProps {
   icon: React.ReactNode;
