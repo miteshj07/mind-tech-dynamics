@@ -1,5 +1,4 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import React, { useLayoutEffect } from 'react';
 
 const SITE_URL = 'https://www.meethemind.com';
 
@@ -12,10 +11,37 @@ interface SeoProps {
   jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
+function upsertMeta(attr: 'name' | 'property', key: string, content?: string) {
+  if (!content) return;
+  let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute(attr, key);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', content);
+}
+
+function upsertLink(rel: string, href?: string) {
+  if (!href) return;
+  let el = document.head.querySelector<HTMLLinkElement>(`link[rel="${rel}"]`);
+  if (!el) {
+    el = document.createElement('link');
+    el.setAttribute('rel', rel);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('href', href);
+}
+
 /**
- * Centralised <head> management: title, meta description, canonical, Open
- * Graph, and any structured data. Works with react-snap so the tags and
- * JSON-LD are baked into the prerendered HTML for search and AI crawlers.
+ * Centralised <head> + structured data management.
+ *
+ * Title, description, canonical and Open Graph tags are written imperatively in
+ * useLayoutEffect (synchronous, before paint) instead of via react-helmet-async
+ * — Helmet's deferred DOM updates race with the react-snap prerenderer and
+ * produced non-deterministic <title> tags. JSON-LD is rendered as a normal body
+ * element so the prerenderer always captures it. JSON-LD is valid anywhere in
+ * the document.
  */
 const Seo = ({ title, description, canonical, jsonLd }: SeoProps) => {
   const href = canonical
@@ -24,22 +50,20 @@ const Seo = ({ title, description, canonical, jsonLd }: SeoProps) => {
       : `${SITE_URL}${canonical}`
     : undefined;
 
+  useLayoutEffect(() => {
+    if (title) document.title = title;
+    upsertMeta('name', 'description', description);
+    upsertLink('canonical', href);
+    upsertMeta('property', 'og:title', title);
+    upsertMeta('property', 'og:description', description);
+    upsertMeta('property', 'og:url', href);
+    upsertMeta('property', 'og:type', 'website');
+  }, [title, description, href]);
+
   const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
   return (
     <>
-      <Helmet>
-        <title>{title}</title>
-        {description && <meta name="description" content={description} />}
-        {href && <link rel="canonical" href={href} />}
-        {href && <meta property="og:url" content={href} />}
-        <meta property="og:title" content={title} />
-        {description && <meta property="og:description" content={description} />}
-        <meta property="og:type" content="website" />
-      </Helmet>
-      {/* JSON-LD is rendered as a normal element (not via Helmet) so the
-          prerenderer captures it deterministically. JSON-LD is valid anywhere
-          in the document, so body placement is fine for search/AI crawlers. */}
       {blocks.map((block, i) => (
         <script
           type="application/ld+json"

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '@/components/layout/Seo';
 import PageHeader from '@/components/layout/PageHeader';
 import ContactCTA from '@/components/layout/ContactCTA';
 import { useCms } from '@/cms/context/CmsContext';
@@ -25,11 +25,8 @@ const Blog = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{seoMetadata.blog.title}</title>
-        <meta name="description" content={seoMetadata.blog.description} />
-      </Helmet>
-      <PageHeader 
+      <Seo title={seoMetadata.blog.title} description={seoMetadata.blog.description} canonical="/blog" />
+      <PageHeader
         title={blogSection.title} 
         subtitle={blogSection.subtitle}
       />

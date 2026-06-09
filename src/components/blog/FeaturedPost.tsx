@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CalendarDays, Clock, ArrowRight } from 'lucide-react';
-import { generateSlug } from '@/utils/blog';
+import { getPostSlug } from '@/utils/blog';
 
 interface BlogPost {
   title: string;
@@ -12,6 +12,7 @@ interface BlogPost {
   author: string;
   image: string;
   tags: string[];
+  slug?: string;
 }
 
 interface FeaturedPostProps {
@@ -19,12 +20,6 @@ interface FeaturedPostProps {
 }
 
 const FeaturedPost = ({ post }: FeaturedPostProps) => {
-  const navigate = useNavigate();
-  
-  const handleClick = () => {
-    navigate(`/blog/${generateSlug(post.title)}`);
-  };
-
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
@@ -61,12 +56,12 @@ const FeaturedPost = ({ post }: FeaturedPostProps) => {
               {post.readTime}
             </div>
           </div>
-          <button 
-            onClick={handleClick}
+          <Link
+            to={`/blog/${getPostSlug(post)}`}
             className="inline-flex items-center text-brand font-medium hover:text-brand-dark transition-colors"
           >
             Read Article <ArrowRight size={16} className="ml-1" />
-          </button>
+          </Link>
         </div>
       </div>
     </div>

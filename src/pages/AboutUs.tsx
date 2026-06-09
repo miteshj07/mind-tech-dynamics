@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '@/components/layout/Seo';
 import PageHeader from '@/components/layout/PageHeader';
 import ContactCTA from '@/components/layout/ContactCTA';
 import { Award, Rocket, CircleCheck, Users, Code } from 'lucide-react';
@@ -66,10 +66,7 @@ const AboutUs = () => {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
   return <>
-      <Helmet>
-        <title>{seoMetadata.aboutUs.title}</title>
-        <meta name="description" content={seoMetadata.aboutUs.description} />
-      </Helmet>
+      <Seo title={seoMetadata.aboutUs.title} description={seoMetadata.aboutUs.description} canonical="/about-us" />
       <PageHeader title="About Meet The Mind" subtitle="We're a team of Salesforce experts dedicated to transforming how businesses leverage technology." />
       
       <section className="py-16">

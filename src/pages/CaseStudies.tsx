@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '@/components/layout/Seo';
 import PageHeader from '@/components/layout/PageHeader';
 import ContactCTA from '@/components/layout/ContactCTA';
 import { ArrowRight } from 'lucide-react';
@@ -172,10 +172,7 @@ const CaseStudies = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{seoMetadata.caseStudies.title}</title>
-        <meta name="description" content={seoMetadata.caseStudies.description} />
-      </Helmet>
+      <Seo title={seoMetadata.caseStudies.title} description={seoMetadata.caseStudies.description} canonical="/case-studies" />
       <PageHeader 
         title={caseStudiesSection.title}
         subtitle={caseStudiesSection.subtitle}
