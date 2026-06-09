@@ -7,6 +7,7 @@ import ServiceOverview from '@/components/home/ServiceOverview';
 import SuccessMetrics from '@/components/home/SuccessMetrics';
 import Testimonials from '@/components/home/Testimonials';
 import CaseStudiesPreview from '@/components/home/CaseStudiesPreview';
+import MarketsWeServe from '@/components/home/MarketsWeServe';
 import ContactCTA from '@/components/layout/ContactCTA';
 import { useCms } from '@/cms/context/CmsContext';
 
@@ -32,7 +33,8 @@ const Index = () => {
       <SuccessMetrics />
       <Testimonials />
       <CaseStudiesPreview />
-      <ContactCTA 
+      <MarketsWeServe />
+      <ContactCTA
         heading={sharedComponents.contactCTA.home.heading}
         subheading={sharedComponents.contactCTA.home.subheading}
         buttonText={sharedComponents.contactCTA.home.buttonText}
