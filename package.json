@@ -27,7 +27,10 @@
       "/case-studies",
       "/blog",
       "/careers",
-      "/contact-us"
+      "/contact-us",
+      "/privacy-policy",
+      "/terms-of-service",
+      "/sitemap"
     ],
     "minifyHtml": {
       "collapseWhitespace": false,
