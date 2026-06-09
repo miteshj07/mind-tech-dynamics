@@ -18,6 +18,8 @@
     "include": [
       "/",
       "/services",
+      "/agentforce",
+      "/b2b-lead-generation",
       "/about-us",
       "/case-studies",
       "/blog",

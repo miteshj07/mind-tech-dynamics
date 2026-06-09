@@ -16,6 +16,8 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 // Pages
 import HomePage from "@/pages/Index";
 import ServicesPage from "@/pages/Services";
+import AgentforcePage from "@/pages/Agentforce";
+import LeadGenerationPage from "@/pages/LeadGeneration";
 import AboutUsPage from "@/pages/AboutUs";
 import CaseStudiesPage from "@/pages/CaseStudies";
 import BlogPage from "@/pages/Blog";
@@ -40,6 +42,8 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
                 <Route path="/services" element={<PageTransition><ServicesPage /></PageTransition>} />
+                <Route path="/agentforce" element={<PageTransition><AgentforcePage /></PageTransition>} />
+                <Route path="/b2b-lead-generation" element={<PageTransition><LeadGenerationPage /></PageTransition>} />
                 <Route path="/about-us" element={<PageTransition><AboutUsPage /></PageTransition>} />
                 <Route path="/case-studies" element={<PageTransition><CaseStudiesPage /></PageTransition>} />
                 <Route path="/blog" element={<PageTransition><BlogPage /></PageTransition>} />

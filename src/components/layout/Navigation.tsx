@@ -25,6 +25,8 @@ const Navigation = () => {
   const menuItems = [
     { name: 'Home', path: '/' },
     { name: 'Services', path: '/services' },
+    { name: 'Agentforce', path: '/agentforce' },
+    { name: 'Lead Generation', path: '/b2b-lead-generation' },
     { name: 'About Us', path: '/about-us' },
     { name: 'Case Studies', path: '/case-studies' },
     { name: 'Blog', path: '/blog' },

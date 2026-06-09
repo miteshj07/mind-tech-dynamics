@@ -2,7 +2,8 @@
 import React from 'react';
 import PageHeader from '@/components/layout/PageHeader';
 import ContactCTA from '@/components/layout/ContactCTA';
-import { Code, Laptop, Link2, FileSearch, ShieldCheck, Lightbulb, CheckCircle } from 'lucide-react';
+import Seo from '@/components/layout/Seo';
+import { Code, Laptop, Link2, FileSearch, ShieldCheck, Lightbulb, CheckCircle, Bot, Workflow } from 'lucide-react';
 
 interface ServiceDetailProps {
   title: string;
@@ -54,6 +55,46 @@ const ServiceDetail = ({ title, description, icon, features, benefits }: Service
 
 const Services = () => {
   const services = [
+    {
+      title: "Agentforce Implementation",
+      description: "We design and deploy Salesforce Agentforce AI agents that qualify leads, resolve service cases 24/7, and automate CRM tasks — grounded in your real Salesforce data.",
+      icon: <Bot size={48} />,
+      features: [
+        "Agent use-case scoping and guardrails",
+        "Data and knowledge grounding in Salesforce",
+        "Topic and action design with Flow and Apex",
+        "Lead qualification and service agents",
+        "Testing, escalation rules and launch",
+        "Ongoing performance optimization"
+      ],
+      benefits: [
+        "24/7 lead qualification and customer service",
+        "Reps freed from repetitive CRM tasks",
+        "Faster response and higher conversion",
+        "AI actions grounded in your live data",
+        "A scalable foundation for CRM automation"
+      ]
+    },
+    {
+      title: "B2B Lead-Generation Automation",
+      description: "We build automated Apollo.io-to-Salesforce lead workflows — enrichment, deduplication, routing, and scoring — so your pipeline fills itself and no lead slips through the cracks.",
+      icon: <Workflow size={48} />,
+      features: [
+        "Apollo.io to Salesforce integration",
+        "Lead enrichment and field mapping",
+        "Deduplication and data hygiene rules",
+        "Logic-based lead routing and assignment",
+        "Lead scoring and follow-up triggers",
+        "Source-to-conversion reporting dashboards"
+      ],
+      benefits: [
+        "A pipeline that fills itself automatically",
+        "Clean, deduplicated, trustworthy CRM data",
+        "Faster, fairer lead follow-up",
+        "Higher conversion from prioritized leads",
+        "Clear visibility into what drives pipeline"
+      ]
+    },
     {
       title: "CRM Implementation",
       description: "We deliver end-to-end Salesforce implementation services tailored to your unique business requirements, ensuring a smooth transition and rapid adoption across your organization.",
@@ -158,8 +199,13 @@ const Services = () => {
 
   return (
     <>
-      <PageHeader 
-        title="Our Salesforce Services" 
+      <Seo
+        title="Salesforce, Agentforce & Lead-Gen Automation Services | Meet The Mind"
+        description="Salesforce implementation, Agentforce AI agents, Apollo.io integration and B2B lead-generation automation. End-to-end CRM services for US, UK, UAE & Australian teams."
+        canonical="/services"
+      />
+      <PageHeader
+        title="Our Salesforce Services"
         subtitle="Explore our full suite of Salesforce services tailored to your unique business needs."
       />
       

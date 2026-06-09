@@ -1,6 +1,7 @@
 import React from 'react';
 import PageHeader from '@/components/layout/PageHeader';
 import ContactCTA from '@/components/layout/ContactCTA';
+import Seo from '@/components/layout/Seo';
 import { Award, Laptop, Users, BookOpen, Rocket } from 'lucide-react';
 import { useCms } from '@/cms/context/CmsContext';
 interface JobPostingProps {
@@ -57,6 +58,11 @@ const Careers = () => {
     return icons[iconName] || <Award size={24} />;
   };
   return <>
+      <Seo
+        title="Careers | Meet The Mind — Salesforce & Agentforce Consultants"
+        description="Join Meet The Mind and build Salesforce & Agentforce solutions for B2B clients across the US, UK, UAE and Australia."
+        canonical="/careers"
+      />
       <PageHeader title={careersSection.title} subtitle={careersSection.subtitle} />
       
       <section className="py-16">
