@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CalendarDays, Clock } from 'lucide-react';
-import { generateSlug } from '@/utils/blog';
+import { getPostSlug } from '@/utils/blog';
 
 interface BlogPost {
   title: string;
@@ -12,6 +12,7 @@ interface BlogPost {
   author: string;
   image: string;
   tags: string[];
+  slug?: string;
 }
 
 interface BlogCardProps {
@@ -19,16 +20,10 @@ interface BlogCardProps {
 }
 
 const BlogCard = ({ post }: BlogCardProps) => {
-  const navigate = useNavigate();
-  
-  const handleClick = () => {
-    navigate(`/blog/${generateSlug(post.title)}`);
-  };
-
   return (
-    <div 
-      className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer"
-      onClick={handleClick}
+    <Link
+      to={`/blog/${getPostSlug(post)}`}
+      className="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl cursor-pointer block"
     >
       <div className="relative h-48">
         <img 
@@ -63,7 +58,7 @@ const BlogCard = ({ post }: BlogCardProps) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

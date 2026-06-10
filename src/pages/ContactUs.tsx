@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import Seo from '@/components/layout/Seo';
 import PageHeader from '@/components/layout/PageHeader';
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -39,10 +39,7 @@ const ContactUs = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{seoMetadata.contactUs.title}</title>
-        <meta name="description" content={seoMetadata.contactUs.description} />
-      </Helmet>
+      <Seo title={seoMetadata.contactUs.title} description={seoMetadata.contactUs.description} canonical="/contact-us" />
       <PageHeader 
         title={contactSection.title}
         subtitle={contactSection.subtitle}

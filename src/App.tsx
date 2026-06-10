@@ -16,6 +16,8 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 // Pages
 import HomePage from "@/pages/Index";
 import ServicesPage from "@/pages/Services";
+import AgentforcePage from "@/pages/Agentforce";
+import LeadGenerationPage from "@/pages/LeadGeneration";
 import AboutUsPage from "@/pages/AboutUs";
 import CaseStudiesPage from "@/pages/CaseStudies";
 import BlogPage from "@/pages/Blog";
@@ -24,6 +26,9 @@ import CareersPage from "@/pages/Careers";
 import ContactUsPage from "@/pages/ContactUs";
 import AdminPage from "@/pages/Admin";
 import AdminLogin from "@/pages/AdminLogin";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
+import TermsOfService from "@/pages/TermsOfService";
+import SitemapPage from "@/pages/SitemapPage";
 import NotFound from "@/pages/NotFound";
 
 // Create a QueryClient instance
@@ -40,12 +45,17 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
                 <Route path="/services" element={<PageTransition><ServicesPage /></PageTransition>} />
+                <Route path="/agentforce" element={<PageTransition><AgentforcePage /></PageTransition>} />
+                <Route path="/b2b-lead-generation" element={<PageTransition><LeadGenerationPage /></PageTransition>} />
                 <Route path="/about-us" element={<PageTransition><AboutUsPage /></PageTransition>} />
                 <Route path="/case-studies" element={<PageTransition><CaseStudiesPage /></PageTransition>} />
                 <Route path="/blog" element={<PageTransition><BlogPage /></PageTransition>} />
                 <Route path="/blog/:slug" element={<PageTransition><BlogPostPage /></PageTransition>} />
                 <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
                 <Route path="/contact-us" element={<PageTransition><ContactUsPage /></PageTransition>} />
+                <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
+                <Route path="/terms-of-service" element={<PageTransition><TermsOfService /></PageTransition>} />
+                <Route path="/sitemap" element={<PageTransition><SitemapPage /></PageTransition>} />
                 <Route path="/admin-login" element={<PageTransition><AdminLogin /></PageTransition>} />
                 <Route 
                   path="/admin" 

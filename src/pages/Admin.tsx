@@ -7,6 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { toast } from '@/components/ui/sonner';
 import EditContentModal from '@/components/admin/EditContentModal';
 import ContentTab from '@/components/admin/ContentTab';
+import BlogManager from '@/components/admin/BlogManager';
 import LogoutButton from '@/components/auth/LogoutButton';
 
 const Admin = () => {
@@ -108,16 +109,21 @@ const Admin = () => {
           </div>
           
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-            <TabsList className="grid grid-cols-8 w-full">
+            <TabsList className="grid grid-cols-9 w-full">
               <TabsTrigger value="home">Home</TabsTrigger>
               <TabsTrigger value="services">Services</TabsTrigger>
               <TabsTrigger value="about">About Us</TabsTrigger>
               <TabsTrigger value="case-studies">Case Studies</TabsTrigger>
-              <TabsTrigger value="blog">Blog</TabsTrigger>
+              <TabsTrigger value="blog-manager">✍️ Blog Manager</TabsTrigger>
+              <TabsTrigger value="blog">Blog Page</TabsTrigger>
               <TabsTrigger value="careers">Careers</TabsTrigger>
               <TabsTrigger value="contact">Contact</TabsTrigger>
               <TabsTrigger value="footer">Footer</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="blog-manager" className="space-y-4">
+              <BlogManager />
+            </TabsContent>
             
             {/* ContentTab renders each section in the CMS */}
             <ContentTab
