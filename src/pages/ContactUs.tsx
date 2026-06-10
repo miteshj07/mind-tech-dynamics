@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Seo from '@/components/layout/Seo';
 import PageHeader from '@/components/layout/PageHeader';
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
@@ -8,11 +8,22 @@ import { Textarea } from '@/components/ui/textarea';
 import { useCms } from '@/cms/context/CmsContext';
 import { useContactForm } from '@/hooks/useContactForm';
 
+const CALENDLY_URL = 'https://calendly.com/mitesh-meethemind/30min';
+
 const ContactUs = () => {
   const { data, isLoading } = useCms();
   const { contactSection, seoMetadata } = data;
-  
+
   const { handleSubmit, isSubmitting, formSuccess, setFormSuccess } = useContactForm();
+
+  useEffect(() => {
+    if (document.querySelector('script[src*="calendly"]')) return;
+    const script = document.createElement('script');
+    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.async = true;
+    document.head.appendChild(script);
+    return () => { script.remove(); };
+  }, []);
 
   const [formState, setFormState] = useState({
     name: '',
@@ -234,14 +245,18 @@ const ContactUs = () => {
             </div>
           </div>
           
-          <div className="bg-gray-50 rounded-xl p-8 mt-16 text-center">
-            <h3 className="text-2xl font-semibold mb-4">{contactSection.consultation.title}</h3>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              {contactSection.consultation.description}
-            </p>
-            <button className="btn-secondary">
-              Book a Time Slot
-            </button>
+          <div className="bg-gray-50 rounded-xl p-8 mt-16">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-semibold mb-4">{contactSection.consultation.title}</h3>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                {contactSection.consultation.description}
+              </p>
+            </div>
+            <div
+              className="calendly-inline-widget rounded-xl overflow-hidden"
+              data-url={`${CALENDLY_URL}?hide_event_type_details=1&hide_gdpr_banner=1`}
+              style={{ minWidth: '320px', height: '700px' }}
+            />
           </div>
         </div>
       </section>
