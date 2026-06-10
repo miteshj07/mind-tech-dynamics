@@ -17,6 +17,9 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import HomePage from "@/pages/Index";
 import ServicesPage from "@/pages/Services";
 import AgentforcePage from "@/pages/Agentforce";
+import AgentforceImplementationPage from "@/pages/AgentforceImplementation";
+import ApolloSalesforceIntegrationPage from "@/pages/ApolloSalesforceIntegration";
+import SalesforceRevOpsPage from "@/pages/SalesforceRevOps";
 import LeadGenerationPage from "@/pages/LeadGeneration";
 import AboutUsPage from "@/pages/AboutUs";
 import CaseStudiesPage from "@/pages/CaseStudies";
@@ -46,6 +49,9 @@ const App = () => {
                 <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
                 <Route path="/services" element={<PageTransition><ServicesPage /></PageTransition>} />
                 <Route path="/agentforce" element={<PageTransition><AgentforcePage /></PageTransition>} />
+                <Route path="/agentforce-implementation" element={<PageTransition><AgentforceImplementationPage /></PageTransition>} />
+                <Route path="/apollo-io-salesforce-integration" element={<PageTransition><ApolloSalesforceIntegrationPage /></PageTransition>} />
+                <Route path="/salesforce-revops" element={<PageTransition><SalesforceRevOpsPage /></PageTransition>} />
                 <Route path="/b2b-lead-generation" element={<PageTransition><LeadGenerationPage /></PageTransition>} />
                 <Route path="/about-us" element={<PageTransition><AboutUsPage /></PageTransition>} />
                 <Route path="/case-studies" element={<PageTransition><CaseStudiesPage /></PageTransition>} />
