@@ -8,6 +8,14 @@
 import { existsSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 
+// On Vercel's build infra, react-snap (puppeteer 1.x) is incompatible with
+// modern Chromium. Skip prerendering there — Google renders JavaScript anyway.
+// The sitemap is hardcoded, so it always includes all routes.
+if (process.env.VERCEL) {
+  console.log('ℹ Vercel environment detected — skipping react-snap (Google renders JS; sitemap is hardcoded).');
+  process.exit(0);
+}
+
 async function findChromiumPath() {
   // 1. Explicit override (set in Vercel env vars or locally)
   if (process.env.PUPPETEER_EXECUTABLE_PATH) {
