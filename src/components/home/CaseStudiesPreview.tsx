@@ -1,20 +1,9 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Clock } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { caseStudiesSection } from '@/cms/data';
-
-interface CaseStudyCardProps {
-  title: string;
-  client: string;
-  description: string;
-  image: string;
-  tags: string[];
-  link: string;
-  index: number;
-  onViewFull: () => void;
-}
+import { useCms } from '@/cms/context/CmsContext';
 
 interface CaseStudy {
   title: string;
@@ -24,12 +13,18 @@ interface CaseStudy {
   solution: string;
   results: string[];
   image: string;
-  logo?: string;
   tags: string[];
-  fullCaseStudyLink?: string;
 }
 
-const CaseStudyCard = ({ title, client, description, image, tags, index, onViewFull }: CaseStudyCardProps) => {
+const CaseStudyCard = ({
+  study,
+  index,
+  onViewFull,
+}: {
+  study: CaseStudy;
+  index: number;
+  onViewFull: () => void;
+}) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,49 +38,38 @@ const CaseStudyCard = ({ title, client, description, image, tags, index, onViewF
       },
       { threshold: 0.1 }
     );
-
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
-
-    return () => {
-      if (cardRef.current) {
-        observer.unobserve(cardRef.current);
-      }
-    };
+    if (cardRef.current) observer.observe(cardRef.current);
+    return () => { if (cardRef.current) observer.unobserve(cardRef.current); };
   }, [index]);
 
   return (
-    <div 
+    <div
       ref={cardRef}
       className="case-study-card group opacity-0 translate-y-10 transition-all duration-700"
     >
       <div className="relative overflow-hidden h-56">
-        <img 
-          src={image} 
-          alt={title} 
+        <img
+          src={study.image}
+          alt={study.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
           <div className="p-6 w-full">
-            <p className="text-brand font-medium text-sm mb-1">{client}</p>
-            <h3 className="text-white text-xl font-bold">{title}</h3>
+            <p className="text-brand font-medium text-sm mb-1">{study.client}</p>
+            <h3 className="text-white text-xl font-bold">{study.title}</h3>
           </div>
         </div>
       </div>
       <div className="p-6">
         <div className="flex flex-wrap gap-2 mb-4">
-          {tags.map((tag, i) => (
-            <span 
-              key={i}
-              className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full"
-            >
+          {study.tags.map((tag, i) => (
+            <span key={i} className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full">
               {tag}
             </span>
           ))}
         </div>
-        <p className="text-gray-600 mb-6">{description}</p>
-        <button 
+        <p className="text-gray-600 mb-6 line-clamp-3">{study.challenge}</p>
+        <button
           onClick={onViewFull}
           className="inline-flex items-center text-brand font-medium hover:text-brand-dark transition-colors"
         >
@@ -96,45 +80,41 @@ const CaseStudyCard = ({ title, client, description, image, tags, index, onViewF
   );
 };
 
-const CaseStudyDialog = ({ study, open, onOpenChange }: { 
+const CaseStudyDialog = ({
+  study,
+  open,
+  onOpenChange,
+}: {
   study: CaseStudy | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) => {
   if (!study) return null;
-  
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">{study.title}</DialogTitle>
-          <DialogDescription className="text-brand font-medium">{study.client} | {study.industry}</DialogDescription>
+          <DialogDescription className="text-brand font-medium">
+            {study.client} | {study.industry}
+          </DialogDescription>
         </DialogHeader>
-        
         <div className="mt-4">
-          <div className="mb-6">
-            <img src={study.image} alt={study.title} className="w-full h-64 object-cover rounded-md" />
-          </div>
-          
+          <img src={study.image} alt={study.title} className="w-full h-64 object-cover rounded-md mb-6" />
           <div className="flex flex-wrap gap-2 mb-6">
             {study.tags.map((tag, i) => (
-              <span key={i} className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full">
-                {tag}
-              </span>
+              <span key={i} className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full">{tag}</span>
             ))}
           </div>
-          
           <div className="space-y-6">
             <section>
               <h3 className="text-xl font-semibold mb-2">Challenge</h3>
               <p className="text-gray-700">{study.challenge}</p>
             </section>
-            
             <section>
               <h3 className="text-xl font-semibold mb-2">Solution</h3>
               <p className="text-gray-700">{study.solution}</p>
             </section>
-            
             <section>
               <h3 className="text-xl font-semibold mb-2">Results</h3>
               <ul className="list-disc pl-5 space-y-2">
@@ -151,6 +131,8 @@ const CaseStudyDialog = ({ study, open, onOpenChange }: {
 };
 
 const CaseStudiesPreview = () => {
+  const { data } = useCms();
+  const { caseStudiesSection } = data;
   const sectionRef = useRef<HTMLDivElement>(null);
   const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -164,97 +146,51 @@ const CaseStudiesPreview = () => {
       },
       { threshold: 0.1 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => { if (sectionRef.current) observer.unobserve(sectionRef.current); };
   }, []);
 
-  // Find the matching full case study from the data
-  const findFullCaseStudy = (title: string): CaseStudy | null => {
-    return caseStudiesSection.studies.find(study => study.title === title) || null;
-  };
+  const studies: CaseStudy[] = caseStudiesSection?.studies ?? [];
 
-  const handleViewFull = (title: string) => {
-    const fullStudy = findFullCaseStudy(title);
-    if (fullStudy) {
-      setSelectedStudy(fullStudy);
-      setDialogOpen(true);
-    }
-  };
-
-  const caseStudies = [
-    {
-      title: "40% Increase in Sales Efficiency",
-      client: "Global Retail Corporation",
-      description: "How a major retail chain optimized their sales process and improved team collaboration with a custom Salesforce solution.",
-      image: "https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Retail", "Sales Cloud", "Integration"],
-      link: "/case-studies/global-retail"
-    },
-    {
-      title: "Streamlined Customer Service Operations",
-      client: "TechFirst Solutions",
-      description: "A technology company reduced response times by 65% and increased customer satisfaction through Service Cloud implementation.",
-      image: "https://images.unsplash.com/photo-1560264280-88b68371db39?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Technology", "Service Cloud", "Automation"],
-      link: "/case-studies/techfirst"
-    },
-    {
-      title: "Data Migration & CRM Transformation",
-      client: "HealthPlus Medical Group",
-      description: "Successful migration from legacy systems to Salesforce Health Cloud, improving patient management and operational efficiency.",
-      image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Healthcare", "Health Cloud", "Migration"],
-      link: "/case-studies/healthplus"
-    }
-  ];
+  // Hide the section entirely when there are no studies
+  if (studies.length === 0) return null;
 
   return (
     <section className="py-20">
       <div className="container mx-auto px-4">
-        <div 
+        <div
           ref={sectionRef}
           className="text-center mb-16 opacity-0 translate-y-8 transition-all duration-700 ease-out"
         >
-          <h2 className="heading-lg mb-4">Featured <span className="text-brand">Case Studies</span></h2>
+          <h2 className="heading-lg mb-4">
+            Featured <span className="text-brand">Case Studies</span>
+          </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover how we've helped organizations transform their operations with tailored Salesforce solutions.
+            {caseStudiesSection?.subtitle}
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {caseStudies.map((study, index) => (
+          {studies.map((study, index) => (
             <CaseStudyCard
               key={index}
-              title={study.title}
-              client={study.client}
-              description={study.description}
-              image={study.image}
-              tags={study.tags}
-              link={study.link}
+              study={study}
               index={index}
-              onViewFull={() => handleViewFull(study.title)}
+              onViewFull={() => {
+                setSelectedStudy(study);
+                setDialogOpen(true);
+              }}
             />
           ))}
         </div>
-        
+
         <div className="text-center mt-12">
-          <Link 
-            to="/case-studies"
-            className="btn-secondary inline-flex items-center"
-          >
+          <Link to="/case-studies" className="btn-secondary inline-flex items-center">
             View All Case Studies <ArrowRight size={20} className="ml-2" />
           </Link>
         </div>
 
-        <CaseStudyDialog 
+        <CaseStudyDialog
           study={selectedStudy}
           open={dialogOpen}
           onOpenChange={setDialogOpen}
