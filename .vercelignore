@@ -1,0 +1,8 @@
+# Don't upload the local build output — Vercel re-builds on its servers
+dist/
+
+# Local scratch / audit files
+.firecrawl/
+
+# Local dev
+*.local
