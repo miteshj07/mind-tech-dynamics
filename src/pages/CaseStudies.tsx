@@ -144,10 +144,51 @@ const CaseStudyDialog = ({ study, open, onOpenChange }: {
 const CaseStudies = () => {
   const { data, isLoading } = useCms();
   const { caseStudiesSection, seoMetadata, sharedComponents } = data;
-  
+
   const [filter, setFilter] = useState<string>("all");
   const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  // Build JSON-LD dynamically from live CMS data so it stays in sync
+  const caseStudiesSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Salesforce & Agentforce Case Studies — Meet The Mind',
+    description: caseStudiesSection.subtitle,
+    url: 'https://www.meethemind.com/case-studies',
+    itemListElement: caseStudiesSection.studies.map((study: CaseStudy, index: number) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Article',
+        headline: study.title,
+        description: study.challenge,
+        articleBody: `Challenge: ${study.challenge} Solution: ${study.solution} Results: ${study.results.join(' ')}`,
+        author: {
+          '@type': 'Organization',
+          name: 'Meet The Mind Technologies',
+          url: 'https://www.meethemind.com/',
+        },
+        about: {
+          '@type': 'Organization',
+          name: study.client,
+          industry: study.industry,
+        },
+        keywords: study.tags.join(', '),
+        publisher: {
+          '@type': 'Organization',
+          name: 'Meet The Mind Technologies',
+          url: 'https://www.meethemind.com/',
+          logo: {
+            '@type': 'ImageObject',
+            url: 'https://www.meethemind.com/og-image.png',
+          },
+        },
+        url: 'https://www.meethemind.com/case-studies',
+        image: study.image,
+      },
+    })),
+  };
   
   // Extract unique industries from case studies for filter options
   const industries = Array.from(new Set(caseStudiesSection.studies.map(study => study.industry)));
@@ -172,7 +213,7 @@ const CaseStudies = () => {
 
   return (
     <>
-      <Seo title={seoMetadata.caseStudies.title} description={seoMetadata.caseStudies.description} canonical="/case-studies" />
+      <Seo title={seoMetadata.caseStudies.title} description={seoMetadata.caseStudies.description} canonical="/case-studies" jsonLd={caseStudiesSchema} />
       <PageHeader 
         title={caseStudiesSection.title}
         subtitle={caseStudiesSection.subtitle}
