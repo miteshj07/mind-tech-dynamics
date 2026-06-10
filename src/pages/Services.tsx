@@ -53,6 +53,23 @@ const ServiceDetail = ({ title, description, icon, features, benefits }: Service
   );
 };
 
+const serviceListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Salesforce & Agentforce Services — Meet The Mind',
+  description: 'End-to-end Salesforce consulting services including Agentforce AI agent implementation, Apollo.io lead-generation automation, CRM implementation, customisation and integration.',
+  provider: { '@type': 'Organization', name: 'Meet The Mind Technologies', url: 'https://www.meethemind.com/' },
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Agentforce Implementation', url: 'https://www.meethemind.com/agentforce' },
+    { '@type': 'ListItem', position: 2, name: 'B2B Lead-Generation Automation', url: 'https://www.meethemind.com/b2b-lead-generation' },
+    { '@type': 'ListItem', position: 3, name: 'CRM Implementation', url: 'https://www.meethemind.com/services' },
+    { '@type': 'ListItem', position: 4, name: 'Salesforce Customisation', url: 'https://www.meethemind.com/services' },
+    { '@type': 'ListItem', position: 5, name: 'Salesforce Integration', url: 'https://www.meethemind.com/services' },
+    { '@type': 'ListItem', position: 6, name: 'Data Migration', url: 'https://www.meethemind.com/services' },
+    { '@type': 'ListItem', position: 7, name: 'Salesforce Support & Maintenance', url: 'https://www.meethemind.com/services' },
+  ],
+};
+
 const Services = () => {
   const services = [
     {
@@ -203,6 +220,7 @@ const Services = () => {
         title="Salesforce, Agentforce & Lead-Gen Automation Services | Meet The Mind"
         description="Salesforce implementation, Agentforce AI agents, Apollo.io integration and B2B lead-generation automation. End-to-end CRM services for US, UK, UAE & Australian teams."
         canonical="/services"
+        jsonLd={serviceListSchema}
       />
       <PageHeader
         title="Our Salesforce Services"

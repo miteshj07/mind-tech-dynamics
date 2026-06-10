@@ -2,31 +2,31 @@
 // SEO Metadata for all pages
 export const seoMetadata = {
   home: {
-    title: "Meet The Mind - Salesforce Solutions & Implementation Experts",
-    description: "Transform your business with expert Salesforce implementation, customization and integration services. Boost efficiency and growth with our tailored CRM solutions."
+    title: "Salesforce & Agentforce Consulting Partner | B2B Lead Automation — Meet The Mind",
+    description: "Meet The Mind is a Salesforce & Agentforce consulting partner specialising in B2B lead-generation automation and Apollo.io–Salesforce integration for teams in the US, UK, UAE & Australia."
   },
   services: {
-    title: "Salesforce Services - Implementation, Customization & Support | Meet The Mind",
-    description: "Comprehensive Salesforce services including implementation, customization, integration, migration, training and ongoing support. Tailored solutions for businesses of all sizes."
+    title: "Salesforce, Agentforce & Lead-Gen Automation Services | Meet The Mind",
+    description: "End-to-end Salesforce services: Agentforce AI agent implementation, Apollo.io lead-generation automation, CRM implementation, customisation and integration for B2B teams."
   },
   aboutUs: {
-    title: "About Meet The Mind | Salesforce Experts & CRM Consultants",
-    description: "Learn about our team of Salesforce experts and our mission to transform how businesses leverage technology through innovative CRM solutions and expert guidance."
+    title: "About Meet The Mind | 5x Salesforce Certified Consultant & Agentforce Partner",
+    description: "Meet Mitesh Jain — 5x Salesforce Certified, Agentblazer Innovator 2025, and founder of Meet The Mind Technologies. Salesforce & Agentforce consulting for US, UK, UAE & Australian B2B teams."
   },
   caseStudies: {
-    title: "Salesforce Success Stories & Case Studies | Meet The Mind",
-    description: "Discover how our Salesforce solutions helped businesses across industries improve efficiency, boost sales, enhance customer service and drive measurable growth."
+    title: "Salesforce & Agentforce Client Results | Meet The Mind Case Studies",
+    description: "Real results from Meet The Mind's Salesforce implementations, Agentforce deployments and B2B lead-generation automation projects across the US, UK, UAE and Australia."
   },
   blog: {
-    title: "Salesforce Tips, Trends & Insights | Meet The Mind Blog",
-    description: "Expert insights, tips and trends on Salesforce implementation, CRM strategy, digital transformation and maximizing your technology investment."
+    title: "Salesforce, Agentforce & B2B Lead-Gen Insights | Meet The Mind Blog",
+    description: "Expert articles on Salesforce implementation, Agentforce AI agents, Apollo.io integration and B2B lead-generation automation — by Meet The Mind Technologies."
   },
   careers: {
-    title: "Careers at Meet The Mind | Join Our Salesforce Expert Team",
-    description: "Join our team of Salesforce experts and grow your career in a collaborative, innovative environment with competitive benefits and continuous learning opportunities."
+    title: "Careers at Meet The Mind | Salesforce & Agentforce Consulting Roles",
+    description: "Join Meet The Mind Technologies — a specialist Salesforce and Agentforce consulting firm. Explore remote opportunities in CRM, AI agent development and B2B automation."
   },
   contactUs: {
-    title: "Contact Meet The Mind | Salesforce Consulting & Implementation",
-    description: "Get in touch with our Salesforce experts to discuss your CRM needs, request a consultation, or learn more about our services and solutions."
+    title: "Contact Meet The Mind | Salesforce & Agentforce Consulting",
+    description: "Book a free discovery call with Meet The Mind's Salesforce and Agentforce experts. We serve B2B teams across the US, UK, UAE and Australia."
   }
 };
