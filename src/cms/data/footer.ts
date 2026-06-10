@@ -7,7 +7,8 @@ export const footerSection = {
   },
   socialLinks: {
     linkedin: "https://www.linkedin.com/company/meetthemind",
-    twitter: "https://x.com/MeetTheMind"
+    twitter: "https://x.com/MeetTheMind",
+    trailhead: "https://www.salesforce.com/trailblazer/mjain31"
   },
   quickLinks: [
     { title: "Home", url: "/" },

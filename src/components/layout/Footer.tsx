@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Twitter, Award } from 'lucide-react';
 import { useCms } from '@/cms/context/CmsContext';
 
 const Footer = () => {
@@ -38,6 +38,9 @@ const Footer = () => {
               </a>
               <a href={footerSection.socialLinks.twitter} target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="hover:text-brand">
                 <Twitter size={20} />
+              </a>
+              <a href={footerSection.socialLinks.trailhead} target="_blank" rel="noopener noreferrer" aria-label="Salesforce Trailblazer Profile" className="hover:text-brand" title="Salesforce Trailblazer">
+                <Award size={20} />
               </a>
             </div>
           </div>
