@@ -6,6 +6,7 @@ import WhyChooseUs from '@/components/home/WhyChooseUs';
 import ServiceOverview from '@/components/home/ServiceOverview';
 import SuccessMetrics from '@/components/home/SuccessMetrics';
 import FounderBio from '@/components/home/FounderBio';
+import TechStackStrip from '@/components/home/TechStackStrip';
 import Testimonials from '@/components/home/Testimonials';
 import CaseStudiesPreview from '@/components/home/CaseStudiesPreview';
 import MarketsWeServe from '@/components/home/MarketsWeServe';
@@ -30,6 +31,7 @@ const Index = () => {
     <div className="min-h-screen">
       <Seo title={seoMetadata.home.title} description={seoMetadata.home.description} canonical="/" />
       <HeroSection />
+      <TechStackStrip />
       <WhyChooseUs />
       <ServiceOverview />
       <SuccessMetrics />
