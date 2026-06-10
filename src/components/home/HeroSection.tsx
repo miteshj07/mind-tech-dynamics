@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, ShieldCheck, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { useCms } from '@/cms/context/CmsContext';
@@ -131,7 +131,7 @@ const HeroSection = () => {
               {heroSection.subheadline}
             </motion.p>
             
-            <motion.div 
+            <motion.div
               className="flex flex-col sm:flex-row gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -139,7 +139,7 @@ const HeroSection = () => {
             >
               <Button asChild className="btn-primary text-lg group" size="lg">
                 <Link to="/contact-us" className="group">
-                  {heroSection.ctaPrimary}{" "} 
+                  {heroSection.ctaPrimary}{" "}
                   <ArrowRight className="ml-2 transition-transform duration-300 group-hover:translate-x-1" size={20} />
                 </Link>
               </Button>
@@ -148,6 +148,33 @@ const HeroSection = () => {
                   {heroSection.ctaSecondary}
                 </Link>
               </Button>
+            </motion.div>
+
+            {/* Trust badge strip */}
+            <motion.div
+              className="flex flex-wrap items-center gap-3 mt-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.1, duration: 0.8 }}
+            >
+              <a
+                href="https://www.salesforce.com/trailblazer/mjain31"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00A1E0]/40 bg-[#00A1E0]/5 text-[#00A1E0] text-sm font-semibold hover:bg-[#00A1E0]/10 transition-colors"
+              >
+                <ShieldCheck size={16} />
+                Salesforce Consulting Partner
+              </a>
+              <a
+                href="https://www.salesforce.com/trailblazer/mjain31"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand/30 bg-brand/5 text-brand text-sm font-semibold hover:bg-brand/10 transition-colors"
+              >
+                <Award size={16} />
+                Certified Trailblazer
+              </a>
             </motion.div>
           </motion.div>
 
