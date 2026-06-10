@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 const CERTIFICATIONS = [
   'Salesforce Administrator',
   'Platform Developer I',
-  'Platform Developer II',
+  'Platform App Builder',
   'Sales Cloud Consultant',
   'Einstein Analytics',
 ];
