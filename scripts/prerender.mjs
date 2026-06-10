@@ -16,12 +16,15 @@ async function findChromiumPath() {
 
   // 2. Try puppeteer's installed Chrome (works on Vercel Linux after npm install)
   try {
-    const { executablePath } = await import('puppeteer');
+    const pup = await import('puppeteer');
+    const executablePath = pup.executablePath ?? pup.default?.executablePath;
     if (typeof executablePath === 'function') {
       const p = executablePath();
+      console.log(`[prerender] puppeteer.executablePath() → ${p}`);
       if (p && existsSync(p)) return p;
+      console.warn(`[prerender] puppeteer path not found on disk: ${p}`);
     }
-  } catch (_) { /* puppeteer not installed or no path */ }
+  } catch (e) { console.warn('[prerender] puppeteer import failed:', e.message); }
 
   // 3. Common Linux paths (Vercel / CI environments)
   for (const p of [
