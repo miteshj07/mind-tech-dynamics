@@ -2,103 +2,55 @@
 // Case Studies
 export const caseStudiesSection = {
   title: "Case Studies",
-  subtitle: "Discover how Meet The Mind helped businesses unlock new growth with tailored Salesforce solutions.",
+  subtitle: "Real Salesforce integration and automation projects delivered by Meet The Mind — connecting billing, finance, and subscription systems directly into the CRM.",
   studies: [
     {
-      title: "40% Increase in Sales Efficiency",
-      client: "Global Retail Corporation",
-      industry: "Retail",
-      challenge: "Managing a complex sales pipeline across 200+ locations with inconsistent processes and limited visibility into sales activities.",
-      solution: "Implemented Sales Cloud with custom territory management and mobile-optimized dashboards for real-time insights.",
-      results: [
-        "40% increase in sales rep efficiency",
-        "25% improvement in lead conversion rates",
-        "Reduced sales cycle by 15 days on average",
-        "Real-time visibility across all territories"
-      ],
-      image: "https://images.unsplash.com/photo-1543286386-713bdd548da4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Retail", "Sales Cloud", "Territory Management", "Analytics"],
-      fullCaseStudyLink: "/case-studies/retail-sales-efficiency"
-    },
-    {
-      title: "Streamlined Customer Service Operations",
-      client: "TechFirst Solutions",
-      industry: "Technology",
-      challenge: "Fragmented customer support processes across multiple channels leading to delayed response times and customer frustration.",
-      solution: "Deployed Service Cloud with omnichannel routing, knowledge base integration, and automated case management workflows.",
-      results: [
-        "65% reduction in average response time",
-        "89% improvement in first-call resolution",
-        "32% decrease in operational costs",
-        "Customer satisfaction score increased from 7.2 to 9.1"
-      ],
-      image: "https://images.unsplash.com/photo-1560264280-88b68371db39?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Technology", "Service Cloud", "Automation", "Knowledge Base"],
-      fullCaseStudyLink: "/case-studies/tech-customer-service"
-    },
-    {
-      title: "Data Migration & CRM Transformation",
-      client: "HealthPlus Medical Group",
-      industry: "Healthcare",
-      challenge: "Legacy systems with siloed patient data preventing coordinated care and efficient administrative operations.",
-      solution: "Comprehensive migration to Health Cloud with custom patient journey mapping and integration with EHR systems.",
-      results: [
-        "Zero data loss during migration of 1M+ patient records",
-        "45% improvement in appointment scheduling efficiency",
-        "Reduced administrative workload by 30%",
-        "Enhanced HIPAA compliance and data security"
-      ],
-      image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Healthcare", "Health Cloud", "Migration", "Integration"],
-      fullCaseStudyLink: "/case-studies/healthcare-data-migration"
-    },
-    {
-      title: "Marketing Automation Revolution",
-      client: "Horizon Financial Services",
+      title: "Automated Subscription Billing with Chargent",
+      client: "Adam Mesh Trading Group",
       industry: "Financial Services",
-      challenge: "Manual marketing processes with limited personalization capabilities and inability to track campaign performance effectively.",
-      solution: "Implemented Marketing Cloud with journey builder, predictive intelligence, and integrated analytics dashboards.",
+      challenge: "Adam Mesh Trading Group runs tiered subscriptions — monthly, quarterly, half-yearly, and annual — for its trading signals, investor alerts, and stock-coaching programs. Payments were handled in a separate system disconnected from Salesforce, so renewals were processed manually, failed or expired-card payments went unrecovered, and sales reps had no way to see a subscriber's payment status or billing history inside the CRM.",
+      solution: "We implemented Chargent payment processing natively inside Salesforce Sales Cloud, using Authorize.Net as the gateway. This created a single, end-to-end subscription billing engine: automated recurring payments across every tier, custom payment schedules defined in Salesforce, and automatic dunning sequences with retry logic to recover failed payments. Card data was secured with Chargent's PCI-compliant tokenization, and billing communications were coordinated through Pardot. Scheduled flows replaced the manual renewal process entirely.",
       results: [
-        "3x increase in qualified leads generated",
-        "42% improvement in campaign ROI",
-        "Personalized communication across 12 customer segments",
-        "Real-time campaign performance tracking"
+        "Recurring billing fully automated across all subscription tiers",
+        "Failed and expired-card payments recovered automatically through dunning sequences",
+        "Sales reps can view payment status and subscription history directly on the Account and Opportunity",
+        "Card data secured with PCI-compliant tokenization inside Salesforce",
+        "Manual renewal admin replaced by scheduled flows"
+      ],
+      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      tags: ["Financial Services", "Chargent", "Subscription Billing", "Sales Cloud"]
+    },
+    {
+      title: "Recurly–Salesforce Subscription Integration",
+      client: "Stock News Network LLC",
+      industry: "Financial Services",
+      challenge: "Stock News Network offered multiple subscription tiers for trading signals, market analysis, and premium alerts. Customers and leads lived in Salesforce, but billing ran on a legacy platform with no automation: there was no recurring billing tied to the CRM, poor tracking of lifecycle events like signup, upgrade, and churn, and payment statuses and invoices that never synced back into Salesforce for finance or sales to see.",
+      solution: "We integrated Recurly as the subscription billing engine and connected it directly to Salesforce through the Recurly API and custom Apex classes. New subscriptions initiated in Salesforce created the matching records in Recurly; real-time payment status, renewal dates, and invoice links synced back into custom Subscription and Invoice objects; and upgrades, downgrades, and cancellations reflected instantly across both platforms. Recurly's native dunning and renewal emails were mapped to Salesforce campaigns for centralized analytics, with the integration secured by OAuth2 and token-refreshing API keys.",
+      results: [
+        "New subscriptions activate near-instantly instead of manual setup",
+        "Real-time payment status, invoices, and renewal dates surfaced inside Salesforce",
+        "Upgrades, downgrades, and cancellations sync automatically across both systems",
+        "A subscription lifecycle dashboard gives account managers a 360° client view",
+        "Failing subscribers flagged early so support can reach out proactively"
       ],
       image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Financial Services", "Marketing Cloud", "Personalization", "Analytics"],
-      fullCaseStudyLink: "/case-studies/financial-marketing-automation"
+      tags: ["Financial Services", "Recurly", "Integration", "Apex"]
     },
     {
-      title: "Field Service Transformation",
-      client: "EnergySmart Utilities",
-      industry: "Energy & Utilities",
-      challenge: "Inefficient field service operations with paper-based processes and limited visibility into technician activities.",
-      solution: "Deployed Field Service Lightning with mobile optimization, real-time scheduling, and inventory management.",
+      title: "Two-Way QuickBooks–Salesforce Integration",
+      client: "Lakewood University",
+      industry: "Education",
+      challenge: "Lakewood University, a fully online accredited institution, managed student onboarding, academic progress, and communication in Salesforce Education Cloud — while tuition payments, scholarships, and refunds were handled separately in QuickBooks Online. The disconnect meant financial data was re-keyed by hand between systems, tuition invoices were issued late, refund reconciliation took days, and finance had no real-time visibility into student lifecycle events like enrollment or dropout.",
+      solution: "We built a bi-directional integration between Salesforce and QuickBooks Online using Salesforce Apex. From Salesforce to QuickBooks, student enrollments generated tuition invoices automatically, contacts synced to customer records, and scholarship grants applied as invoice discounts. From QuickBooks back to Salesforce, payment status, refunds, and outstanding balances flowed onto each student profile — triggering automated reminder journeys for overdue accounts. Scheduled sync jobs every 15 minutes, paired with error-logging middleware to catch failed syncs, kept both systems aligned without overloading them.",
       results: [
-        "28% increase in jobs completed per day",
-        "60% reduction in paperwork and administrative tasks",
-        "First-time fix rate improved from 65% to 92%",
-        "Real-time visibility into field operations"
+        "Tuition invoices issued automatically on enrollment instead of days later",
+        "Payment status, refunds, and balances sync back to each student record",
+        "Refund reconciliation automated between finance and student services",
+        "Outstanding balances trigger automated reminder journeys",
+        "A unified student-and-financial view across Education Cloud and QuickBooks"
       ],
-      image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Energy", "Field Service", "Mobile", "Scheduling"],
-      fullCaseStudyLink: "/case-studies/utilities-field-service"
-    },
-    {
-      title: "Non-Profit Donor Management",
-      client: "Global Hope Foundation",
-      industry: "Non-Profit",
-      challenge: "Fragmented donor data and inability to track relationship history, leading to missed fundraising opportunities.",
-      solution: "Implemented Nonprofit Cloud with donor journey mapping, engagement tracking, and integrated fundraising analytics.",
-      results: [
-        "35% increase in donor retention",
-        "22% growth in average donation size",
-        "Streamlined grant management process",
-        "Comprehensive donor relationship tracking"
-      ],
-      image: "https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
-      tags: ["Non-Profit", "Donor Management", "Fundraising", "Analytics"],
-      fullCaseStudyLink: "/case-studies/nonprofit-donor-management"
+      image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      tags: ["Education", "QuickBooks", "Integration", "Education Cloud"]
     }
   ]
 };
