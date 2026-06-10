@@ -1,65 +1,115 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Linkedin } from 'lucide-react';
+import {
+  SiSalesforce,
+  SiZapier,
+  SiSlack,
+  SiMailchimp,
+  SiIntuit,
+} from 'react-icons/si';
 
 interface Partner {
   name: string;
-  /** simple-icons CDN slug — undefined means use text fallback */
-  iconSlug?: string;
-  /** colour shown on hover */
   hoverColor: string;
+  render: (hovered: boolean) => React.ReactNode;
 }
 
+const iconStyle = (hovered: boolean, color: string) => ({
+  color: hovered ? color : '#9CA3AF',
+  transition: 'color 0.3s ease',
+  fontSize: '2rem',
+});
+
 const PARTNERS: Partner[] = [
-  { name: 'Salesforce',              iconSlug: 'salesforce',        hoverColor: '#00A1E0' },
-  { name: 'Agentforce',              iconSlug: undefined,           hoverColor: '#00A1E0' },
-  { name: 'Apollo.io',               iconSlug: undefined,           hoverColor: '#2563EB' },
-  { name: 'LinkedIn Sales Nav',      iconSlug: 'linkedin',          hoverColor: '#0A66C2' },
-  { name: 'Zapier',                  iconSlug: 'zapier',            hoverColor: '#FF4A00' },
-  { name: 'Slack',                   iconSlug: 'slack',             hoverColor: '#4A154B' },
-  { name: 'Tableau',                 iconSlug: 'tableau',           hoverColor: '#E8762D' },
-  { name: 'QuickBooks',              iconSlug: 'intuit',            hoverColor: '#2CA01C' },
-  { name: 'Mailchimp',               iconSlug: 'mailchimp',         hoverColor: '#FFE01B' },
+  {
+    name: 'Salesforce',
+    hoverColor: '#00A1E0',
+    render: (h) => <SiSalesforce style={iconStyle(h, '#00A1E0')} />,
+  },
+  {
+    name: 'Agentforce',
+    hoverColor: '#00A1E0',
+    render: (h) => (
+      <span
+        className="text-sm font-black tracking-tight leading-none"
+        style={{ color: h ? '#00A1E0' : '#9CA3AF', transition: 'color 0.3s ease' }}
+      >
+        Agent<br />force
+      </span>
+    ),
+  },
+  {
+    name: 'Apollo.io',
+    hoverColor: '#2563EB',
+    render: (h) => (
+      <span
+        className="text-sm font-black tracking-tight"
+        style={{ color: h ? '#2563EB' : '#9CA3AF', transition: 'color 0.3s ease' }}
+      >
+        Apollo.io
+      </span>
+    ),
+  },
+  {
+    name: 'LinkedIn Sales Nav',
+    hoverColor: '#0A66C2',
+    render: (h) => (
+      <Linkedin
+        size={32}
+        style={{ color: h ? '#0A66C2' : '#9CA3AF', transition: 'color 0.3s ease' }}
+      />
+    ),
+  },
+  {
+    name: 'Zapier',
+    hoverColor: '#FF4A00',
+    render: (h) => <SiZapier style={iconStyle(h, '#FF4A00')} />,
+  },
+  {
+    name: 'Slack',
+    hoverColor: '#4A154B',
+    render: (h) => <SiSlack style={iconStyle(h, '#4A154B')} />,
+  },
+  {
+    name: 'Tableau',
+    hoverColor: '#E8762D',
+    render: (h) => (
+      <span
+        className="text-sm font-black tracking-tight"
+        style={{ color: h ? '#E8762D' : '#9CA3AF', transition: 'color 0.3s ease' }}
+      >
+        Tableau
+      </span>
+    ),
+  },
+  {
+    name: 'QuickBooks',
+    hoverColor: '#2CA01C',
+    render: (h) => <SiIntuit style={iconStyle(h, '#2CA01C')} />,
+  },
+  {
+    name: 'Mailchimp',
+    hoverColor: '#FFE01B',
+    render: (h) => <SiMailchimp style={iconStyle(h, '#c79a00')} />,
+  },
 ];
 
-const PartnerLogo = ({ partner }: { partner: Partner }) => {
-  const [hovered, setHovered] = React.useState(false);
+const PartnerCard = ({ partner }: { partner: Partner }) => {
+  const [hovered, setHovered] = useState(false);
 
   return (
     <div
-      className="flex flex-col items-center gap-2 cursor-default select-none"
+      className="flex flex-col items-center gap-2 min-w-[72px] cursor-default select-none"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {partner.iconSlug ? (
-        <img
-          src={`https://cdn.simpleicons.org/${partner.iconSlug}`}
-          alt={partner.name}
-          width={36}
-          height={36}
-          style={{
-            filter: hovered ? 'none' : 'grayscale(100%) opacity(0.45)',
-            transition: 'filter 0.3s ease',
-          }}
-        />
-      ) : (
-        /* Text fallback for brands without a simple-icon (Agentforce, Apollo.io) */
-        <div
-          className="h-9 flex items-center justify-center px-2 rounded font-bold text-sm tracking-tight transition-colors duration-300"
-          style={{ color: hovered ? partner.hoverColor : '#9CA3AF' }}
-        >
-          {partner.name === 'Agentforce' ? (
-            <span>
-              <span style={{ color: hovered ? '#00A1E0' : '#9CA3AF' }}>Agent</span>
-              <span style={{ color: hovered ? '#032D60' : '#9CA3AF' }}>force</span>
-            </span>
-          ) : (
-            <span>{partner.name}</span>
-          )}
-        </div>
-      )}
+      <div className="h-9 flex items-center justify-center">
+        {partner.render(hovered)}
+      </div>
       <span
-        className="text-xs font-medium transition-colors duration-300"
+        className="text-xs font-medium text-center leading-tight transition-colors duration-300"
         style={{ color: hovered ? partner.hoverColor : '#9CA3AF' }}
       >
         {partner.name}
@@ -90,7 +140,7 @@ const TechStackStrip = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
         >
           {PARTNERS.map((partner) => (
-            <PartnerLogo key={partner.name} partner={partner} />
+            <PartnerCard key={partner.name} partner={partner} />
           ))}
         </motion.div>
       </div>
