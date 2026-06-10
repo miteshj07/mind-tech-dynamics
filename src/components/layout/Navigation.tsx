@@ -48,20 +48,25 @@ const Navigation = () => {
         {/* Desktop Menu */}
         <div className="hidden lg:flex items-center space-x-8">
           {menuItems.map((item) => (
-            <Link 
+            <Link
               key={item.name}
-              to={item.path} 
+              to={item.path}
               className="font-medium text-gray-700 hover:text-brand transition-colors"
             >
               {item.name}
             </Link>
           ))}
+          <Link
+            to="/salesforce-health-check"
+            className="font-semibold text-brand border border-brand/40 px-4 py-2 rounded-full hover:bg-brand/5 transition-colors text-sm whitespace-nowrap"
+          >
+            Free SF Audit
+          </Link>
           <Button className="btn-primary">
             <Link to="/contact-us" className="group">
-            Book a Free Consultation
+              Book a Free Consultation
             </Link>
           </Button>
-          {/* Book a Free Consultation */}
         </div>
 
         {/* Mobile Menu Button */}
@@ -77,15 +82,22 @@ const Navigation = () => {
         <div className="lg:hidden bg-white absolute top-full left-0 w-full shadow-lg py-4 animate-fade-in">
           <div className="container mx-auto px-4 flex flex-col space-y-4">
             {menuItems.map((item) => (
-              <Link 
+              <Link
                 key={item.name}
-                to={item.path} 
+                to={item.path}
                 className="font-medium text-gray-700 hover:text-brand transition-colors py-2 border-b border-gray-100"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
               </Link>
             ))}
+            <Link
+              to="/salesforce-health-check"
+              className="font-semibold text-brand py-2 border-b border-gray-100"
+              onClick={() => setIsOpen(false)}
+            >
+              🔍 Free Salesforce Audit
+            </Link>
             <Button className="btn-primary mt-4">
               {/* Book a Free Consultation */}
               <Link to="/contact-us" className="group" onClick={() => setIsOpen(false)}>
