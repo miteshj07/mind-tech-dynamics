@@ -5,6 +5,7 @@ import HeroSection from '@/components/home/HeroSection';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 import ServiceOverview from '@/components/home/ServiceOverview';
 import SuccessMetrics from '@/components/home/SuccessMetrics';
+import FounderBio from '@/components/home/FounderBio';
 import Testimonials from '@/components/home/Testimonials';
 import CaseStudiesPreview from '@/components/home/CaseStudiesPreview';
 import MarketsWeServe from '@/components/home/MarketsWeServe';
@@ -32,6 +33,7 @@ const Index = () => {
       <WhyChooseUs />
       <ServiceOverview />
       <SuccessMetrics />
+      <FounderBio />
       <Testimonials />
       <CaseStudiesPreview />
       <MarketsWeServe />
