@@ -22,8 +22,16 @@ const ValueCard = ({ icon, title, description }: ValueCardProps) => (
 const certifications = [
   'Salesforce Certified Administrator',
   'Salesforce Certified Platform App Builder',
+  'Salesforce Certified Platform Developer I',
   'Salesforce Certified Sales Cloud Consultant',
-  'Agentforce Specialist',
+  'Salesforce Certified CRM Analytics & Einstein Discovery Consultant',
+];
+
+const trailheadStats = [
+  { value: '230+', label: 'Badges' },
+  { value: '164K+', label: 'Trailhead Points' },
+  { value: '5', label: 'Certifications' },
+  { value: 'Innovator', label: 'Agentblazer 2025' },
 ];
 
 const AboutUs = () => {
@@ -113,18 +121,28 @@ const AboutUs = () => {
                   <p className="text-brand font-semibold mb-4">Founder &amp; Lead Salesforce Consultant</p>
 
                   <p className="text-gray-700 mb-4">
-                    Mitesh Jain has spent over a decade immersed in the Salesforce ecosystem — implementing CRM strategies, architecting automation workflows, and most recently helping B2B teams adopt Agentforce AI agents. He founded Meet The Mind Technologies to give growing businesses access to the kind of senior Salesforce expertise normally reserved for large enterprise engagements.
+                    Mitesh Jain is a 5x Salesforce Certified consultant and Agentblazer Innovator who has spent over a decade building CRM and automation systems for B2B revenue teams. Holding certifications across the Salesforce Platform, Sales Cloud, and CRM Analytics, he founded Meet The Mind Technologies to give ambitious businesses direct access to senior Salesforce expertise — without the overhead of a large consultancy.
                   </p>
 
-                  <p className="text-gray-700 mb-6">
-                    With clients spanning the US, UK, UAE, and Australia, Mitesh brings a global perspective to every engagement — understanding the nuances of different markets, compliance requirements, and sales motions that shape how CRM strategy should be designed.
+                  <p className="text-gray-700 mb-5">
+                    With clients across the US, UK, UAE, and Australia, Mitesh brings a global perspective to every engagement — from Agentforce AI agent rollouts to Apollo.io lead-gen automation wired directly into Salesforce. As a Salesforce Partner and Double Star Ranger with 230+ Trailhead badges, he stays at the cutting edge of the platform.
                   </p>
+
+                  {/* Trailhead stats */}
+                  <div className="grid grid-cols-4 gap-3 mb-5 p-3 bg-gray-50 rounded-xl">
+                    {trailheadStats.map((stat) => (
+                      <div key={stat.label} className="text-center">
+                        <p className="text-lg font-bold text-brand">{stat.value}</p>
+                        <p className="text-xs text-gray-500">{stat.label}</p>
+                      </div>
+                    ))}
+                  </div>
 
                   {/* Certifications */}
                   <div>
                     <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3 flex items-center gap-2">
                       <Award size={14} />
-                      Certifications
+                      Salesforce Certifications
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {certifications.map((cert) => (
