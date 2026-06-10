@@ -7,6 +7,7 @@ import ServiceOverview from '@/components/home/ServiceOverview';
 import SuccessMetrics from '@/components/home/SuccessMetrics';
 import FounderBio from '@/components/home/FounderBio';
 import TechStackStrip from '@/components/home/TechStackStrip';
+import HowWeWork from '@/components/home/HowWeWork';
 import Testimonials from '@/components/home/Testimonials';
 import CaseStudiesPreview from '@/components/home/CaseStudiesPreview';
 import MarketsWeServe from '@/components/home/MarketsWeServe';
@@ -38,6 +39,7 @@ const Index = () => {
       <FounderBio />
       <Testimonials />
       <CaseStudiesPreview />
+      <HowWeWork />
       <MarketsWeServe />
       <HomeFaq />
       <ContactCTA
