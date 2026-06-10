@@ -21,6 +21,7 @@ import AgentforceImplementationPage from "@/pages/AgentforceImplementation";
 import ApolloSalesforceIntegrationPage from "@/pages/ApolloSalesforceIntegration";
 import SalesforceRevOpsPage from "@/pages/SalesforceRevOps";
 import SalesforceHealthCheckPage from "@/pages/SalesforceHealthCheck";
+import SalesforceDataCloudPage from "@/pages/SalesforceDataCloud";
 import LeadGenerationPage from "@/pages/LeadGeneration";
 import AboutUsPage from "@/pages/AboutUs";
 import CaseStudiesPage from "@/pages/CaseStudies";
@@ -54,6 +55,7 @@ const App = () => {
                 <Route path="/apollo-io-salesforce-integration" element={<PageTransition><ApolloSalesforceIntegrationPage /></PageTransition>} />
                 <Route path="/salesforce-revops" element={<PageTransition><SalesforceRevOpsPage /></PageTransition>} />
                 <Route path="/salesforce-health-check" element={<PageTransition><SalesforceHealthCheckPage /></PageTransition>} />
+                <Route path="/salesforce-data-cloud" element={<PageTransition><SalesforceDataCloudPage /></PageTransition>} />
                 <Route path="/b2b-lead-generation" element={<PageTransition><LeadGenerationPage /></PageTransition>} />
                 <Route path="/about-us" element={<PageTransition><AboutUsPage /></PageTransition>} />
                 <Route path="/case-studies" element={<PageTransition><CaseStudiesPage /></PageTransition>} />
