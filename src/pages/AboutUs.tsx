@@ -101,21 +101,11 @@ const AboutUs = () => {
       {/* Our Story */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-            <div>
-              <h2 className="heading-md mb-6">{aboutUsSection.story.title}</h2>
-              {aboutUsSection.story.content.map((paragraph, index) => (
-                <p key={index} className="text-gray-700 mb-4">{paragraph}</p>
-              ))}
-            </div>
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-brand/30 to-blue-500/30 rounded-xl blur-xl opacity-50"></div>
-              <img
-                src={aboutUsSection.story.image}
-                alt="Meet The Mind Technologies — Salesforce consulting team"
-                className="relative rounded-xl shadow-lg w-full h-auto"
-              />
-            </div>
+          <div className="max-w-3xl mx-auto mb-20">
+            <h2 className="heading-md mb-6">{aboutUsSection.story.title}</h2>
+            {aboutUsSection.story.content.map((paragraph, index) => (
+              <p key={index} className="text-gray-700 mb-4 text-lg leading-relaxed">{paragraph}</p>
+            ))}
           </div>
 
           {/* Values */}
@@ -183,13 +173,17 @@ const AboutUs = () => {
                     </p>
                     <div className="flex flex-wrap gap-2">
                       {certifications.map((cert) => (
-                        <span
+                        <a
                           key={cert}
-                          className="inline-flex items-center gap-1 text-xs bg-brand/10 text-brand font-medium px-3 py-1 rounded-full"
+                          href="https://www.salesforce.com/trailblazer/mjain31"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs bg-brand/10 text-brand font-semibold px-3 py-1.5 rounded-full border border-brand/20 hover:bg-brand/20 transition-colors"
                         >
                           <CheckCircle size={11} />
                           {cert}
-                        </span>
+                          <span className="text-gray-400 font-normal">· Mitesh Jain</span>
+                        </a>
                       ))}
                     </div>
                   </div>

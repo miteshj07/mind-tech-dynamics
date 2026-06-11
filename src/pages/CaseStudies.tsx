@@ -142,7 +142,7 @@ const CaseStudyDialog = ({ study, open, onOpenChange }: {
 };
 
 const CaseStudies = () => {
-  const { data, isLoading } = useCms();
+  const { data } = useCms();
   const { caseStudiesSection, seoMetadata, sharedComponents } = data;
 
   const [filter, setFilter] = useState<string>("all");
@@ -206,11 +206,6 @@ const CaseStudies = () => {
     setSelectedStudy(study);
     setDialogOpen(true);
   };
-
-  if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  }
-
   return (
     <>
       <Seo title={seoMetadata.caseStudies.title} description={seoMetadata.caseStudies.description} canonical="/case-studies" jsonLd={caseStudiesSchema} />

@@ -14,7 +14,7 @@ const SITE = 'https://www.meethemind.com';
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const { data, isLoading } = useCms();
+  const { data } = useCms();
   const { blogSection, sharedComponents } = data;
 
   // Resolve the post synchronously during render (not in an effect) so the
@@ -30,11 +30,6 @@ const BlogPost = () => {
   }, [slug]);
 
   const handleBack = () => navigate('/blog');
-
-  if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  }
-
   if (!post) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">

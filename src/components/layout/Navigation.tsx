@@ -29,7 +29,7 @@ const Navigation = () => {
     { name: 'Lead Generation', path: '/b2b-lead-generation' },
     { name: 'About Us', path: '/about-us' },
     { name: 'Case Studies', path: '/case-studies' },
-    { name: 'Blog', path: '/blog' },
+    { name: 'Trailblazer Playbook', path: '/blog' },
     { name: 'Careers', path: '/careers' },
     { name: 'Contact Us', path: '/contact-us' },
   ];

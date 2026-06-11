@@ -36,7 +36,7 @@ const PARTNERS: Partner[] = [
         className="text-sm font-black tracking-tight leading-none"
         style={{ color: h ? '#00A1E0' : '#9CA3AF', transition: 'color 0.3s ease' }}
       >
-        Agent<br />force
+        Agentforce
       </span>
     ),
   },
