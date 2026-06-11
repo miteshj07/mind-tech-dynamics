@@ -11,6 +11,11 @@ import { supabase } from '@/integrations/supabase/client';
 
 const SITE = 'https://www.meethemind.com';
 
+// Strip a leading H1 from markdown so we don't duplicate the title shown in the header
+function stripLeadingH1(md: string): string {
+  return md.replace(/^#\s+.+\n?/, '').trimStart();
+}
+
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
@@ -36,7 +41,7 @@ const BlogPost = () => {
             slug: row.slug,
             title: row.title,
             excerpt: row.excerpt || '',
-            content: row.content,
+            content: row.content ? stripLeadingH1(row.content) : '',
             image: row.featured_image || null,
             tags: row.tags || [],
             author: row.author || 'MeetTheMind',
@@ -57,15 +62,15 @@ const BlogPost = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <p className="text-gray-400">Loading…</p>
+      <div className="min-h-screen flex flex-col items-center justify-center pt-28">
+        <p className="text-gray-400 text-lg">Loading…</p>
       </div>
     );
   }
 
   if (!post) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
+      <div className="min-h-screen flex flex-col items-center justify-center pt-28">
         <h2 className="text-2xl font-bold mb-4">Blog post not found</h2>
         <Button onClick={handleBack}>Back to Blog</Button>
       </div>
@@ -73,7 +78,6 @@ const BlogPost = () => {
   }
 
   const canonical = `/blog/${post.slug}`;
-  const relatedPosts: any[] = [];
 
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -102,50 +106,103 @@ const BlogPost = () => {
         jsonLd={articleSchema}
       />
 
-      <div className="bg-gray-50 py-8 pt-28">
-        <div className="container mx-auto px-4">
-          <Button variant="ghost" onClick={handleBack} className="flex items-center mb-6">
-            <ArrowLeft size={16} className="mr-2" /> Back to All Articles
-          </Button>
+      {/* Page background */}
+      <div className="bg-gray-50 min-h-screen pt-24 pb-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
 
-          <article className="bg-white rounded-xl shadow-md overflow-hidden">
-            {post.image && (
-              <div className="relative h-[400px]">
-                <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
-                <div className="absolute top-6 left-6 flex flex-wrap gap-2">
-                  {(post.tags || []).map((tag: string, i: number) => (
-                    <span key={i} className="text-xs bg-white/90 backdrop-blur-sm text-gray-700 px-3 py-1 rounded-full">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+          {/* Back link */}
+          <button
+            onClick={handleBack}
+            className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-800 transition-colors mb-8"
+          >
+            <ArrowLeft size={15} />
+            Back to all articles
+          </button>
 
-            <div className="p-8 md:p-12">
-              <h1 className="text-3xl md:text-4xl font-bold mb-6">{post.title}</h1>
-
-              <div className="flex flex-wrap items-center text-gray-500 gap-6 mb-8">
-                {post.author && (
-                  <div className="flex items-center"><User size={18} className="mr-2" />{post.author}</div>
-                )}
-                {post.date && (
-                  <div className="flex items-center"><CalendarDays size={18} className="mr-2" />{post.date}</div>
-                )}
-                {post.readTime && (
-                  <div className="flex items-center"><Clock size={18} className="mr-2" />{post.readTime}</div>
-                )}
-              </div>
-
-              <div className="prose prose-lg max-w-none prose-headings:font-bold prose-a:text-brand">
-                {post.content ? (
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
-                ) : (
-                  <p className="text-xl font-medium">{post.excerpt}</p>
-                )}
-              </div>
+          {/* Hero image */}
+          {post.image && (
+            <div className="rounded-2xl overflow-hidden mb-10 h-72 md:h-96">
+              <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
             </div>
+          )}
+
+          {/* Tags */}
+          {post.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-5">
+              {post.tags.map((tag: string, i: number) => (
+                <span key={i} className="text-xs font-medium bg-brand/10 text-brand px-3 py-1 rounded-full">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Title */}
+          <h1 className="text-3xl md:text-4xl font-bold leading-tight text-gray-900 mb-5">
+            {post.title}
+          </h1>
+
+          {/* Excerpt */}
+          {post.excerpt && (
+            <p className="text-lg text-gray-500 leading-relaxed mb-6 border-l-4 border-brand pl-4">
+              {post.excerpt}
+            </p>
+          )}
+
+          {/* Meta row */}
+          <div className="flex flex-wrap items-center gap-5 text-sm text-gray-400 pb-8 border-b border-gray-200 mb-10">
+            {post.author && (
+              <span className="flex items-center gap-1.5">
+                <User size={15} /> {post.author}
+              </span>
+            )}
+            {post.date && (
+              <span className="flex items-center gap-1.5">
+                <CalendarDays size={15} /> {post.date}
+              </span>
+            )}
+            {post.readTime && (
+              <span className="flex items-center gap-1.5">
+                <Clock size={15} /> {post.readTime}
+              </span>
+            )}
+          </div>
+
+          {/* Article body */}
+          <article
+            className="
+              prose prose-lg max-w-none
+              prose-headings:font-bold prose-headings:text-gray-900 prose-headings:leading-snug
+              prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
+              prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+              prose-p:text-gray-700 prose-p:leading-relaxed prose-p:my-5
+              prose-strong:text-gray-900 prose-strong:font-semibold
+              prose-a:text-brand prose-a:no-underline hover:prose-a:underline
+              prose-ul:my-5 prose-ul:space-y-2 prose-li:text-gray-700
+              prose-ol:my-5 prose-ol:space-y-2
+              prose-hr:my-10 prose-hr:border-gray-200
+              prose-blockquote:border-l-4 prose-blockquote:border-brand prose-blockquote:pl-5 prose-blockquote:text-gray-600 prose-blockquote:italic
+            "
+          >
+            {post.content ? (
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
+            ) : (
+              <p className="text-xl">{post.excerpt}</p>
+            )}
           </article>
+
+          {/* Author footer */}
+          <div className="mt-14 pt-8 border-t border-gray-200 flex items-start gap-4">
+            <div className="w-12 h-12 rounded-full bg-brand/10 flex items-center justify-center flex-shrink-0">
+              <span className="text-brand font-semibold text-sm">MJ</span>
+            </div>
+            <div>
+              <p className="font-semibold text-gray-900 text-sm">{post.author}</p>
+              <p className="text-gray-500 text-sm mt-0.5">
+                Salesforce consultant with 10 years of Sales and Service Cloud implementation experience.
+              </p>
+            </div>
+          </div>
 
         </div>
       </div>
