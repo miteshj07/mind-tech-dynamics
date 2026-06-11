@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Seo from '@/components/layout/Seo';
 import PageHeader from '@/components/layout/PageHeader';
 import ContactCTA from '@/components/layout/ContactCTA';
@@ -10,14 +10,51 @@ import SearchBar from '@/components/blog/SearchBar';
 import NewsletterSignup from '@/components/blog/NewsletterSignup';
 import EmptySearchResult from '@/components/blog/EmptySearchResult';
 import { filterPosts } from '@/utils/blog';
+import { supabase } from '@/integrations/supabase/client';
+
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+
+function mapPost(row: any) {
+  return {
+    slug: row.slug,
+    title: row.title,
+    excerpt: row.excerpt || '',
+    date: row.published_at
+      ? new Date(row.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+      : '',
+    readTime: row.reading_time ? `${row.reading_time} min read` : '5 min read',
+    author: row.author || 'MeetTheMind',
+    image: row.featured_image || FALLBACK_IMAGE,
+    tags: row.tags || [],
+    content: row.content,
+    metaTitle: row.meta_title,
+    metaDescription: row.meta_description,
+  };
+}
 
 const Blog = () => {
   const { data } = useCms();
   const { blogSection, seoMetadata, sharedComponents } = data;
 
   const [searchTerm, setSearchTerm] = useState("");
+  const [livePosts, setLivePosts] = useState<any[]>([]);
+  const [loadingPosts, setLoadingPosts] = useState(true);
 
-  const filteredPosts = filterPosts(blogSection.posts, searchTerm);
+  useEffect(() => {
+    supabase
+      .from('blog_posts')
+      .select('*')
+      .eq('status', 'published')
+      .order('published_at', { ascending: false })
+      .then(({ data: rows }) => {
+        if (rows) setLivePosts(rows.map(mapPost));
+        setLoadingPosts(false);
+      });
+  }, []);
+
+  const featuredPost = livePosts[0] || null;
+  const remainingPosts = livePosts.slice(1);
+  const filteredPosts = filterPosts(remainingPosts, searchTerm);
 
   const blogSchema = {
     '@context': 'https://schema.org',
@@ -48,16 +85,26 @@ const Blog = () => {
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           </div>
           
-          <FeaturedPost post={blogSection.featuredPost} />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-            {filteredPosts.map((post, index) => (
-              <BlogCard key={index} post={post} />
-            ))}
-          </div>
-          
-          {filteredPosts.length === 0 && (
-            <EmptySearchResult resetSearch={() => setSearchTerm("")} />
+          {loadingPosts ? (
+            <div className="py-16 text-center text-gray-400">Loading posts…</div>
+          ) : (
+            <>
+              {featuredPost && <FeaturedPost post={featuredPost} />}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+                {filteredPosts.map((post, index) => (
+                  <BlogCard key={index} post={post} />
+                ))}
+              </div>
+
+              {!loadingPosts && livePosts.length === 0 && (
+                <p className="text-center text-gray-400 py-16">No posts published yet. Check back soon.</p>
+              )}
+
+              {livePosts.length > 1 && filteredPosts.length === 0 && searchTerm && (
+                <EmptySearchResult resetSearch={() => setSearchTerm("")} />
+              )}
+            </>
           )}
           
           <div className="flex justify-center mt-12">

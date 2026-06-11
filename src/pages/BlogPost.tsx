@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useCms } from '@/cms/context/CmsContext';
@@ -7,7 +7,7 @@ import Seo from '@/components/layout/Seo';
 import ContactCTA from '@/components/layout/ContactCTA';
 import { CalendarDays, Clock, User, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { getPostSlug, isPublished } from '@/utils/blog';
+import { supabase } from '@/integrations/supabase/client';
 
 const SITE = 'https://www.meethemind.com';
 
@@ -15,21 +15,54 @@ const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { data } = useCms();
-  const { blogSection, sharedComponents } = data;
+  const { sharedComponents } = data;
 
-  // Resolve the post synchronously during render (not in an effect) so the
-  // title/meta/JSON-LD are set on first paint and the prerenderer captures the
-  // correct, post-specific tags.
-  const post = useMemo(() => {
-    const allPosts = [blogSection.featuredPost, ...(blogSection.posts || [])];
-    return allPosts.find((p) => p && getPostSlug(p) === slug) || null;
-  }, [slug, blogSection]);
+  const [post, setPost] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (!slug) return;
+    setLoading(true);
+    supabase
+      .from('blog_posts')
+      .select('*')
+      .eq('slug', slug)
+      .eq('status', 'published')
+      .single()
+      .then(({ data: row }) => {
+        if (row) {
+          setPost({
+            slug: row.slug,
+            title: row.title,
+            excerpt: row.excerpt || '',
+            content: row.content,
+            image: row.featured_image || null,
+            tags: row.tags || [],
+            author: row.author || 'MeetTheMind',
+            date: row.published_at
+              ? new Date(row.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+              : '',
+            readTime: row.reading_time ? `${row.reading_time} min read` : '5 min read',
+            metaTitle: row.meta_title,
+            metaDescription: row.meta_description,
+            datePublished: row.published_at,
+          });
+        }
+        setLoading(false);
+      });
   }, [slug]);
 
   const handleBack = () => navigate('/blog');
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <p className="text-gray-400">Loading…</p>
+      </div>
+    );
+  }
+
   if (!post) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
@@ -39,21 +72,17 @@ const BlogPost = () => {
     );
   }
 
-  const canonical = `/blog/${getPostSlug(post)}`;
-  const relatedPosts = (blogSection.posts || [])
-    .filter((p: any) => p.title !== post.title && isPublished(p))
-    .filter((p: any) => (p.tags || []).some((tag: string) => (post.tags || []).includes(tag)))
-    .slice(0, 3);
+  const canonical = `/blog/${post.slug}`;
+  const relatedPosts: any[] = [];
 
-  // BlogPosting structured data so search/AI engines can attribute the article.
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt,
     image: post.image ? [post.image] : undefined,
-    datePublished: post.datePublished || post.date,
-    dateModified: post.dateModified || post.datePublished || post.date,
+    datePublished: post.datePublished,
+    dateModified: post.datePublished,
     author: { '@type': 'Person', name: post.author || 'Meet The Mind Technologies' },
     publisher: {
       '@type': 'Organization',
@@ -118,28 +147,6 @@ const BlogPost = () => {
             </div>
           </article>
 
-          {relatedPosts.length > 0 && (
-            <div className="mt-12">
-              <h2 className="text-2xl font-bold mb-6">Related Articles</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {relatedPosts.map((relatedPost: any, index: number) => (
-                  <Link
-                    key={index}
-                    to={`/blog/${getPostSlug(relatedPost)}`}
-                    className="bg-white rounded-xl shadow-md overflow-hidden block hover:shadow-xl transition-shadow"
-                  >
-                    <div className="h-48 overflow-hidden">
-                      <img src={relatedPost.image} alt={relatedPost.title} className="w-full h-full object-cover" />
-                    </div>
-                    <div className="p-6">
-                      <h3 className="font-bold mb-2 hover:text-brand">{relatedPost.title}</h3>
-                      <p className="text-gray-600 text-sm line-clamp-2">{relatedPost.excerpt}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
