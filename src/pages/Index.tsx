@@ -16,22 +16,73 @@ import HomeFaq from '@/components/home/HomeFaq';
 import ContactCTA from '@/components/layout/ContactCTA';
 import { useCms } from '@/cms/context/CmsContext';
 
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Meet The Mind Technologies',
+  url: 'https://www.meethemind.com',
+  logo: 'https://www.meethemind.com/lovable-uploads/284a223f-a649-48c8-adfb-b59481cce7ba.png',
+  foundingDate: '2022',
+  description: 'Salesforce consulting firm specialising in Agentforce AI implementation, Apollo.io integration, RevOps automation and Salesforce Data Cloud for B2B revenue teams.',
+  founder: {
+    '@type': 'Person',
+    name: 'Mitesh Jain',
+    jobTitle: 'Founder & CEO',
+    url: 'https://www.linkedin.com/in/miteshj07/',
+    sameAs: [
+      'https://www.linkedin.com/in/miteshj07/',
+      'https://www.salesforce.com/trailblazer/mjain31',
+    ],
+  },
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'S4, Solitaire Tower, Choolai',
+    addressLocality: 'Chennai',
+    postalCode: '600010',
+    addressCountry: 'IN',
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: '+91-7358576420',
+    email: 'mitesh@meethemind.com',
+    contactType: 'customer service',
+  },
+  areaServed: [
+    { '@type': 'Country', name: 'United States' },
+    { '@type': 'Country', name: 'United Kingdom' },
+    { '@type': 'Country', name: 'United Arab Emirates' },
+    { '@type': 'Country', name: 'Australia' },
+  ],
+  sameAs: [
+    'https://www.linkedin.com/company/meetthemind',
+    'https://x.com/MeetTheMind',
+    'https://www.salesforce.com/trailblazer/mjain31',
+  ],
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Meet The Mind Technologies',
+  url: 'https://www.meethemind.com',
+};
+
 const Index = () => {
-  const { data, isLoading } = useCms();
+  const { data } = useCms();
   const { seoMetadata, sharedComponents } = data;
 
   useEffect(() => {
-    // Scroll to top on page load
     window.scrollTo(0, 0);
   }, []);
 
-  if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center"></div>;
-  }
-
   return (
     <div className="min-h-screen">
-      <Seo title={seoMetadata.home.title} description={seoMetadata.home.description} canonical="/" />
+      <Seo
+        title={seoMetadata.home.title}
+        description={seoMetadata.home.description}
+        canonical="/"
+        jsonLd={[orgSchema, websiteSchema]}
+      />
       <HeroSection />
       <TechStackStrip />
       <WhyChooseUs />

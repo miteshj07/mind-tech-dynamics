@@ -10,8 +10,37 @@ import { useContactForm } from '@/hooks/useContactForm';
 
 const CALENDLY_URL = 'https://calendly.com/mitesh-meethemind/30min';
 
+const contactSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Meet The Mind Technologies',
+  url: 'https://www.meethemind.com',
+  telephone: '+91-7358576420',
+  email: 'mitesh@meethemind.com',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'S4, Solitaire Tower, Choolai',
+    addressLocality: 'Chennai',
+    postalCode: '600010',
+    addressCountry: 'IN',
+  },
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      telephone: '+91-7358576420',
+      contactType: 'sales',
+      availableLanguage: 'English',
+    },
+    {
+      '@type': 'ContactPoint',
+      email: 'mitesh@meethemind.com',
+      contactType: 'customer support',
+    },
+  ],
+};
+
 const ContactUs = () => {
-  const { data, isLoading } = useCms();
+  const { data } = useCms();
   const { contactSection, seoMetadata } = data;
 
   const { handleSubmit, isSubmitting, formSuccess, setFormSuccess } = useContactForm();
@@ -44,13 +73,9 @@ const ContactUs = () => {
     handleSubmit(formState);
   };
 
-  if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  }
-
   return (
     <>
-      <Seo title={seoMetadata.contactUs.title} description={seoMetadata.contactUs.description} canonical="/contact-us" />
+      <Seo title={seoMetadata.contactUs.title} description={seoMetadata.contactUs.description} canonical="/contact-us" jsonLd={contactSchema} />
       <PageHeader 
         title={contactSection.title}
         subtitle={contactSection.subtitle}

@@ -175,6 +175,24 @@ const HeroSection = () => {
                 <Award size={16} />
                 Certified Trailblazer
               </a>
+              <a
+                href="https://www.salesforce.com/trailblazer/mjain31"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand/30 bg-brand/5 text-brand text-sm font-semibold hover:bg-brand/10 transition-colors"
+              >
+                <ShieldCheck size={16} />
+                5× Salesforce Certified
+              </a>
+              <a
+                href="https://www.salesforce.com/trailblazer/mjain31"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00A1E0]/40 bg-[#00A1E0]/5 text-[#00A1E0] text-sm font-semibold hover:bg-[#00A1E0]/10 transition-colors"
+              >
+                <Award size={16} />
+                Agentblazer Innovator 2025
+              </a>
             </motion.div>
           </motion.div>
 

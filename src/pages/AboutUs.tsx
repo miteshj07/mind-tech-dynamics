@@ -34,6 +34,42 @@ const trailheadStats = [
   { value: 'Innovator', label: 'Agentblazer 2025' },
 ];
 
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Mitesh Jain',
+  jobTitle: 'Founder & CEO',
+  worksFor: {
+    '@type': 'Organization',
+    name: 'Meet The Mind Technologies',
+    url: 'https://www.meethemind.com',
+  },
+  url: 'https://www.meethemind.com/about-us',
+  image: 'https://www.meethemind.com/lovable-uploads/mitesh-jain-founder.png',
+  sameAs: [
+    'https://www.linkedin.com/in/miteshj07/',
+    'https://www.salesforce.com/trailblazer/mjain31',
+  ],
+  knowsAbout: [
+    'Salesforce CRM',
+    'Agentforce AI',
+    'Apollo.io integration',
+    'RevOps automation',
+    'Salesforce Data Cloud',
+    'B2B lead generation',
+    'Sales Cloud',
+    'Salesforce Flow',
+    'Apex development',
+  ],
+  hasCredential: [
+    { '@type': 'EducationalOccupationalCredential', name: 'Salesforce Certified Administrator' },
+    { '@type': 'EducationalOccupationalCredential', name: 'Salesforce Certified Platform Developer I' },
+    { '@type': 'EducationalOccupationalCredential', name: 'Salesforce Certified Platform App Builder' },
+    { '@type': 'EducationalOccupationalCredential', name: 'Salesforce Certified Sales Cloud Consultant' },
+    { '@type': 'EducationalOccupationalCredential', name: 'Salesforce Certified CRM Analytics & Einstein Discovery Consultant' },
+  ],
+};
+
 const AboutUs = () => {
   const { data } = useCms();
   const { aboutUsSection, seoMetadata, sharedComponents } = data;
@@ -55,6 +91,7 @@ const AboutUs = () => {
         title={seoMetadata.aboutUs.title}
         description={seoMetadata.aboutUs.description}
         canonical="/about-us"
+        jsonLd={personSchema}
       />
       <PageHeader
         title="About Meet The Mind"

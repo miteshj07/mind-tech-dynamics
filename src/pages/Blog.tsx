@@ -12,20 +12,30 @@ import EmptySearchResult from '@/components/blog/EmptySearchResult';
 import { filterPosts } from '@/utils/blog';
 
 const Blog = () => {
-  const { data, isLoading } = useCms();
+  const { data } = useCms();
   const { blogSection, seoMetadata, sharedComponents } = data;
-  
+
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   const filteredPosts = filterPosts(blogSection.posts, searchTerm);
 
-  if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  }
+  const blogSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: blogSection.title,
+    description: blogSection.subtitle,
+    url: 'https://www.meethemind.com/blog',
+    publisher: {
+      '@type': 'Organization',
+      name: 'Meet The Mind Technologies',
+      url: 'https://www.meethemind.com',
+      logo: 'https://www.meethemind.com/lovable-uploads/284a223f-a649-48c8-adfb-b59481cce7ba.png',
+    },
+  };
 
   return (
     <>
-      <Seo title={seoMetadata.blog.title} description={seoMetadata.blog.description} canonical="/blog" />
+      <Seo title={seoMetadata.blog.title} description={seoMetadata.blog.description} canonical="/blog" jsonLd={blogSchema} />
       <PageHeader
         title={blogSection.title} 
         subtitle={blogSection.subtitle}
