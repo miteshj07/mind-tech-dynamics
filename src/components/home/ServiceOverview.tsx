@@ -8,10 +8,11 @@ interface ServiceCardProps {
   icon: React.ReactNode;
   title: string;
   description: string;
+  link: string;
   index: number;
 }
 
-const ServiceCard = ({ icon, title, description, index }: ServiceCardProps) => {
+const ServiceCard = ({ icon, title, description, link, index }: ServiceCardProps) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,8 +48,8 @@ const ServiceCard = ({ icon, title, description, index }: ServiceCardProps) => {
       </div>
       <h3 className="text-xl font-semibold mb-3">{title}</h3>
       <p className="text-gray-600 mb-4">{description}</p>
-      <Link 
-        to="/services" 
+      <Link
+        to={link}
         className="inline-flex items-center text-brand font-medium hover:text-brand-dark transition-colors"
       >
         Learn More <ArrowRight size={16} className="ml-1 transition-transform duration-300 group-hover:translate-x-1" />
@@ -117,6 +118,7 @@ const ServiceOverview = () => {
               icon={getIconComponent(service.icon)}
               title={service.title}
               description={service.description}
+              link={(service as any).link || '/services'}
               index={index}
             />
           ))}

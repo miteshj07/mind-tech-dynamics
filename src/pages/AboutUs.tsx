@@ -35,7 +35,7 @@ const trailheadStats = [
 ];
 
 const AboutUs = () => {
-  const { data, isLoading } = useCms();
+  const { data } = useCms();
   const { aboutUsSection, seoMetadata, sharedComponents } = data;
 
   const getIconComponent = (iconName: string, size: number = 40) => {
@@ -48,10 +48,6 @@ const AboutUs = () => {
       default: return <Award size={size} />;
     }
   };
-
-  if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  }
 
   return (
     <>

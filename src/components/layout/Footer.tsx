@@ -5,18 +5,9 @@ import { Mail, Phone, MapPin, Linkedin, Twitter, Award } from 'lucide-react';
 import { useCms } from '@/cms/context/CmsContext';
 
 const Footer = () => {
-  const { data, isLoading } = useCms();
+  const { data } = useCms();
   const { footerSection } = data;
   
-  if (isLoading || !footerSection) {
-    return (
-      <footer className="bg-gray-900 text-white py-8">
-        <div className="container mx-auto px-4">
-          <p className="text-center">Loading footer content...</p>
-        </div>
-      </footer>
-    );
-  }
 
   return (
     <footer className="bg-gray-900 text-white pt-16 pb-8">
