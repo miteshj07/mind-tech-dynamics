@@ -38,10 +38,14 @@ const FounderBio = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            {/* Avatar placeholder */}
+            {/* Founder photo */}
             <div className="relative">
-              <div className="w-40 h-40 rounded-2xl bg-gradient-to-br from-brand to-brand/60 flex items-center justify-center shadow-xl">
-                <span className="text-white text-5xl font-bold tracking-tight select-none">MJ</span>
+              <div className="w-40 h-40 rounded-2xl shadow-xl overflow-hidden border-2 border-brand/20">
+                <img
+                  src="/lovable-uploads/mitesh-jain-founder.png"
+                  alt="Mitesh Jain, Founder & CEO of Meet The Mind Technologies"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               {/* Verified badge */}
               <div className="absolute -bottom-3 -right-3 bg-white rounded-full p-1 shadow-md">

@@ -110,8 +110,12 @@ const AboutUs = () => {
               <div className="grid grid-cols-1 md:grid-cols-3">
                 {/* Photo column */}
                 <div className="bg-gradient-to-br from-brand/10 to-blue-500/10 flex items-center justify-center p-10">
-                  <div className="w-40 h-40 rounded-full bg-brand/20 flex items-center justify-center text-brand text-6xl font-bold shadow-inner">
-                    MJ
+                  <div className="w-40 h-40 rounded-full overflow-hidden shadow-lg border-4 border-white">
+                    <img
+                      src="/lovable-uploads/mitesh-jain-founder.png"
+                      alt="Mitesh Jain, Founder & CEO of Meet The Mind Technologies"
+                      className="w-full h-full object-cover object-top"
+                    />
                   </div>
                 </div>
 
