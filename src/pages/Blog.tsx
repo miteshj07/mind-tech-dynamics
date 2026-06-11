@@ -113,10 +113,12 @@ const Blog = () => {
             </div>
           )}
 
-          <NewsletterSignup
-            title={blogSection.newsletterSignup.title}
-            description={blogSection.newsletterSignup.description}
-          />
+          {blogSection?.newsletterSignup && (
+            <NewsletterSignup
+              title={blogSection.newsletterSignup.title}
+              description={blogSection.newsletterSignup.description}
+            />
+          )}
         </div>
       </section>
 
