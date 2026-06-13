@@ -107,7 +107,7 @@ const BlogPost = () => {
       />
 
       {/* Page background */}
-      <div className="bg-gray-50 min-h-screen pt-24 pb-20">
+      <div className="bg-gray-50 min-h-screen pt-36 pb-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
 
           {/* Back link */}
