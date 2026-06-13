@@ -78,17 +78,19 @@ const Navigation = () => {
             </button>
 
             {servicesOpen && (
-              <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-lg border border-gray-100 py-2 animate-fade-in">
-                {SERVICE_LINKS.map(item => (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={() => setServicesOpen(false)}
-                    className={`block px-4 py-2 text-sm text-gray-700 hover:text-brand hover:bg-gray-50 transition-colors ${item.name === 'All Services' ? 'border-t border-gray-100 mt-1 pt-3 font-medium' : ''}`}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
+              <div className="absolute top-full left-0 pt-2 w-56">
+                <div className="bg-white rounded-xl shadow-lg border border-gray-100 py-2 animate-fade-in">
+                  {SERVICE_LINKS.map(item => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setServicesOpen(false)}
+                      className={`block px-4 py-2 text-sm text-gray-700 hover:text-brand hover:bg-gray-50 transition-colors ${item.name === 'All Services' ? 'border-t border-gray-100 mt-1 pt-3 font-medium' : ''}`}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
             )}
           </div>
