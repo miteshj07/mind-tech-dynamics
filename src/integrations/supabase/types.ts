@@ -9,6 +9,72 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      blog_posts: {
+        Row: {
+          id: string
+          slug: string
+          title: string
+          excerpt: string | null
+          content: string
+          featured_image: string | null
+          reading_time: number | null
+          meta_title: string | null
+          meta_description: string | null
+          tags: string[]
+          status: Database["public"]["Enums"]["blog_status"]
+          author: string
+          published_at: string | null
+          source_topic: string | null
+          source_url: string | null
+          linkedin_post: string | null
+          trailblazer_post: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          slug: string
+          title: string
+          excerpt?: string | null
+          content?: string
+          featured_image?: string | null
+          reading_time?: number | null
+          meta_title?: string | null
+          meta_description?: string | null
+          tags?: string[]
+          status?: Database["public"]["Enums"]["blog_status"]
+          author?: string
+          published_at?: string | null
+          source_topic?: string | null
+          source_url?: string | null
+          linkedin_post?: string | null
+          trailblazer_post?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          title?: string
+          excerpt?: string | null
+          content?: string
+          featured_image?: string | null
+          reading_time?: number | null
+          meta_title?: string | null
+          meta_description?: string | null
+          tags?: string[]
+          status?: Database["public"]["Enums"]["blog_status"]
+          author?: string
+          published_at?: string | null
+          source_topic?: string | null
+          source_url?: string | null
+          linkedin_post?: string | null
+          trailblazer_post?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       cms_content: {
         Row: {
           created_at: string | null
@@ -129,6 +195,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      blog_status: "draft" | "published" | "archived"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -245,6 +312,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      blog_status: ["draft", "published", "archived"],
     },
   },
 } as const
