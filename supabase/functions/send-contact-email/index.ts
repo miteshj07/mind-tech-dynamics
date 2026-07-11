@@ -17,21 +17,35 @@ serve(async (req) => {
 
   try {
     const { name, email, phone, company, service, message } = await req.json();
-    
+
     console.log("Received contact form submission:", { name, email, phone, company, service, message });
+
+    // Recipient + sender are configurable via Supabase secrets so they can be
+    // changed without a redeploy. Defaults: notify support@, send from the
+    // Resend sandbox until the meethemind.com domain is verified in Resend.
+    //   RESEND_TO   → e.g. "support@meethemind.com"
+    //   RESEND_FROM → e.g. "DealPulse <notifications@meethemind.com>" (needs verified domain)
+    const toAddress = Deno.env.get("RESEND_TO") || "support@meethemind.com";
+    const fromAddress = Deno.env.get("RESEND_FROM") || "Meet The Mind <onboarding@resend.dev>";
+
+    const isEarlyAccess = service === "DealPulse Early Access";
+    const subject = isEarlyAccess
+      ? "New DealPulse Early-Access Request"
+      : "New Contact Form Submission – Meet The Mind";
 
     // Send email using Resend
     const { data, error } = await resend.emails.send({
-      from: "Contact Form <onboarding@resend.dev>",
-      to: "mitesh@meethemind.com",
-      subject: "New Contact Form Submission – Meet The Mind",
+      from: fromAddress,
+      to: toAddress,
+      reply_to: email,
+      subject,
       html: `
-        <h2>New Contact Form Submission</h2>
+        <h2>${isEarlyAccess ? "New DealPulse Early-Access Request" : "New Contact Form Submission"}</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
         <p><strong>Company:</strong> ${company}</p>
-        <p><strong>Service:</strong> ${service}</p>
+        <p><strong>Interest:</strong> ${service}</p>
         <p><strong>Message:</strong> ${message}</p>
       `,
     });

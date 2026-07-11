@@ -18,6 +18,7 @@ import {
   PlusCircle,
   Building2,
   Bell,
+  Play,
   ArrowRight,
   CheckCircle,
 } from 'lucide-react';
@@ -286,21 +287,48 @@ const DealPulse = () => {
         </div>
       </div>
 
+      {/* 2b · DEMO VIDEO */}
+      <section className="py-14">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <h2 className="heading-md mb-3 text-center">See DealPulse in 90 seconds</h2>
+          <p className="text-gray-600 text-lg text-center mb-8">
+            A quick tour of the brief, the board, and the rules — no signup needed.
+          </p>
+          {/*
+            To go live, replace the placeholder <div> below with the embed, e.g.:
+            <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5">
+              <iframe className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/VIDEO_ID" title="DealPulse demo"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen />
+            </div>
+          */}
+          <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5 bg-gray-900">
+            <img
+              src="/dealpulse/pipeline-dashboard.png"
+              alt="DealPulse demo preview"
+              className="absolute inset-0 w-full h-full object-cover object-top opacity-30"
+            />
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <div className="w-20 h-20 rounded-full bg-white/95 flex items-center justify-center shadow-lg">
+                <Play size={30} className="ml-1" style={{ color: FOREST }} fill="currentColor" />
+              </div>
+              <p className="text-white/90 mt-4 text-sm font-medium tracking-wide">Demo video coming soon</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 3 · THE PROBLEM */}
-      <section className="py-20">
+      <section className="py-14" style={{ backgroundColor: MIST }}>
         <div className="container mx-auto px-4 max-w-3xl">
-          <h2 className="heading-md mb-8 text-center">Pipeline reviews find risk two weeks too late</h2>
-          <div className="space-y-5 text-lg text-gray-600 leading-relaxed">
+          <h2 className="heading-md mb-6 text-center">Pipeline reviews find risk two weeks too late</h2>
+          <div className="space-y-4 text-lg text-gray-600 leading-relaxed">
             <p>
               By the time a deal comes up in the pipeline review, the warning signs have
-              been there for weeks — no activity, a pushed close date, a support fire
-              burning in the background. Nobody saw them because nobody was looking at all
-              of them at once.
-            </p>
-            <p>
-              Salesforce records what your reps type. It doesn’t tell you what your deals
-              are actually <em>doing</em> — which ones have gone quiet, slipped, or started
-              to erode while everyone was busy.
+              been there for weeks — no activity, a pushed close date, a support fire in
+              the background. Salesforce records what your reps <em>type</em>; it doesn’t
+              tell you what your deals are actually <em>doing</em>.
             </p>
             <p>
               And the revenue-intelligence tools that promise to help usually sync your
@@ -313,22 +341,20 @@ const DealPulse = () => {
       </section>
 
       {/* 4 · HOW IT WORKS */}
-      <section className="py-20" style={{ backgroundColor: MIST }}>
-        <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="heading-md mb-14 text-center">How DealPulse works</h2>
-          <div className="space-y-10">
+      <section className="py-14">
+        <div className="container mx-auto px-4">
+          <h2 className="heading-md mb-10 text-center">How DealPulse works</h2>
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {steps.map((s, i) => (
-              <div key={i} className="flex items-start gap-6">
+              <div key={i}>
                 <div
-                  className="rounded-full w-11 h-11 flex items-center justify-center flex-shrink-0 font-bold text-white text-lg"
+                  className="rounded-full w-11 h-11 flex items-center justify-center mb-4 font-bold text-white text-lg"
                   style={{ backgroundColor: FOREST }}
                 >
                   {i + 1}
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-2" style={{ color: INK }}>{s.title}</h3>
-                  <p className="text-gray-600 text-lg leading-relaxed">{s.desc}</p>
-                </div>
+                <h3 className="text-lg font-semibold mb-2" style={{ color: INK }}>{s.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
@@ -336,7 +362,7 @@ const DealPulse = () => {
       </section>
 
       {/* 5 · THE 7 SIGNALS */}
-      <section className="py-20">
+      <section className="py-14" style={{ backgroundColor: MIST }}>
         <div className="container mx-auto px-4">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <h2 className="heading-md mb-4">Seven signals, live on every deal out of the box</h2>
@@ -370,7 +396,7 @@ const DealPulse = () => {
       </section>
 
       {/* 5b · CAPABILITIES BEYOND THE SCORE */}
-      <section className="py-20" style={{ backgroundColor: MIST }}>
+      <section className="py-14">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-2xl mx-auto mb-14">
             <h2 className="heading-md mb-4">More than a risk score</h2>
@@ -400,7 +426,7 @@ const DealPulse = () => {
       </section>
 
       {/* 6 · SCREENSHOT GALLERY */}
-      <section className="py-20">
+      <section className="py-14" style={{ backgroundColor: MIST }}>
         <div className="container mx-auto px-4">
           <h2 className="heading-md mb-4 text-center">See it in Salesforce</h2>
           <p className="text-gray-600 text-lg text-center max-w-2xl mx-auto mb-12">
@@ -446,7 +472,7 @@ const DealPulse = () => {
       </section>
 
       {/* 7 · NATIVE TRUST BLOCK — Ink dark band */}
-      <section className="py-20" style={{ backgroundColor: INK }}>
+      <section className="py-14" style={{ backgroundColor: INK }}>
         <div className="container mx-auto px-4">
           <div className="inline-flex bg-white rounded-xl px-4 py-2 mb-10">
             <img
@@ -480,7 +506,7 @@ const DealPulse = () => {
       </section>
 
       {/* 8 · BUILT BY CONSULTANTS */}
-      <section className="py-16">
+      <section className="py-14">
         <div className="container mx-auto px-4 max-w-3xl text-center">
           <ShieldCheck size={40} style={{ color: FOREST }} className="mx-auto mb-5" />
           <h2 className="heading-md mb-4">Built by the consultants who see these deals every day</h2>
@@ -496,7 +522,7 @@ const DealPulse = () => {
       </section>
 
       {/* 9 · FAQ */}
-      <section className="py-20" style={{ backgroundColor: MIST }}>
+      <section className="py-14" style={{ backgroundColor: MIST }}>
         <div className="container mx-auto px-4 max-w-3xl">
           <h2 className="heading-md mb-10 text-center">DealPulse FAQs</h2>
           <div className="space-y-5">
@@ -514,7 +540,7 @@ const DealPulse = () => {
       </section>
 
       {/* 11 · CTA BAND */}
-      <section className="py-20" style={{ backgroundColor: INK }}>
+      <section className="py-14" style={{ backgroundColor: INK }}>
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-5 max-w-2xl mx-auto">
             See your at-risk deals this week.
