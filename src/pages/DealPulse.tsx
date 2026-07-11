@@ -4,14 +4,20 @@ import {
   ShieldCheck,
   Activity,
   CalendarClock,
+  CalendarX,
   TrendingDown,
-  Users,
+  Hourglass,
   ListChecks,
-  AlertTriangle,
+  Clock,
   Lock,
   Eye,
   KeyRound,
   Sparkles,
+  SlidersHorizontal,
+  LineChart,
+  PlusCircle,
+  Building2,
+  Bell,
   ArrowRight,
   CheckCircle,
 } from 'lucide-react';
@@ -28,14 +34,49 @@ const MIST = '#EEF4F0';
 
 const gradientStrip = 'linear-gradient(90deg, #B31120 0%, #247854 100%)';
 
+// The "Standard Seven" — active out of the box (matches DP_NativeSignalConfig / Signal Management screen)
 const signals = [
-  { icon: Activity, name: 'Activity Gap', desc: 'Days since the last logged Task or Event on the deal.' },
-  { icon: CalendarClock, name: 'Close-Date Pushes', desc: 'How many times the Close Date has slipped forward.' },
-  { icon: TrendingDown, name: 'Stage Regression', desc: 'The opportunity moved backward to an earlier stage.' },
-  { icon: AlertTriangle, name: 'Open High-Priority Cases', desc: 'Unresolved high-priority support cases on the account.' },
-  { icon: ListChecks, name: 'Missing Next Step', desc: 'No Next Step defined — nothing planned to move it forward.' },
-  { icon: TrendingDown, name: 'Amount Erosion', desc: 'The deal value has dropped since it was created.' },
-  { icon: Users, name: 'Contact Engagement', desc: 'How many buying-side contacts are actually engaged.' },
+  { icon: Activity, name: 'Days Since Last Activity', desc: 'Days since the last completed Task or Event on the deal.' },
+  { icon: CalendarX, name: 'No Future Scheduled Activity', desc: 'Nothing open is on the calendar today or later to move it forward.' },
+  { icon: CalendarClock, name: 'Close Date Push Count', desc: 'How many times the Close Date has been pushed to a later date.' },
+  { icon: TrendingDown, name: 'Stage Regressed', desc: 'The opportunity moved backward to an earlier stage.' },
+  { icon: Hourglass, name: 'Stage Stagnation', desc: 'How many days the deal has sat in its current stage.' },
+  { icon: ListChecks, name: 'Next Step Blank', desc: 'The Opportunity has no Next Step defined.' },
+  { icon: Clock, name: 'Opportunity Age', desc: 'How long the deal has been open since it was created.' },
+];
+
+// Capabilities beyond the risk score
+const capabilities = [
+  {
+    icon: SlidersHorizontal,
+    title: 'A glass-box rule engine',
+    desc: 'You decide what “High Risk” means — in plain conditions, no code. Every tier traces back to rules you can read and edit, not a proprietary model you have to trust.',
+  },
+  {
+    icon: LineChart,
+    title: 'Risk momentum & history',
+    desc: 'A per-deal sparkline shows whether a deal is getting riskier or cooling off, and a Movers panel surfaces the biggest shifts across your pipeline.',
+  },
+  {
+    icon: PlusCircle,
+    title: 'No-code Custom Signals',
+    desc: 'Build your own signals from any related object — pick the source, the aggregate, and the threshold. They score right alongside the built-in seven.',
+  },
+  {
+    icon: Building2,
+    title: 'Industry signal packs',
+    desc: 'Pre-built packs auto-detect your cloud and add vertical signals for Manufacturing, Financial Services, Health, and Revenue Cloud / CPQ.',
+  },
+  {
+    icon: Sparkles,
+    title: 'AI-optional by design',
+    desc: 'Risk scoring is deterministic and never spends an AI credit. Einstein briefs are optional, run on your own entitlement, and quietly fall back to a written brief when AI is off.',
+  },
+  {
+    icon: Bell,
+    title: 'One digest, not a flood',
+    desc: 'When deals change tier, each owner gets a single grouped digest email and one in-app alert — never a separate message per deal.',
+  },
 ];
 
 const steps = [
@@ -172,26 +213,26 @@ const DealPulse = () => {
       <EarlyAccessForm open={formOpen} onClose={() => setFormOpen(false)} />
 
       {/* 1 · HERO — light background */}
-      <section className="relative pt-32 pb-16" style={{ backgroundColor: MIST }}>
+      <section className="relative pt-28 pb-14" style={{ backgroundColor: MIST }}>
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
             <div>
               <img
                 src="/dealpulse/dealpulse-logo.png"
                 srcSet="/dealpulse/dealpulse-logo.png 1x, /dealpulse/dealpulse-logo-2x.png 2x"
                 alt="DealPulse"
-                className="h-11 w-auto mb-8"
+                className="h-10 w-auto mb-6"
               />
               <p
-                className="text-xs font-semibold tracking-widest uppercase mb-4"
+                className="text-xs font-semibold tracking-widest uppercase mb-3"
                 style={{ color: FOREST }}
               >
                 Deal Risk Intelligence · 100% Native
               </p>
-              <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6" style={{ color: INK }}>
+              <h1 className="text-4xl md:text-5xl font-bold leading-[1.1] mb-5" style={{ color: INK }}>
                 Know which deals are at risk — before your pipeline review.
               </h1>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+              <p className="text-lg text-gray-600 mb-7 leading-relaxed">
                 DealPulse is a 100% native Salesforce app that scores every open
                 Opportunity, shows exactly which risk signals are firing, and tells the
                 rep what to do next. No sync-out. No black box. No questionnaires.
@@ -209,12 +250,12 @@ const DealPulse = () => {
               </div>
             </div>
 
-            <div className="relative">
+            <div className="w-full max-w-[380px] mx-auto lg:mx-0 lg:ml-auto">
               <div className="rounded-2xl bg-white shadow-2xl ring-1 ring-black/5 overflow-hidden">
-                <div className="flex items-center gap-1.5 px-4 py-3 border-b border-gray-100">
-                  <span className="w-3 h-3 rounded-full bg-red-400" />
-                  <span className="w-3 h-3 rounded-full bg-yellow-400" />
-                  <span className="w-3 h-3 rounded-full bg-green-400" />
+                <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-gray-100">
+                  <span className="w-2.5 h-2.5 rounded-full bg-red-400" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-green-400" />
                 </div>
                 <img
                   src="/dealpulse/deal-brief.png"
@@ -298,10 +339,10 @@ const DealPulse = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <h2 className="heading-md mb-4">Seven built-in signals, working on every deal</h2>
+            <h2 className="heading-md mb-4">Seven signals, live on every deal out of the box</h2>
             <p className="text-gray-600 text-lg">
-              Each one maps to something your reps already know matters — surfaced
-              automatically, on every open Opportunity.
+              Each one maps to something your reps already know matters — computed
+              automatically from data already in Salesforce, on every open Opportunity.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -321,14 +362,45 @@ const DealPulse = () => {
             })}
           </div>
           <p className="text-center text-gray-500 mt-10 max-w-2xl mx-auto">
-            Plus no-code <strong className="text-gray-700">Custom Signals</strong> and industry packs for
-            Manufacturing, Financial Services, Health, and CPQ.
+            Four more signals — <strong className="text-gray-700">Amount Erosion, Open High-Priority Cases,
+            Total Contacts,</strong> and <strong className="text-gray-700">Engaged Contacts</strong> — switch
+            on per org, alongside a no-code Custom Signal builder and 20 industry-pack signals.
           </p>
         </div>
       </section>
 
+      {/* 5b · CAPABILITIES BEYOND THE SCORE */}
+      <section className="py-20" style={{ backgroundColor: MIST }}>
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <h2 className="heading-md mb-4">More than a risk score</h2>
+            <p className="text-gray-600 text-lg">
+              DealPulse is a full deal-risk workflow — you control the rules, watch the
+              momentum, and extend it to your business, all inside Salesforce.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {capabilities.map((c, i) => {
+              const Icon = c.icon;
+              return (
+                <div key={i} className="rounded-xl bg-white p-7 shadow-sm">
+                  <div
+                    className="w-12 h-12 rounded-lg flex items-center justify-center mb-4"
+                    style={{ backgroundColor: 'rgba(36,120,84,0.1)' }}
+                  >
+                    <Icon size={24} style={{ color: FOREST }} />
+                  </div>
+                  <h3 className="font-semibold text-lg mb-2" style={{ color: INK }}>{c.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{c.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* 6 · SCREENSHOT GALLERY */}
-      <section className="py-20" style={{ backgroundColor: '#F9FAFB' }}>
+      <section className="py-20">
         <div className="container mx-auto px-4">
           <h2 className="heading-md mb-4 text-center">See it in Salesforce</h2>
           <p className="text-gray-600 text-lg text-center max-w-2xl mx-auto mb-12">
@@ -360,7 +432,13 @@ const DealPulse = () => {
                 <span className="w-3 h-3 rounded-full bg-yellow-400" />
                 <span className="w-3 h-3 rounded-full bg-green-400" />
               </div>
-              <img src={active.src} alt={active.alt} className="w-full" />
+              <div className="flex justify-center bg-white p-4 sm:p-6">
+                <img
+                  src={active.src}
+                  alt={active.alt}
+                  className="w-auto max-w-full max-h-[560px] object-contain rounded-md"
+                />
+              </div>
             </div>
             <p className="text-center text-gray-500 mt-5 max-w-2xl mx-auto">{active.caption}</p>
           </div>
