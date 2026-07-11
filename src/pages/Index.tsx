@@ -4,6 +4,7 @@ import Seo from '@/components/layout/Seo';
 import HeroSection from '@/components/home/HeroSection';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 import ServiceOverview from '@/components/home/ServiceOverview';
+import DealPulseTeaser from '@/components/home/DealPulseTeaser';
 import SuccessMetrics from '@/components/home/SuccessMetrics';
 import FounderBio from '@/components/home/FounderBio';
 import TechStackStrip from '@/components/home/TechStackStrip';
@@ -87,6 +88,7 @@ const Index = () => {
       <TechStackStrip />
       <WhyChooseUs />
       <ServiceOverview />
+      <DealPulseTeaser />
       <SuccessMetrics />
       <FounderBio />
       <Testimonials />

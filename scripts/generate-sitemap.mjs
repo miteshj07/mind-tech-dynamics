@@ -18,6 +18,8 @@ const STATIC_ROUTES = [
   '/blog',
   '/careers',
   '/contact-us',
+  '/apps',
+  '/dealpulse',
 ];
 
 // ── Blog slugs (keep in sync with Supabase blog posts) ───────────────────────

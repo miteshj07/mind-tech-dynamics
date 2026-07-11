@@ -9,6 +9,7 @@ const SERVICE_LINKS = [
   { name: 'Apollo.io Integration',     path: '/apollo-io-salesforce-integration' },
   { name: 'Salesforce RevOps',         path: '/salesforce-revops' },
   { name: 'Data Cloud',                path: '/salesforce-data-cloud' },
+  { name: 'DealPulse — Deal Risk App', path: '/dealpulse' },
   { name: 'All Services',              path: '/services' },
 ];
 
