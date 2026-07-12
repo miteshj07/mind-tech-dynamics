@@ -9,7 +9,6 @@ const SERVICE_LINKS = [
   { name: 'Apollo.io Integration',     path: '/apollo-io-salesforce-integration' },
   { name: 'Salesforce RevOps',         path: '/salesforce-revops' },
   { name: 'Data Cloud',                path: '/salesforce-data-cloud' },
-  { name: 'DealPulse — Deal Risk App', path: '/dealpulse' },
   { name: 'All Services',              path: '/services' },
 ];
 
@@ -38,8 +37,7 @@ const Navigation = () => {
 
   const menuItems = [
     { name: 'Home', path: '/' },
-    { name: 'Agentforce', path: '/agentforce' },
-    { name: 'Lead Generation', path: '/b2b-lead-generation' },
+    { name: 'Salesforce Apps', path: '/apps', badge: 'New' },
     { name: 'About Us', path: '/about-us' },
     { name: 'Case Studies', path: '/case-studies' },
     { name: 'Trailblazer Playbook', path: '/blog' },
@@ -59,7 +57,7 @@ const Navigation = () => {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden lg:flex items-center space-x-8">
+        <div className="hidden xl:flex items-center xl:space-x-3 2xl:space-x-6">
           <Link to="/" className="font-medium text-gray-700 hover:text-brand transition-colors">
             Home
           </Link>
@@ -100,9 +98,14 @@ const Navigation = () => {
             <Link
               key={item.name}
               to={item.path}
-              className="font-medium text-gray-700 hover:text-brand transition-colors"
+              className="font-medium text-gray-700 hover:text-brand transition-colors inline-flex items-center gap-1.5 whitespace-nowrap"
             >
               {item.name}
+              {'badge' in item && item.badge && (
+                <span className="text-[9px] font-bold uppercase tracking-wide bg-brand/10 text-brand px-1.5 py-0.5 rounded-full leading-none">
+                  {item.badge}
+                </span>
+              )}
             </Link>
           ))}
 
@@ -118,7 +121,7 @@ const Navigation = () => {
         </div>
 
         {/* Mobile Menu Button */}
-        <div className="lg:hidden">
+        <div className="xl:hidden">
           <button onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -127,7 +130,7 @@ const Navigation = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden bg-white absolute top-full left-0 w-full shadow-lg py-4 animate-fade-in">
+        <div className="xl:hidden bg-white absolute top-full left-0 w-full shadow-lg py-4 animate-fade-in">
           <div className="container mx-auto px-4 flex flex-col space-y-4">
             <Link to="/" className="font-medium text-gray-700 hover:text-brand transition-colors py-2 border-b border-gray-100" onClick={() => setIsOpen(false)}>
               Home
@@ -161,10 +164,15 @@ const Navigation = () => {
               <Link
                 key={item.name}
                 to={item.path}
-                className="font-medium text-gray-700 hover:text-brand transition-colors py-2 border-b border-gray-100"
+                className="font-medium text-gray-700 hover:text-brand transition-colors py-2 border-b border-gray-100 flex items-center gap-2"
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
+                {'badge' in item && item.badge && (
+                  <span className="text-[9px] font-bold uppercase tracking-wide bg-brand/10 text-brand px-1.5 py-0.5 rounded-full leading-none">
+                    {item.badge}
+                  </span>
+                )}
               </Link>
             ))}
 
