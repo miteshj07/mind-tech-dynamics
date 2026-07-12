@@ -18,7 +18,6 @@ import {
   PlusCircle,
   Building2,
   Bell,
-  Play,
   ArrowRight,
   CheckCircle,
 } from 'lucide-react';
@@ -251,19 +250,18 @@ const DealPulse = () => {
               </div>
             </div>
 
-            <div className="w-full max-w-[380px] mx-auto lg:mx-0 lg:ml-auto">
-              <div className="rounded-2xl bg-white shadow-2xl ring-1 ring-black/5 overflow-hidden">
-                <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-gray-100">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-400" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-green-400" />
-                </div>
-                <img
-                  src="/dealpulse/deal-brief.png"
-                  alt="DealPulse risk brief on a Salesforce Opportunity"
-                  className="w-full"
-                  width={950}
-                  height={1270}
+            <div className="w-full">
+              <div className="rounded-2xl shadow-2xl ring-1 ring-black/5 overflow-hidden bg-gray-900">
+                <video
+                  src="/dealpulse/teaser.mp4"
+                  poster="/dealpulse/teaser-poster.jpg"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  className="w-full aspect-video object-cover"
+                  aria-label="DealPulse 28-second teaser"
                 />
               </div>
             </div>
@@ -290,31 +288,20 @@ const DealPulse = () => {
       {/* 2b · DEMO VIDEO */}
       <section className="py-14">
         <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="heading-md mb-3 text-center">See DealPulse in 90 seconds</h2>
+          <h2 className="heading-md mb-3 text-center">See DealPulse in under a minute</h2>
           <p className="text-gray-600 text-lg text-center mb-8">
-            A quick tour of the brief, the board, and the rules — no signup needed.
+            A 51-second walkthrough of the brief, the board, and the rules — press play.
           </p>
-          {/*
-            To go live, replace the placeholder <div> below with the embed, e.g.:
-            <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5">
-              <iframe className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/VIDEO_ID" title="DealPulse demo"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen />
-            </div>
-          */}
           <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5 bg-gray-900">
-            <img
-              src="/dealpulse/pipeline-dashboard.png"
-              alt="DealPulse demo preview"
-              className="absolute inset-0 w-full h-full object-cover object-top opacity-30"
+            <video
+              src="/dealpulse/demo.mp4"
+              poster="/dealpulse/demo-poster.jpg"
+              controls
+              preload="none"
+              playsInline
+              className="w-full h-full object-cover"
+              aria-label="DealPulse 51-second product demo"
             />
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <div className="w-20 h-20 rounded-full bg-white/95 flex items-center justify-center shadow-lg">
-                <Play size={30} className="ml-1" style={{ color: FOREST }} fill="currentColor" />
-              </div>
-              <p className="text-white/90 mt-4 text-sm font-medium tracking-wide">Demo video coming soon</p>
-            </div>
           </div>
         </div>
       </section>
