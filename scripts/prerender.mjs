@@ -10,8 +10,10 @@
 // engines, social unfurlers) then get complete, per-page HTML.
 //
 // Replaces the old react-snap setup, whose bundled puppeteer 1.x was
-// incompatible with modern Chromium on Vercel. Uses the puppeteer@21 already
-// in devDependencies (ships its own matched Chromium).
+// incompatible with modern Chromium on Vercel. Uses puppeteer-core with
+// @sparticuz/chromium on Linux (a Chromium built to run inside Vercel's minimal
+// build image, which lacks the system libs a normal Chromium needs), and a
+// system Chrome when run locally (macOS/Windows).
 //
 // FAILS SAFE: if Chromium can't launch, it logs a warning and exits 0, leaving
 // the plain SPA build intact — so it can never break the deploy. The app's
@@ -90,28 +92,34 @@ async function fetchBlogRoutes() {
 }
 
 async function launchBrowser() {
-  const puppeteer = (await import('puppeteer')).default;
-  const args = ['--no-sandbox', '--disable-setuid-sandbox'];
-  // Prefer puppeteer's bundled Chromium; fall back to an explicit path / system Chrome.
-  try {
-    return await puppeteer.launch({ headless: 'new', args });
-  } catch (e1) {
-    const candidates = [
-      process.env.PUPPETEER_EXECUTABLE_PATH,
-      '/usr/bin/google-chrome-stable',
-      '/usr/bin/google-chrome',
-      '/usr/bin/chromium-browser',
-      '/usr/bin/chromium',
-      '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    ].filter(Boolean);
-    for (const executablePath of candidates) {
-      if (!existsSync(executablePath)) continue;
-      try {
-        return await puppeteer.launch({ headless: 'new', args, executablePath });
-      } catch { /* try next */ }
-    }
-    throw e1;
+  const puppeteer = (await import('puppeteer-core')).default;
+
+  // Linux (Vercel build / CI): @sparticuz/chromium ships a Chromium + the shared
+  // libraries these minimal images lack — the fix for "couldn't launch Chrome".
+  if (process.platform === 'linux') {
+    const chromium = (await import('@sparticuz/chromium')).default;
+    return await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    });
   }
+
+  // Local dev (macOS/Windows): drive a system Chrome.
+  const args = ['--no-sandbox', '--disable-setuid-sandbox'];
+  const candidates = [
+    process.env.PUPPETEER_EXECUTABLE_PATH,
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    '/usr/local/bin/chromium',
+  ].filter(Boolean);
+  for (const executablePath of candidates) {
+    if (existsSync(executablePath)) {
+      return await puppeteer.launch({ headless: 'new', args, executablePath });
+    }
+  }
+  throw new Error('no local Chrome found (set PUPPETEER_EXECUTABLE_PATH)');
 }
 
 // Serve dist/. The SPA shell is cached in memory once so that writing
