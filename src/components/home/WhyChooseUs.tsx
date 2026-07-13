@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
+import { sanitizeInlineHtml } from '@/lib/sanitize';
 import { CheckCircle, Users, Award, Rocket, Code, Database } from 'lucide-react';
 import { useCms } from '@/cms/context/CmsContext';
 
@@ -98,7 +99,7 @@ const WhyChooseUs = () => {
           ref={sectionRef}
           className="text-center mb-16 opacity-0 translate-y-8 transition-all duration-700 ease-out"
         >
-          <h2 className="heading-lg mb-4" dangerouslySetInnerHTML={{ __html: whyChooseUsSection.title }} />
+          <h2 className="heading-lg mb-4" dangerouslySetInnerHTML={{ __html: sanitizeInlineHtml(whyChooseUsSection.title) }} />
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             {whyChooseUsSection.subtitle}
           </p>

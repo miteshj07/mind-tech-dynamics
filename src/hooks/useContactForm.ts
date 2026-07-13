@@ -22,8 +22,6 @@ export const useContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      console.log("Submitting form data:", formData);
-      
       // 1. Insert data into Supabase inquiries table
       const { error: dbError } = await supabase
         .from('inquiries')

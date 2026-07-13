@@ -9,6 +9,17 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Escape user-supplied values before embedding them in the notification email,
+// so a submission can't inject markup / phishing links / tracking pixels into
+// the admin's inbox.
+const esc = (s: unknown): string =>
+  String(s ?? "").replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string)
+  );
+
+const isValidEmail = (s: unknown): s is string =>
+  typeof s === "string" && s.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -18,7 +29,15 @@ serve(async (req) => {
   try {
     const { name, email, phone, company, service, message } = await req.json();
 
-    console.log("Received contact form submission:", { name, email, phone, company, service, message });
+    // Reject invalid submissions (also protects the attacker-controlled reply_to).
+    if (!isValidEmail(email)) {
+      return new Response(
+        JSON.stringify({ success: false, error: "A valid email address is required." }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    console.log("Received contact form submission for interest:", service || "general");
 
     // Recipient + sender are configurable via Supabase secrets so they can be
     // changed without a redeploy. Defaults: notify support@, send from the
@@ -41,12 +60,12 @@ serve(async (req) => {
       subject,
       html: `
         <h2>${isEarlyAccess ? "New DealPulse Early-Access Request" : "New Contact Form Submission"}</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
-        <p><strong>Company:</strong> ${company}</p>
-        <p><strong>Interest:</strong> ${service}</p>
-        <p><strong>Message:</strong> ${message}</p>
+        <p><strong>Name:</strong> ${esc(name)}</p>
+        <p><strong>Email:</strong> ${esc(email)}</p>
+        <p><strong>Phone:</strong> ${esc(phone) || "Not provided"}</p>
+        <p><strong>Company:</strong> ${esc(company)}</p>
+        <p><strong>Interest:</strong> ${esc(service)}</p>
+        <p><strong>Message:</strong> ${esc(message)}</p>
       `,
     });
 

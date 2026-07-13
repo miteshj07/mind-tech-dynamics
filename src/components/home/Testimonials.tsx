@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { sanitizeInlineHtml } from '@/lib/sanitize';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { useCms } from '@/cms/context/CmsContext';
 interface Testimonial {
@@ -49,7 +50,7 @@ const Testimonials = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="heading-lg mb-4" dangerouslySetInnerHTML={{
-          __html: testimonialsSection.title
+          __html: sanitizeInlineHtml(testimonialsSection.title)
         }} />
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             {testimonialsSection.subtitle}

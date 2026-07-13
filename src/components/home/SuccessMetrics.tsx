@@ -1,5 +1,6 @@
 
 import React, { useRef } from 'react';
+import { sanitizeInlineHtml } from '@/lib/sanitize';
 import { TrendingUp, Clock, DollarSign, Heart } from 'lucide-react';
 import { useCms } from '@/cms/context/CmsContext';
 
@@ -23,7 +24,7 @@ const SuccessMetrics = () => {
     <section ref={sectionRef} className="py-20 bg-gray-100">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="heading-lg mb-4" dangerouslySetInnerHTML={{ __html: successMetricsSection.title }} />
+          <h2 className="heading-lg mb-4" dangerouslySetInnerHTML={{ __html: sanitizeInlineHtml(successMetricsSection.title) }} />
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             {successMetricsSection.subtitle}
           </p>
