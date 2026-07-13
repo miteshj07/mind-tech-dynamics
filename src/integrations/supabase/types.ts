@@ -9,6 +9,57 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      analytics_snapshots: {
+        Row: {
+          id: string
+          snapshot_date: string
+          range_start: string | null
+          range_end: string | null
+          kpis: Json
+          channels: Json
+          top_pages: Json
+          top_queries: Json
+          gsc_totals: Json
+          ga4_ok: boolean
+          gsc_ok: boolean
+          error: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          snapshot_date: string
+          range_start?: string | null
+          range_end?: string | null
+          kpis?: Json
+          channels?: Json
+          top_pages?: Json
+          top_queries?: Json
+          gsc_totals?: Json
+          ga4_ok?: boolean
+          gsc_ok?: boolean
+          error?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          snapshot_date?: string
+          range_start?: string | null
+          range_end?: string | null
+          kpis?: Json
+          channels?: Json
+          top_pages?: Json
+          top_queries?: Json
+          gsc_totals?: Json
+          ga4_ok?: boolean
+          gsc_ok?: boolean
+          error?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           id: string

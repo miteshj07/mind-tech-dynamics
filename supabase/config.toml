@@ -3,3 +3,8 @@ project_id = "rlfansvalprvofpuqmsb"
 
 [functions.send-contact-email]
 verify_jwt = false
+
+# Invoked server-to-server by pg_cron (no Supabase user JWT). Guarded
+# instead by an x-cron-secret header the function checks.
+[functions.analytics-snapshot]
+verify_jwt = false

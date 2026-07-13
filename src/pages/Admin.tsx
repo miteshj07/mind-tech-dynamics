@@ -9,6 +9,7 @@ import EditContentModal from '@/components/admin/EditContentModal';
 import ContentTab from '@/components/admin/ContentTab';
 import BlogManager from '@/components/admin/BlogManager';
 import LogoutButton from '@/components/auth/LogoutButton';
+import AnalyticsTab from '@/components/admin/analytics/AnalyticsTab';
 
 const Admin = () => {
   const { data, updateContent, uploadImage, refreshData } = useCms();
@@ -109,7 +110,8 @@ const Admin = () => {
           </div>
           
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-            <TabsList className="grid grid-cols-9 w-full">
+            <TabsList className="grid grid-cols-10 w-full">
+              <TabsTrigger value="analytics">📊 Analytics</TabsTrigger>
               <TabsTrigger value="home">Home</TabsTrigger>
               <TabsTrigger value="services">Services</TabsTrigger>
               <TabsTrigger value="about">About Us</TabsTrigger>
@@ -120,6 +122,10 @@ const Admin = () => {
               <TabsTrigger value="contact">Contact</TabsTrigger>
               <TabsTrigger value="footer">Footer</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="analytics" className="space-y-4">
+              <AnalyticsTab />
+            </TabsContent>
 
             <TabsContent value="blog-manager" className="space-y-4">
               <BlogManager />
