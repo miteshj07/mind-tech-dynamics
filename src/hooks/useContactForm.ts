@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { trackEvent } from '@/lib/analytics';
 
 interface ContactFormData {
   name: string;
@@ -50,12 +51,18 @@ export const useContactForm = () => {
         // but log the error for monitoring
       }
 
+      // Record the conversion (GA4 recommended "generate_lead" event).
+      trackEvent('generate_lead', {
+        method: 'contact_form',
+        service: formData.service || 'unspecified',
+      });
+
       // Show success message
       toast({
         title: "Message sent!",
         description: "Thank you! Our team will get back to you shortly.",
       });
-      
+
       setFormSuccess(true);
     } catch (error) {
       console.error('Error in form submission:', error);

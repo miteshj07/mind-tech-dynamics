@@ -12,6 +12,8 @@ import Navigation from "@/components/layout/Navigation";
 import Footer from "@/components/layout/Footer";
 import PageTransition from "@/components/layout/PageTransition";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import RouteAnalytics from "@/components/analytics/RouteAnalytics";
+import CtaTracker from "@/components/analytics/CtaTracker";
 
 // Pages
 import HomePage from "@/pages/Index";
@@ -48,6 +50,8 @@ const App = () => {
         <BrowserRouter>
           <AuthProvider>
             <TooltipProvider>
+              <RouteAnalytics />
+              <CtaTracker />
               <Navigation />
               <Routes>
                 <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />

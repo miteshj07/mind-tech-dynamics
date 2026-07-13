@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useCms } from '@/cms/context/CmsContext';
 import { useContactForm } from '@/hooks/useContactForm';
+import { trackEvent } from '@/lib/analytics';
 
 const CALENDLY_URL = 'https://calendly.com/mitesh-meethemind/30min';
 
@@ -54,6 +55,18 @@ const ContactUs = () => {
     return () => { script.remove(); };
   }, []);
 
+  // Record a conversion when a visitor books a call through the Calendly widget.
+  useEffect(() => {
+    const onMessage = (e: MessageEvent) => {
+      if (e.origin !== 'https://calendly.com') return;
+      if (e.data?.event === 'calendly.event_scheduled') {
+        trackEvent('book_consultation', { method: 'calendly' });
+      }
+    };
+    window.addEventListener('message', onMessage);
+    return () => window.removeEventListener('message', onMessage);
+  }, []);
+
   const [formState, setFormState] = useState({
     name: '',
     company: '',
@@ -62,6 +75,9 @@ const ContactUs = () => {
     service: '',
     message: '',
   });
+
+  // "Send a message" (form) vs "Book a call" (Calendly) — one ask at a time.
+  const [activeTab, setActiveTab] = useState<'call' | 'message'>('message');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -98,7 +114,13 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">{contactSection.contactInfo.email.title}</h3>
-                    <p className="text-gray-600">{contactSection.contactInfo.email.value}</p>
+                    <a
+                      href={`mailto:${contactSection.contactInfo.email.value}`}
+                      onClick={() => trackEvent('contact_click', { method: 'email' })}
+                      className="text-gray-600 hover:text-brand transition-colors break-all"
+                    >
+                      {contactSection.contactInfo.email.value}
+                    </a>
                   </div>
                 </div>
                 
@@ -108,7 +130,13 @@ const ContactUs = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold mb-1">{contactSection.contactInfo.phone.title}</h3>
-                    <p className="text-gray-600">{contactSection.contactInfo.phone.value}</p>
+                    <a
+                      href={`tel:${contactSection.contactInfo.phone.value.replace(/[^+\d]/g, '')}`}
+                      onClick={() => trackEvent('contact_click', { method: 'phone' })}
+                      className="text-gray-600 hover:text-brand transition-colors"
+                    >
+                      {contactSection.contactInfo.phone.value}
+                    </a>
                   </div>
                 </div>
                 
@@ -139,8 +167,41 @@ const ContactUs = () => {
               </div>
             </div>
             
-            {/* Contact Form */}
+            {/* Book a call OR send a message — one ask at a time */}
             <div className="bg-white rounded-xl shadow-lg p-8">
+              <div role="tablist" aria-label="Get in touch" className="grid grid-cols-2 gap-1 p-1 mb-8 bg-gray-100 rounded-lg">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={activeTab === 'message'}
+                  onClick={() => setActiveTab('message')}
+                  className={`py-2.5 rounded-md text-sm font-semibold transition-colors ${activeTab === 'message' ? 'bg-white text-brand shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
+                >
+                  Send a message
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={activeTab === 'call'}
+                  onClick={() => setActiveTab('call')}
+                  className={`py-2.5 rounded-md text-sm font-semibold transition-colors ${activeTab === 'call' ? 'bg-white text-brand shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}
+                >
+                  Book a call
+                </button>
+              </div>
+
+              {/* Book a call */}
+              <div className={activeTab === 'call' ? 'block' : 'hidden'}>
+                <p className="text-gray-600 mb-6">{contactSection.consultation.description}</p>
+                <div
+                  className="calendly-inline-widget rounded-xl overflow-hidden"
+                  data-url={`${CALENDLY_URL}?hide_event_type_details=1&hide_gdpr_banner=1`}
+                  style={{ minWidth: '280px', height: '630px' }}
+                />
+              </div>
+
+              {/* Send a message */}
+              <div className={activeTab === 'message' ? 'block' : 'hidden'}>
               {formSuccess ? (
                 <div className="text-center py-12">
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mb-6">
@@ -267,22 +328,10 @@ const ContactUs = () => {
                   </form>
                 </>
               )}
+              </div>
             </div>
           </div>
           
-          <div className="bg-gray-50 rounded-xl p-8 mt-16">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold mb-4">{contactSection.consultation.title}</h3>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                {contactSection.consultation.description}
-              </p>
-            </div>
-            <div
-              className="calendly-inline-widget rounded-xl overflow-hidden"
-              data-url={`${CALENDLY_URL}?hide_event_type_details=1&hide_gdpr_banner=1`}
-              style={{ minWidth: '320px', height: '700px' }}
-            />
-          </div>
         </div>
       </section>
     </>
