@@ -171,6 +171,13 @@ async function main() {
       });
       // Ensure React has rendered something into #root.
       await page.waitForSelector('#root > *', { timeout: 15000 }).catch(() => {});
+      // Blog detail pages fetch their body from Supabase after mount — wait for
+      // the article to render (and for Seo.tsx to set the per-post canonical)
+      // before snapshotting, or we'd capture just the page chrome. networkidle2
+      // can fire before that fetch resolves on slower (CI) networks.
+      if (/^\/blog\/.+/.test(route)) {
+        await page.waitForSelector('article', { timeout: 25000 }).catch(() => {});
+      }
       const html = await page.content();
 
       const outDir = route === '/' ? DIST : join(DIST, route);
