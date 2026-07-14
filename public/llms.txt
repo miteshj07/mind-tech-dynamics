@@ -1,0 +1,45 @@
+# Meet The Mind Technologies
+
+> Founder-led Salesforce consultancy specializing in Salesforce implementation,
+> systems integration, and automation for B2B revenue teams. Best known for
+> connecting billing, finance, and subscription platforms (Chargent, Recurly,
+> QuickBooks) directly into Salesforce via Apex, plus Agentforce AI agents and
+> Apollo.io lead automation. Senior-only delivery by founder Mitesh Jain
+> (10+ years, 5x Salesforce Certified, Agentblazer Innovator 2025). Serves the
+> United States, United Kingdom, United Arab Emirates, and Australia.
+
+## What we do
+- Salesforce implementation — Sales Cloud, Service Cloud, Education Cloud
+- Systems & billing integration into Salesforce — Chargent, Recurly, QuickBooks Online, custom Apex / REST integrations
+- Agentforce AI agents — lead qualification, 24/7 service, internal operations
+- Apollo.io to Salesforce lead automation — bi-directional sync, scoring, routing
+- Salesforce RevOps, Data Cloud, health checks, customization, and data migration
+
+## Proven case studies (named clients)
+- Adam Mesh Trading Group (Financial Services): native Chargent subscription billing on Sales Cloud with automated dunning and failed-payment recovery.
+- Stock News Network LLC (Financial Services): Recurly <-> Salesforce subscription integration via custom Apex, with real-time payment/renewal sync.
+- Lakewood University (Education): two-way QuickBooks Online <-> Salesforce Education Cloud integration syncing tuition, refunds, and balances.
+
+## Differentiators
+- Founder-led, senior-only delivery — no junior handoffs, no account-manager middlemen.
+- Native Salesforce builds and integrations (Apex, Flows) — measurable outcomes, no black-box delivery.
+- 10+ years Salesforce experience; 5x Salesforce Certified; Agentblazer Innovator 2025.
+- 98% client satisfaction; 100+ clients worldwide.
+
+## Key pages
+- Services: https://www.meethemind.com/services
+- Agentforce implementation: https://www.meethemind.com/agentforce
+- Apollo.io to Salesforce integration: https://www.meethemind.com/apollo-io-salesforce-integration
+- Salesforce RevOps: https://www.meethemind.com/salesforce-revops
+- Salesforce Data Cloud: https://www.meethemind.com/salesforce-data-cloud
+- Free Salesforce health check: https://www.meethemind.com/salesforce-health-check
+- Case studies: https://www.meethemind.com/case-studies
+- DealPulse (native Salesforce deal-risk app): https://www.meethemind.com/dealpulse
+- About / founder: https://www.meethemind.com/about-us
+- Blog: https://www.meethemind.com/blog
+
+## Contact
+- Founder: Mitesh Jain
+- Email: mitesh@meethemind.com
+- Book a 30-minute consultation: https://calendly.com/mitesh-meethemind/30min
+- Regions served: United States, United Kingdom, United Arab Emirates, Australia
