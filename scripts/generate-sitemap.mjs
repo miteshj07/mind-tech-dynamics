@@ -1,17 +1,23 @@
-// Generates dist/sitemap.xml from a hardcoded route list + any extra
-// prerendered blog posts detected in dist/. Works whether or not
-// react-snap ran successfully.
+// Generates dist/sitemap.xml. Static pages come from the maintained list below;
+// blog posts are discovered from whatever the prerender step actually wrote to
+// dist/blog/* — so the sitemap can never drift out of sync with published posts
+// (no hardcoded slug list to go stale). Runs after prerender in `postbuild`.
 import { readdirSync, statSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 const SITE = 'https://www.meethemind.com';
 const DIST = 'dist';
 
-// ── Known static routes (always included) ────────────────────────────────────
+// ── Indexable static routes (stable; excludes legal/admin — see EXCLUDE) ──────
 const STATIC_ROUTES = [
   '/',
   '/services',
   '/agentforce',
+  '/agentforce-implementation',
+  '/apollo-io-salesforce-integration',
+  '/salesforce-revops',
+  '/salesforce-health-check',
+  '/salesforce-data-cloud',
   '/b2b-lead-generation',
   '/about-us',
   '/case-studies',
@@ -20,17 +26,6 @@ const STATIC_ROUTES = [
   '/contact-us',
   '/apps',
   '/dealpulse',
-];
-
-// ── Blog slugs (keep in sync with Supabase blog posts) ───────────────────────
-const BLOG_SLUGS = [
-  'crm-integration-mistakes-to-avoid',
-  'agentforce-future-of-salesforce-ai-agents',
-  'apollo-io-salesforce-integration-guide',
-  'b2b-lead-qualification-with-salesforce',
-  'roi-of-salesforce-implementation',
-  'salesforce-financial-services-firms',
-  'salesforce-crm-australian-smes',
 ];
 
 // ── Routes to never index ─────────────────────────────────────────────────────
@@ -43,7 +38,7 @@ const EXCLUDE = new Set([
   '/sitemap',
 ]);
 
-// ── Detect any extra prerendered blog routes from dist/ ───────────────────────
+// ── Discover blog posts from the prerendered output (single source of truth) ──
 function findPrerenderedBlogRoutes(dir) {
   const blogDir = join(dir, 'blog');
   if (!existsSync(blogDir)) return [];
@@ -57,20 +52,18 @@ function findPrerenderedBlogRoutes(dir) {
   return routes;
 }
 
-const knownBlogRoutes = BLOG_SLUGS.map(s => `/blog/${s}`);
-const prerenderedBlogRoutes = findPrerenderedBlogRoutes(DIST);
+const blogRoutes = findPrerenderedBlogRoutes(DIST);
 
-// Merge: known routes + any prerendered extras not already listed
-const allRoutes = [
-  ...STATIC_ROUTES,
-  ...knownBlogRoutes,
-  ...prerenderedBlogRoutes.filter(r => !knownBlogRoutes.includes(r)),
-].filter((r, i, a) => a.indexOf(r) === i && !EXCLUDE.has(r));
+const allRoutes = [...STATIC_ROUTES, ...blogRoutes].filter(
+  (r, i, a) => a.indexOf(r) === i && !EXCLUDE.has(r),
+);
 
 // ── Priority + changefreq ─────────────────────────────────────────────────────
+const HIGH_PRIORITY = /^\/(services|agentforce|agentforce-implementation|apollo-io-salesforce-integration|salesforce-revops|salesforce-health-check|salesforce-data-cloud|b2b-lead-generation)$/;
+
 const priority = (r) =>
   r === '/' ? '1.0'
-  : /^\/(services|agentforce|b2b-lead-generation)$/.test(r) ? '0.9'
+  : HIGH_PRIORITY.test(r) ? '0.9'
   : r.startsWith('/blog/') ? '0.7'
   : '0.6';
 
@@ -88,4 +81,4 @@ const urls = allRoutes
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 writeFileSync(join(DIST, 'sitemap.xml'), xml);
-console.log(`✓ sitemap.xml written with ${allRoutes.length} URLs (${knownBlogRoutes.length} blog posts)`);
+console.log(`✓ sitemap.xml written with ${allRoutes.length} URLs (${blogRoutes.length} blog posts)`);
