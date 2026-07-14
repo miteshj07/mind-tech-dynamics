@@ -12,6 +12,7 @@ interface CaseStudy {
   title: string;
   client: string;
   industry: string;
+  metric?: string;
   challenge: string;
   solution: string;
   results: string[];
@@ -60,7 +61,13 @@ const CaseStudyCard = ({ study, index, onViewDetails }: CaseStudyCardProps) => {
         <p className="text-brand font-medium">{study.client}</p>
         <h3 className="text-xl font-bold mb-2">{study.title}</h3>
         <p className="text-gray-500 text-sm mb-4">Industry: {study.industry}</p>
-        
+
+        {study.metric && (
+          <div className="mb-4 rounded-lg bg-brand/5 border border-brand/20 px-4 py-3">
+            <p className="text-sm font-semibold text-brand-dark">{study.metric}</p>
+          </div>
+        )}
+
         <div className="border-t border-gray-100 pt-4">
           <h4 className="font-medium mb-2">Challenge</h4>
           <p className="text-gray-600 text-sm mb-4">{study.challenge}</p>
@@ -115,6 +122,12 @@ const CaseStudyDialog = ({ study, open, onOpenChange }: {
             ))}
           </div>
           
+          {study.metric && (
+            <div className="mb-6 rounded-lg bg-brand/5 border border-brand/20 px-4 py-3">
+              <p className="font-semibold text-brand-dark">{study.metric}</p>
+            </div>
+          )}
+
           <div className="space-y-6">
             <section>
               <h3 className="text-xl font-semibold mb-2">Challenge</h3>
@@ -163,7 +176,7 @@ const CaseStudies = () => {
         '@type': 'Article',
         headline: study.title,
         description: study.challenge,
-        articleBody: `Challenge: ${study.challenge} Solution: ${study.solution} Results: ${study.results.join(' ')}`,
+        articleBody: `${study.metric ? study.metric + '. ' : ''}Challenge: ${study.challenge} Solution: ${study.solution} Results: ${study.results.join(' ')}`,
         author: {
           '@type': 'Organization',
           name: 'Meet The Mind Technologies',
