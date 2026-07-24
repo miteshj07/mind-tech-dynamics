@@ -31,6 +31,7 @@ import BlogPage from "@/pages/Blog";
 import BlogPostPage from "@/pages/BlogPost";
 import AppsPage from "@/pages/Apps";
 import DealPulsePage from "@/pages/DealPulse";
+import GroundTruthPage from "@/pages/GroundTruth";
 import CareersPage from "@/pages/Careers";
 import ContactUsPage from "@/pages/ContactUs";
 import AdminPage from "@/pages/Admin";
@@ -69,6 +70,7 @@ const App = () => {
                 <Route path="/blog/:slug" element={<PageTransition><BlogPostPage /></PageTransition>} />
                 <Route path="/apps" element={<PageTransition><AppsPage /></PageTransition>} />
                 <Route path="/dealpulse" element={<PageTransition><DealPulsePage /></PageTransition>} />
+                <Route path="/groundtruth" element={<PageTransition><GroundTruthPage /></PageTransition>} />
                 <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
                 <Route path="/contact-us" element={<PageTransition><ContactUsPage /></PageTransition>} />
                 <Route path="/contact" element={<Navigate to="/contact-us" replace />} />

@@ -26,6 +26,7 @@ const STATIC_ROUTES = [
   '/contact-us',
   '/apps',
   '/dealpulse',
+  '/groundtruth',
 ];
 
 // ── Routes to never index ─────────────────────────────────────────────────────

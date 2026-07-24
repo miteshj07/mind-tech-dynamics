@@ -8,6 +8,10 @@ import ContactCTA from '@/components/layout/ContactCTA';
 const FOREST = '#247854';
 const gradientStrip = 'linear-gradient(90deg, #B31120 0%, #247854 100%)';
 
+// GroundTruth brand (from its logo)
+const GT_TEAL = '#159AA0';
+const GT_GRADIENT = 'linear-gradient(135deg, #159AA0 0%, #2E63B0 50%, #7A3B9D 100%)';
+
 const whyColumns = [
   {
     icon: Layers,
@@ -35,7 +39,7 @@ const Apps = () => {
     <>
       <Seo
         title="Salesforce Apps | DealPulse & Native Apps by Meet The Mind"
-        description="Product-grade Salesforce apps built, run, and supported by Meet The Mind — starting with DealPulse, native deal-risk intelligence for revenue teams."
+        description="Product-grade native Salesforce apps built, run, and supported by Meet The Mind — DealPulse for deal-risk intelligence and GroundTruth for Agentforce data readiness."
         canonical="/apps"
       />
 
@@ -76,13 +80,45 @@ const Apps = () => {
               </div>
             </div>
 
-            {/* Ghost tile */}
-            <div className="rounded-2xl border border-dashed border-gray-200 bg-gray-50 p-8 flex flex-col justify-center items-center text-center">
-              <Boxes size={36} className="text-gray-300 mb-4" />
-              <h3 className="text-lg font-semibold text-gray-500 mb-2">More apps in the works</h3>
-              <p className="text-gray-400 text-sm max-w-xs">
-                Built the same way: native, security-reviewed, and nothing leaving your org.
-              </p>
+            {/* GroundTruth tile */}
+            <div className="rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
+              <div className="h-1" style={{ background: GT_GRADIENT }} />
+              <div className="p-8 flex flex-col flex-grow">
+                <div className="flex items-center gap-3 mb-5">
+                  <img src="/groundtruth/groundtruth-icon.png" alt="GroundTruth" className="w-12 h-12 rounded-lg" />
+                  <span className="text-xs font-semibold px-3 py-1 rounded-full bg-amber-100 text-amber-700">
+                    Early access
+                  </span>
+                </div>
+                <h3 className="text-2xl font-bold mb-1">GroundTruth</h3>
+                <p className="text-xs font-semibold tracking-wide uppercase mb-4" style={{ color: GT_TEAL }}>
+                  Trusted Data Layer · 100% Native
+                </p>
+                <p className="text-gray-600 mb-6 flex-grow">
+                  Give your AI agents data they can trust. GroundTruth scores your CRM's
+                  readiness for Agentforce across six dimensions, shows which records will
+                  trip an agent up, and helps you fix them.
+                </p>
+                <Link
+                  to="/groundtruth"
+                  className="inline-flex items-center font-semibold text-brand hover:underline"
+                >
+                  Explore GroundTruth <ArrowRight size={16} className="ml-1.5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Ghost tile — more to come */}
+          <div className="max-w-4xl mx-auto mt-8">
+            <div className="rounded-2xl border border-dashed border-gray-200 bg-gray-50 py-8 px-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left">
+              <Boxes size={30} className="text-gray-300 flex-shrink-0" />
+              <div>
+                <h3 className="text-base font-semibold text-gray-500">More apps in the works</h3>
+                <p className="text-gray-400 text-sm">
+                  Built the same way: native, security-reviewed, and nothing leaving your org.
+                </p>
+              </div>
             </div>
           </div>
         </div>
