@@ -125,6 +125,44 @@ const trustPillars = [
   { title: 'Agentforce-optional', desc: 'The base package runs without Agentforce; the runtime guardrail lights up when you have it.' },
 ];
 
+const gallery = [
+  {
+    key: 'dashboard',
+    tab: 'Readiness Dashboard',
+    src: '/groundtruth/shot-dashboard.png',
+    caption: 'Your Readiness Score, the Benchmark go-live gate, and all six dimensions scored — with open issues broken out by object.',
+    alt: 'GroundTruth Readiness dashboard showing a 92.29 readiness score, benchmark 95, and the six dimension bars.',
+  },
+  {
+    key: 'health',
+    tab: 'Findings',
+    src: '/groundtruth/shot-data-health.png',
+    caption: 'Every open issue on the records you own — filter by dimension, search, and resolve in place.',
+    alt: 'GroundTruth My Data Health list of open data issues with dimension filters and resolve actions.',
+  },
+  {
+    key: 'merge',
+    tab: 'Resolve & Merge',
+    src: '/groundtruth/shot-resolve-merge.png',
+    caption: 'Merge duplicates with field-level survivorship — pick the record to keep, then keep the best value from any of them.',
+    alt: 'GroundTruth Resolve Data Issues modal merging duplicate leads with field-level survivorship.',
+  },
+  {
+    key: 'rules',
+    tab: 'Rule Management',
+    src: '/groundtruth/shot-rules.png',
+    caption: 'The whole rulebook, grouped by object. Turn off a rule your org does not use so it stops affecting your score.',
+    alt: 'GroundTruth Rule Management screen listing 35 rules across 7 objects with active counts.',
+  },
+  {
+    key: 'agent',
+    tab: 'Agentforce Guardrail',
+    src: '/groundtruth/shot-agentforce.png',
+    caption: 'Agents can ask whether a record is safe to act on — and get a straight answer before they touch a customer.',
+    alt: 'Agentforce conversation asking GroundTruth whether a contact has data issues before emailing them.',
+  },
+];
+
 const faqs = [
   {
     q: 'Is GroundTruth really 100% native?',
@@ -154,6 +192,8 @@ const faqs = [
 
 const GroundTruth = () => {
   const [formOpen, setFormOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState(gallery[0].key);
+  const activeShot = gallery.find(g => g.key === activeTab) ?? gallery[0];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -360,6 +400,46 @@ const GroundTruth = () => {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* 6 · SCREENSHOT GALLERY */}
+      <section className="py-14">
+        <div className="container mx-auto px-4">
+          <h2 className="heading-md mb-3 text-center">See it in Salesforce</h2>
+          <p className="text-gray-600 text-lg text-center max-w-2xl mx-auto mb-10">
+            Real screens from the shipped app — no mockups.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {gallery.map(g => (
+              <button
+                key={g.key}
+                onClick={() => setActiveTab(g.key)}
+                className={`px-4 py-2 rounded-full text-sm font-medium border transition-colors ${
+                  activeTab === g.key
+                    ? 'text-white border-transparent'
+                    : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
+                }`}
+                style={activeTab === g.key ? { backgroundColor: TEAL } : undefined}
+              >
+                {g.tab}
+              </button>
+            ))}
+          </div>
+
+          <div className="max-w-5xl mx-auto">
+            <div className="rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5">
+              <img
+                src={activeShot.src}
+                alt={activeShot.alt}
+                className="w-full h-auto block"
+                width={1600}
+                height={1000}
+              />
+            </div>
+            <p className="text-center text-gray-500 mt-5 max-w-2xl mx-auto">{activeShot.caption}</p>
           </div>
         </div>
       </section>
