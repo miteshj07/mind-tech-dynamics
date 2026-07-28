@@ -20,6 +20,61 @@ const esc = (s: unknown): string =>
 const isValidEmail = (s: unknown): s is string =>
   typeof s === "string" && s.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
 
+const SITE = "https://www.meethemind.com";
+
+// Confirmation ("auto-reply") copy sent back to the person who submitted an app
+// form. Keyed by the form's `service` tag. Only these two services get an
+// auto-reply; the general contact form is left as notify-only.
+const AUTO_REPLIES: Record<
+  string,
+  { brand: string; subject: string; heading: string; intro: string; blurb: string; link: string; linkLabel: string }
+> = {
+  "DealPulse Early Access": {
+    brand: "DealPulse",
+    subject: "Thanks for your interest in DealPulse",
+    heading: "Thanks for your interest in DealPulse",
+    intro:
+      "Thanks for requesting early access to DealPulse. We have your request, and someone from our team will be in touch shortly to set up your access and walk you through it.",
+    blurb:
+      "DealPulse scores every open Opportunity for risk, from the signals already in your CRM, entirely inside Salesforce. While you wait, here is a quick look at how it works:",
+    link: `${SITE}/dealpulse`,
+    linkLabel: "See how DealPulse works",
+  },
+  "GroundTruth Readiness Assessment": {
+    brand: "GroundTruth",
+    subject: "Thanks for requesting a GroundTruth readiness assessment",
+    heading: "Thanks for requesting a readiness assessment",
+    intro:
+      "Thanks for requesting a GroundTruth readiness assessment. We have your request, and someone from our team will be in touch shortly to run it with you on your own org.",
+    blurb:
+      "GroundTruth scores how ready your CRM data is for Agentforce across six dimensions and shows exactly which records will trip an agent up, all without your data leaving Salesforce. While you wait, here is a quick look at how it works:",
+    link: `${SITE}/groundtruth`,
+    linkLabel: "See how GroundTruth works",
+  },
+};
+
+const renderAutoReply = (
+  firstName: string,
+  a: (typeof AUTO_REPLIES)[string],
+): string => `
+  <div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:560px;margin:0 auto;color:#1f2937;line-height:1.6;">
+    <h1 style="font-size:22px;font-weight:700;color:#0f172a;margin:0 0 20px;">${esc(a.heading)}</h1>
+    <p style="margin:0 0 16px;">Hi ${esc(firstName)},</p>
+    <p style="margin:0 0 16px;">${esc(a.intro)}</p>
+    <p style="margin:0 0 20px;">${esc(a.blurb)}</p>
+    <p style="margin:0 0 28px;">
+      <a href="${a.link}" style="display:inline-block;background:#0f172a;color:#ffffff;text-decoration:none;font-weight:600;padding:12px 22px;border-radius:8px;">${esc(a.linkLabel)}</a>
+    </p>
+    <p style="margin:0 0 4px;">Talk soon,</p>
+    <p style="margin:0 0 28px;">The Meet The Mind team</p>
+    <hr style="border:none;border-top:1px solid #e5e7eb;margin:0 0 16px;" />
+    <p style="font-size:12px;color:#9ca3af;margin:0;">
+      Meet The Mind Technologies · <a href="${SITE}" style="color:#9ca3af;">meethemind.com</a><br />
+      You received this because you submitted a request at meethemind.com.
+    </p>
+  </div>
+`;
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -81,6 +136,29 @@ serve(async (req) => {
     }
 
     console.log("Email sent successfully:", data);
+
+    // Send a branded confirmation ("auto-reply") to the submitter for the two
+    // app forms. Non-blocking: a failure here must never affect the admin
+    // notification above or the response to the client. Sent from
+    // support@meethemind.com, which works because the meethemind.com domain is
+    // verified in Resend (domain verification covers every address at it).
+    const autoReply = AUTO_REPLIES[service as string];
+    if (autoReply) {
+      const firstName = String(name ?? "").trim().split(/\s+/)[0] || "there";
+      try {
+        const { error: arError } = await resend.emails.send({
+          from: `${autoReply.brand} <support@meethemind.com>`,
+          to: email,
+          reply_to: "support@meethemind.com",
+          subject: autoReply.subject,
+          html: renderAutoReply(firstName, autoReply),
+        });
+        if (arError) console.error("Auto-reply send error (non-blocking):", arError);
+        else console.log("Auto-reply sent to submitter:", email);
+      } catch (arErr) {
+        console.error("Auto-reply threw (non-blocking):", arErr);
+      }
+    }
 
     return new Response(
       JSON.stringify({ success: true, data }),
