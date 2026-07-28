@@ -502,9 +502,14 @@ const DealPulse = () => {
             engagements — the same stalled-deal anatomy, over and over. The team that
             built it is the team that supports it.
           </p>
-          <Link to="/about-us" className="text-brand font-semibold hover:underline">
-            Meet the team behind DealPulse →
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-x-8 gap-y-2 justify-center">
+            <Link to="/about-us" className="text-brand font-semibold hover:underline">
+              Meet the team behind DealPulse →
+            </Link>
+            <Link to="/deal-risk-intelligence" className="text-brand font-semibold hover:underline">
+              New to deal risk intelligence? Read the guide →
+            </Link>
+          </div>
         </div>
       </section>
 

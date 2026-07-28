@@ -51,6 +51,7 @@ const STATIC_ROUTES = [
   '/apps',
   '/dealpulse',
   '/groundtruth',
+  '/deal-risk-intelligence',
   '/careers',
   '/contact-us',
   '/privacy-policy',

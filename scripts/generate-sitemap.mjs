@@ -27,6 +27,7 @@ const STATIC_ROUTES = [
   '/apps',
   '/dealpulse',
   '/groundtruth',
+  '/deal-risk-intelligence',
 ];
 
 // ── Routes to never index ─────────────────────────────────────────────────────
