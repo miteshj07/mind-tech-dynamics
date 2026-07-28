@@ -4,8 +4,8 @@
 //
 // Serves the built `dist/` locally, drives a real headless Chrome over every
 // public route, and saves the fully-rendered HTML to dist/<route>/index.html.
-// Because it's a real browser, the app's client-side rendering — including the
-// imperative <head> writes in Seo.tsx, CMS content, and async blog fetches —
+// Because it's a real browser, the app's client-side rendering, including the
+// imperative <head> writes in Seo.tsx, CMS content, and async blog fetches , 
 // all work exactly as they do for a visitor. Non-JS crawlers (AI answer
 // engines, social unfurlers) then get complete, per-page HTML.
 //
@@ -16,7 +16,7 @@
 // system Chrome when run locally (macOS/Windows).
 //
 // FAILS SAFE: if Chromium can't launch, it logs a warning and exits 0, leaving
-// the plain SPA build intact — so it can never break the deploy. The app's
+// the plain SPA build intact, so it can never break the deploy. The app's
 // main.tsx hydrates the prerendered HTML (hydrateRoot when #root has markup).
 // ============================================================
 
@@ -29,12 +29,12 @@ import { extname, join } from 'node:path';
 const DIST = 'dist';
 const PORT = 45678;
 
-// Supabase (public, publishable — same values as src/integrations/supabase/client.ts)
+// Supabase (public, publishable, same values as src/integrations/supabase/client.ts)
 const SB_URL = 'https://rlfansvalprvofpuqmsb.supabase.co';
 const SB_KEY = 'sb_publishable_EsIXaQP9xnMWmfy6DS0kiw_9rubIkga';
 
 // Public routes to prerender. Keep in sync with src/App.tsx (admin/auth routes
-// are intentionally excluded — they're client-only and behind auth).
+// are intentionally excluded, they're client-only and behind auth).
 const STATIC_ROUTES = [
   '/',
   '/services',
@@ -71,12 +71,12 @@ const MIME = {
 };
 
 if (!existsSync(join(DIST, 'index.html'))) {
-  console.warn('⚠ dist/index.html not found — run the build first. Skipping prerender.');
+  console.warn('⚠ dist/index.html not found, run the build first. Skipping prerender.');
   process.exit(0);
 }
 
 // Fetch published blog slugs so blog posts get prerendered too (published posts
-// are public via RLS). Best-effort — skip blog routes if the fetch fails.
+// are public via RLS). Best-effort, skip blog routes if the fetch fails.
 async function fetchBlogRoutes() {
   try {
     const res = await fetch(
@@ -89,7 +89,7 @@ async function fetchBlogRoutes() {
     console.log(`[prerender] ${routes.length} published blog posts`);
     return routes;
   } catch (e) {
-    console.warn(`[prerender] couldn't fetch blog slugs (${e.message}) — skipping blog routes`);
+    console.warn(`[prerender] couldn't fetch blog slugs (${e.message}), skipping blog routes`);
     return [];
   }
 }
@@ -98,7 +98,7 @@ async function launchBrowser() {
   const puppeteer = (await import('puppeteer-core')).default;
 
   // Linux (Vercel build / CI): @sparticuz/chromium ships a Chromium + the shared
-  // libraries these minimal images lack — the fix for "couldn't launch Chrome".
+  // libraries these minimal images lack, the fix for "couldn't launch Chrome".
   if (process.platform === 'linux') {
     const chromium = (await import('@sparticuz/chromium')).default;
     return await puppeteer.launch({
@@ -151,7 +151,7 @@ async function main() {
   try {
     browser = await launchBrowser();
   } catch (e) {
-    console.warn(`⚠ Could not launch Chromium (${e.message}) — skipping prerender; site ships as a plain SPA.`);
+    console.warn(`⚠ Could not launch Chromium (${e.message}), skipping prerender; site ships as a plain SPA.`);
     process.exit(0);
   }
 
@@ -174,7 +174,7 @@ async function main() {
       });
       // Ensure React has rendered something into #root.
       await page.waitForSelector('#root > *', { timeout: 15000 }).catch(() => {});
-      // Blog detail pages fetch their body from Supabase after mount — wait for
+      // Blog detail pages fetch their body from Supabase after mount, wait for
       // the article to render (and for Seo.tsx to set the per-post canonical)
       // before snapshotting, or we'd capture just the page chrome. networkidle2
       // can fire before that fetch resolves on slower (CI) networks.
@@ -190,7 +190,7 @@ async function main() {
       console.log(`  ✓ ${route}`);
     } catch (e) {
       failed += 1;
-      console.warn(`  ✗ ${route} — ${e.message}`);
+      console.warn(`  ✗ ${route}, ${e.message}`);
     } finally {
       await page.close();
     }
@@ -198,12 +198,12 @@ async function main() {
 
   await browser.close();
   await new Promise((resolve) => server.close(resolve));
-  console.log(`[prerender] done — ${ok} prerendered, ${failed} failed.`);
+  console.log(`[prerender] done, ${ok} prerendered, ${failed} failed.`);
   // Never fail the build on prerender problems.
   process.exit(0);
 }
 
 main().catch((e) => {
-  console.warn(`⚠ prerender error (${e.message}) — continuing without prerender.`);
+  console.warn(`⚠ prerender error (${e.message}), continuing without prerender.`);
   process.exit(0);
 });

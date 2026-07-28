@@ -1,6 +1,6 @@
 // Generates dist/sitemap.xml. Static pages come from the maintained list below;
 // blog posts are discovered from whatever the prerender step actually wrote to
-// dist/blog/* — so the sitemap can never drift out of sync with published posts
+// dist/blog/*, so the sitemap can never drift out of sync with published posts
 // (no hardcoded slug list to go stale). Runs after prerender in `postbuild`.
 import { readdirSync, statSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -8,7 +8,7 @@ import { join } from 'node:path';
 const SITE = 'https://www.meethemind.com';
 const DIST = 'dist';
 
-// ── Indexable static routes (stable; excludes legal/admin — see EXCLUDE) ──────
+// ── Indexable static routes (stable; excludes legal/admin, see EXCLUDE) ──────
 const STATIC_ROUTES = [
   '/',
   '/services',

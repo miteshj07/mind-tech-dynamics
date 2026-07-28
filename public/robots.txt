@@ -1,4 +1,4 @@
-# Meet The Mind Technologies — robots.txt
+# Meet The Mind Technologies, robots.txt
 
 # --- Search engines ---
 User-agent: Googlebot
