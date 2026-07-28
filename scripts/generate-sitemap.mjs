@@ -29,6 +29,7 @@ const STATIC_ROUTES = [
   '/groundtruth',
   '/deal-risk-intelligence',
   '/dealpulse-vs-clari',
+  '/salesforce-deal-risk-apps',
 ];
 
 // ── Routes to never index ─────────────────────────────────────────────────────

@@ -53,6 +53,7 @@ const STATIC_ROUTES = [
   '/groundtruth',
   '/deal-risk-intelligence',
   '/dealpulse-vs-clari',
+  '/salesforce-deal-risk-apps',
   '/careers',
   '/contact-us',
   '/privacy-policy',

@@ -204,7 +204,8 @@ const DealRiskIntelligence = () => {
             <p className="mt-6">
               The gap between the first two camps is where the most useful tools sit: <strong>automatic</strong> (so
               it catches the deals reps avoid), <strong>native</strong> (so your data never leaves the CRM), and
-              <strong> transparent</strong> (so you can explain and edit the logic).
+              <strong> transparent</strong> (so you can explain and edit the logic). See how the real tools stack up
+              in our comparison of <Link to="/salesforce-deal-risk-apps" className="text-brand hover:underline">native Salesforce deal-risk apps</Link>.
             </p>
           </div>
 
