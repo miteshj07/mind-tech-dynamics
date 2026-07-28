@@ -22,7 +22,7 @@ const capabilities = [
     icon: <Workflow size={40} />,
     title: 'Internal Ops Agents',
     description:
-      'Agents that automate repetitive CRM tasks — data entry, follow-up creation, record updates, and routing — so your team spends time selling, not clicking.',
+      'Agents that automate repetitive CRM tasks, data entry, follow-up creation, record updates, and routing, so your team spends time selling, not clicking.',
   },
 ];
 
@@ -31,13 +31,13 @@ const process = [
   ['Data & knowledge grounding', 'We connect Agentforce to your Salesforce data, knowledge articles, and systems so answers are accurate and on-brand.'],
   ['Agent build & topic design', 'We configure topics, actions, and Flows/Apex so each agent can actually do the work, not just chat.'],
   ['Testing & guardrails', 'We test against real scenarios, tune responses, and set escalation rules before anything goes live.'],
-  ['Launch & optimization', 'We deploy, monitor performance, and refine — improving deflection, qualification, and conversion over time.'],
+  ['Launch & optimization', 'We deploy, monitor performance, and refine, improving deflection, qualification, and conversion over time.'],
 ];
 
 const faqs = [
   {
     q: 'What is Salesforce Agentforce?',
-    a: 'Agentforce is Salesforce’s platform for building autonomous AI agents that take action inside your CRM — qualifying leads, answering customers, and automating tasks — using your own Salesforce data and business rules.',
+    a: 'Agentforce is Salesforce’s platform for building autonomous AI agents that take action inside your CRM, qualifying leads, answering customers, and automating tasks, using your own Salesforce data and business rules.',
   },
   {
     q: 'What does an Agentforce specialist or consultant do?',
@@ -45,11 +45,11 @@ const faqs = [
   },
   {
     q: 'How is Agentforce different from a chatbot?',
-    a: 'Traditional chatbots follow scripted flows. Agentforce agents reason over your live Salesforce data and can take real actions — creating records, updating opportunities, routing leads, and resolving cases — not just returning canned replies.',
+    a: 'Traditional chatbots follow scripted flows. Agentforce agents reason over your live Salesforce data and can take real actions, creating records, updating opportunities, routing leads, and resolving cases, not just returning canned replies.',
   },
   {
     q: 'Can Agentforce help with B2B lead generation?',
-    a: 'Yes. Agentforce agents can qualify inbound leads 24/7, enrich and route them in Salesforce, and trigger follow-up — which pairs directly with our Apollo.io-to-Salesforce lead-generation automation.',
+    a: 'Yes. Agentforce agents can qualify inbound leads 24/7, enrich and route them in Salesforce, and trigger follow-up, which pairs directly with our Apollo.io-to-Salesforce lead-generation automation.',
   },
   {
     q: 'Which countries does Meet The Mind serve for Agentforce?',
@@ -70,7 +70,7 @@ const Agentforce = () => {
     provider: { '@type': 'Organization', name: 'Meet The Mind Technologies', url: 'https://www.meethemind.com/' },
     areaServed: ['United States', 'United Kingdom', 'United Arab Emirates', 'Australia'],
     description:
-      'End-to-end Salesforce Agentforce implementation — lead qualification agents, 24/7 service agents, and automation agents grounded in your CRM data.',
+      'End-to-end Salesforce Agentforce implementation, lead qualification agents, 24/7 service agents, and automation agents grounded in your CRM data.',
   };
 
   const faqSchema = {
@@ -86,7 +86,7 @@ const Agentforce = () => {
   return (
     <>
       <Seo
-        title="Agentforce Implementation | Salesforce AI Agents for B2B — Meet The Mind"
+        title="Agentforce Implementation | Salesforce AI Agents for B2B, Meet The Mind"
         description="Salesforce Agentforce implementation partner. We build AI agents that qualify leads, resolve service cases 24/7, and automate CRM tasks for B2B teams in the US, UK, UAE & Australia."
         canonical="/agentforce"
         jsonLd={[serviceSchema, faqSchema]}
@@ -94,7 +94,7 @@ const Agentforce = () => {
 
       <PageHeader
         title="Agentforce Implementation"
-        subtitle="We design and deploy Salesforce Agentforce AI agents that qualify leads, answer customers, and automate work — grounded in your real CRM data."
+        subtitle="We design and deploy Salesforce Agentforce AI agents that qualify leads, answer customers, and automate work, grounded in your real CRM data."
       />
 
       <section className="py-16">
@@ -102,13 +102,13 @@ const Agentforce = () => {
           <div className="text-brand mb-4"><Bot size={48} /></div>
           <h2 className="heading-md mb-6">AI agents that take action inside Salesforce</h2>
           <p className="text-gray-600 text-lg mb-4">
-            Agentforce is Salesforce's platform for autonomous AI agents — and Meet The Mind is an early-adopter
+            Agentforce is Salesforce's platform for autonomous AI agents, and Meet The Mind is an early-adopter
             implementation partner. Unlike scripted chatbots, Agentforce agents reason over your live Salesforce
             data and take real actions: creating and updating records, routing and qualifying leads, and resolving
             customer cases around the clock.
           </p>
           <p className="text-gray-600 text-lg">
-            We deliver Agentforce end to end — from use-case scoping and data grounding to topic and action design
+            We deliver Agentforce end to end, from use-case scoping and data grounding to topic and action design
             (including Flow and Apex), guardrails, launch, and ongoing optimization.
           </p>
         </div>

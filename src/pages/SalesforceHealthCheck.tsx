@@ -39,9 +39,9 @@ const auditAreas = [
 ];
 
 const whatYouGet = [
-  { title: 'Written audit report', desc: 'A clear, prioritised document covering every area reviewed — with specific findings, not generic recommendations.' },
+  { title: 'Written audit report', desc: 'A clear, prioritised document covering every area reviewed, with specific findings, not generic recommendations.' },
   { title: 'Priority matrix', desc: 'Issues ranked by impact and effort: what to fix today, this quarter, and what to plan for next year.' },
-  { title: 'Quick wins list', desc: 'A shortlist of changes you or your admin can make immediately — no paid engagement required.' },
+  { title: 'Quick wins list', desc: 'A shortlist of changes you or your admin can make immediately, no paid engagement required.' },
   { title: '45-min debrief call', desc: 'Mitesh walks you through the findings, answers questions, and recommends next steps. No sales pressure.' },
 ];
 
@@ -57,7 +57,7 @@ const whoIsItFor = [
 const faqs = [
   {
     q: 'Is the Salesforce health check really free?',
-    a: 'Yes — completely free, no strings attached. We review your org, deliver a written report, and hold a debrief call at no cost. Some clients then choose to engage us for remediation work; many don\'t. Either way, you get a clear picture of where your Salesforce org stands.',
+    a: 'Yes, completely free, no strings attached. We review your org, deliver a written report, and hold a debrief call at no cost. Some clients then choose to engage us for remediation work; many don\'t. Either way, you get a clear picture of where your Salesforce org stands.',
   },
   {
     q: 'What access do you need to my Salesforce org?',
@@ -69,11 +69,11 @@ const faqs = [
   },
   {
     q: 'What size org is the health check suited for?',
-    a: 'The health check is best suited for orgs with 5–250 Salesforce users. Larger enterprise orgs are welcome — contact us to discuss scope and timeline.',
+    a: 'The health check is best suited for orgs with 5–250 Salesforce users. Larger enterprise orgs are welcome, contact us to discuss scope and timeline.',
   },
   {
     q: 'Can you audit a Salesforce org that uses Apollo.io or Agentforce?',
-    a: 'Yes — and we specifically look at Apollo.io integration health, data sync gaps, and Agentforce readiness as part of our audit scope. These are areas most generic Salesforce audits miss entirely.',
+    a: 'Yes, and we specifically look at Apollo.io integration health, data sync gaps, and Agentforce readiness as part of our audit scope. These are areas most generic Salesforce audits miss entirely.',
   },
 ];
 
@@ -114,8 +114,8 @@ const SalesforceHealthCheck = () => {
   return (
     <>
       <Seo
-        title="Free Salesforce Health Check Audit — Meet The Mind Technologies"
-        description="Free Salesforce org health check for B2B teams. We audit data quality, automation, security, integrations, and adoption — then deliver a written report and 45-min debrief. No cost, no obligation."
+        title="Free Salesforce Health Check Audit, Meet The Mind Technologies"
+        description="Free Salesforce org health check for B2B teams. We audit data quality, automation, security, integrations, and adoption, then deliver a written report and 45-min debrief. No cost, no obligation."
         canonical="/salesforce-health-check"
         jsonLd={[serviceSchema, faqSchema]}
       />
@@ -124,7 +124,7 @@ const SalesforceHealthCheck = () => {
       <section className="pt-32 pb-16 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
         <div className="container mx-auto px-4 max-w-4xl text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand/20 border border-brand/30 text-brand text-sm font-semibold mb-6">
-            <Zap size={14} /> Free — No Cost, No Obligation
+            <Zap size={14} /> Free, No Cost, No Obligation
           </div>
           <h1 className="text-4xl md:text-5xl font-black mb-6 leading-tight">
             Free Salesforce<br />
@@ -132,7 +132,7 @@ const SalesforceHealthCheck = () => {
           </h1>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
             We audit your Salesforce org across 6 areas, deliver a prioritised written report,
-            and walk you through the findings on a 45-minute call — completely free.
+            and walk you through the findings on a 45-minute call, completely free.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
             <Link
@@ -172,7 +172,7 @@ const SalesforceHealthCheck = () => {
         <div className="container mx-auto px-4">
           <h2 className="heading-md mb-4 text-center">What we audit</h2>
           <p className="text-gray-500 text-center max-w-2xl mx-auto mb-12">
-            6 areas covering the full health of your Salesforce org — not a surface-level check.
+            6 areas covering the full health of your Salesforce org, not a surface-level check.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {auditAreas.map((area, i) => (
@@ -263,7 +263,7 @@ const SalesforceHealthCheck = () => {
 
       <ContactCTA
         heading="Book your free Salesforce health check"
-        subheading="Takes 10 minutes to set up. We handle everything else — org access, audit, report, and debrief — within 5 business days."
+        subheading="Takes 10 minutes to set up. We handle everything else, org access, audit, report, and debrief, within 5 business days."
         buttonText="Book Free Health Check"
       />
     </>

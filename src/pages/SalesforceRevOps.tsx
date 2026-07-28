@@ -8,7 +8,7 @@ import Seo from '@/components/layout/Seo';
 
 const challenges = [
   'Leads fall through the cracks between marketing handoff and sales follow-up',
-  'Forecasting is manual — reps update pipeline in spreadsheets alongside Salesforce',
+  'Forecasting is manual, reps update pipeline in spreadsheets alongside Salesforce',
   'No single view of the customer across marketing, sales, and post-sale',
   'Quota and territory management done outside the CRM, creating data mismatches',
   'Sales cycle length is unknown because stage dates are never tracked',
@@ -19,7 +19,7 @@ const services = [
   {
     icon: <Workflow size={28} />,
     title: 'Lead-to-Close Process Automation',
-    description: 'We map your entire revenue process — from first touch to closed-won — into Salesforce. Lead assignment rules, stage gates, approval workflows, and automated handoffs between SDRs, AEs, and CSMs.',
+    description: 'We map your entire revenue process, from first touch to closed-won, into Salesforce. Lead assignment rules, stage gates, approval workflows, and automated handoffs between SDRs, AEs, and CSMs.',
   },
   {
     icon: <Target size={28} />,
@@ -29,22 +29,22 @@ const services = [
   {
     icon: <RefreshCw size={28} />,
     title: 'Apollo.io + Salesforce Outbound Automation',
-    description: 'We connect Apollo.io outbound sequences directly to Salesforce pipeline — syncing contacts, logging sequence activity, and triggering Salesforce Flows based on prospect engagement signals.',
+    description: 'We connect Apollo.io outbound sequences directly to Salesforce pipeline, syncing contacts, logging sequence activity, and triggering Salesforce Flows based on prospect engagement signals.',
   },
   {
     icon: <BarChart3 size={28} />,
     title: 'Pipeline & Forecast Reporting',
-    description: 'We build live Salesforce dashboards that replace weekly forecast spreadsheets — showing pipeline by stage, source, rep, and close date, with historical trend data leadership can act on.',
+    description: 'We build live Salesforce dashboards that replace weekly forecast spreadsheets, showing pipeline by stage, source, rep, and close date, with historical trend data leadership can act on.',
   },
   {
     icon: <Zap size={28} />,
     title: 'Flow-Based Revenue Automation',
-    description: 'We automate the manual work that kills RevOps efficiency: follow-up task creation, deal stage alerts, renewal reminders, quote approvals, and territory assignment — all inside Salesforce Flow.',
+    description: 'We automate the manual work that kills RevOps efficiency: follow-up task creation, deal stage alerts, renewal reminders, quote approvals, and territory assignment, all inside Salesforce Flow.',
   },
   {
     icon: <TrendingUp size={28} />,
     title: 'Agentforce AI for RevOps',
-    description: 'Layer Salesforce Agentforce AI agents on top of your RevOps stack — agents that qualify inbound leads, flag at-risk deals, summarise account history for AEs, and surface next-best-action recommendations.',
+    description: 'Layer Salesforce Agentforce AI agents on top of your RevOps stack, agents that qualify inbound leads, flag at-risk deals, summarise account history for AEs, and surface next-best-action recommendations.',
   },
 ];
 
@@ -58,27 +58,27 @@ const outcomes = [
 const faqs = [
   {
     q: 'What is Salesforce RevOps automation?',
-    a: 'Salesforce RevOps (Revenue Operations) automation means using Salesforce — combined with tools like Apollo.io and Agentforce — to eliminate manual handoffs between marketing, sales, and customer success, automate pipeline management and reporting, and create a single system of record for all revenue data.',
+    a: 'Salesforce RevOps (Revenue Operations) automation means using Salesforce, combined with tools like Apollo.io and Agentforce, to eliminate manual handoffs between marketing, sales, and customer success, automate pipeline management and reporting, and create a single system of record for all revenue data.',
   },
   {
     q: 'How is this different from a standard Salesforce implementation?',
-    a: 'A standard implementation configures Salesforce objects and users. A RevOps implementation goes further — designing the full lead-to-cash process, connecting outbound tools like Apollo.io, building Flow-based automation for every revenue handoff, and creating dashboards that actually drive decisions. We do both, but the RevOps layer is what changes behaviour.',
+    a: 'A standard implementation configures Salesforce objects and users. A RevOps implementation goes further, designing the full lead-to-cash process, connecting outbound tools like Apollo.io, building Flow-based automation for every revenue handoff, and creating dashboards that actually drive decisions. We do both, but the RevOps layer is what changes behaviour.',
   },
   {
     q: 'Do you work with existing Salesforce orgs, or only greenfield implementations?',
-    a: 'Both. We frequently inherit existing Salesforce orgs — auditing the current setup, cleaning data, redesigning broken processes, and building automation on top of what already works. A Salesforce health check audit is often the first step.',
+    a: 'Both. We frequently inherit existing Salesforce orgs, auditing the current setup, cleaning data, redesigning broken processes, and building automation on top of what already works. A Salesforce health check audit is often the first step.',
   },
   {
     q: 'Can you integrate Apollo.io into our RevOps stack?',
-    a: 'Yes — Apollo.io to Salesforce integration is one of our core specialisations. We sync leads bi-directionally, log sequence activity to Salesforce records, use Apollo.io firmographic data in lead scoring, and trigger Salesforce Flows based on outbound engagement signals.',
+    a: 'Yes, Apollo.io to Salesforce integration is one of our core specialisations. We sync leads bi-directionally, log sequence activity to Salesforce records, use Apollo.io firmographic data in lead scoring, and trigger Salesforce Flows based on outbound engagement signals.',
   },
   {
     q: 'Which industries do you serve for Salesforce RevOps?',
-    a: 'We primarily serve B2B SaaS, FinTech, and Professional Services companies — typically 10–250 person revenue teams running Salesforce as their CRM with Apollo.io for outbound. We serve clients in the US, UK, UAE, and Australia.',
+    a: 'We primarily serve B2B SaaS, FinTech, and Professional Services companies, typically 10–250 person revenue teams running Salesforce as their CRM with Apollo.io for outbound. We serve clients in the US, UK, UAE, and Australia.',
   },
   {
     q: 'How long does a RevOps automation project take?',
-    a: 'Focused automation projects (e.g. lead routing, pipeline reporting, Apollo.io sync) take 3–6 weeks. Full end-to-end RevOps implementations — process redesign, automation, reporting, and training — run 8–14 weeks depending on org complexity.',
+    a: 'Focused automation projects (e.g. lead routing, pipeline reporting, Apollo.io sync) take 3–6 weeks. Full end-to-end RevOps implementations, process redesign, automation, reporting, and training, run 8–14 weeks depending on org complexity.',
   },
 ];
 
@@ -97,7 +97,7 @@ const SalesforceRevOps = () => {
     },
     areaServed: ['United States', 'United Kingdom', 'United Arab Emirates', 'Australia'],
     description:
-      'Salesforce RevOps automation for B2B revenue teams — lead-to-close process design, pipeline reporting, Apollo.io integration, Flow-based automation, and Agentforce AI agents. Meet The Mind Technologies.',
+      'Salesforce RevOps automation for B2B revenue teams, lead-to-close process design, pipeline reporting, Apollo.io integration, Flow-based automation, and Agentforce AI agents. Meet The Mind Technologies.',
   };
 
   const faqSchema = {
@@ -113,7 +113,7 @@ const SalesforceRevOps = () => {
   return (
     <>
       <Seo
-        title="Salesforce RevOps Automation — Revenue Operations Consulting | Meet The Mind"
+        title="Salesforce RevOps Automation, Revenue Operations Consulting | Meet The Mind"
         description="Salesforce Revenue Operations (RevOps) consulting for B2B teams. Lead-to-close automation, Apollo.io integration, pipeline reporting, and Agentforce AI. US, UK, UAE & Australia."
         canonical="/salesforce-revops"
         jsonLd={[serviceSchema, faqSchema]}
@@ -121,7 +121,7 @@ const SalesforceRevOps = () => {
 
       <PageHeader
         title="Salesforce RevOps Automation"
-        subtitle="We design and automate your entire revenue process inside Salesforce — from first Apollo.io touch to closed-won — so your sales, marketing, and CS teams operate from one system with zero manual handoffs."
+        subtitle="We design and automate your entire revenue process inside Salesforce, from first Apollo.io touch to closed-won, so your sales, marketing, and CS teams operate from one system with zero manual handoffs."
       />
 
       {/* Intro */}
@@ -134,7 +134,7 @@ const SalesforceRevOps = () => {
           </p>
           <p className="text-lg text-gray-700 leading-relaxed mb-8">
             We connect Salesforce with Apollo.io outbound workflows and Agentforce AI agents to build
-            a fully automated revenue stack — one where leads enrich automatically, pipeline stays
+            a fully automated revenue stack, one where leads enrich automatically, pipeline stays
             current without rep intervention, and leadership has live forecasting they can trust.
           </p>
 
@@ -158,7 +158,7 @@ const SalesforceRevOps = () => {
         <div className="container mx-auto px-4">
           <h2 className="heading-md mb-4 text-center">What we automate inside Salesforce</h2>
           <p className="text-gray-500 text-center max-w-2xl mx-auto mb-12">
-            Every engagement is scoped around your specific revenue bottleneck — we don't deploy generic templates.
+            Every engagement is scoped around your specific revenue bottleneck. We don't deploy generic templates.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((s, i) => (
@@ -214,7 +214,7 @@ const SalesforceRevOps = () => {
               <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
                 <Zap className="text-brand" size={18} /> Agentforce-ready
               </h3>
-              <p className="text-gray-600 text-sm">We build RevOps stacks that are Agentforce-ready from day one — so you can layer AI agents on top without a rearchitecture when you're ready.</p>
+              <p className="text-gray-600 text-sm">We build RevOps stacks that are Agentforce-ready from day one, so you can layer AI agents on top without a rearchitecture when you're ready.</p>
             </div>
           </div>
         </div>

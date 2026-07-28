@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { trackEvent } from '@/lib/analytics';
 
 // Destinations that signal buying intent. A click heading toward one of these
-// is a meaningful CTA no matter where on the site it happens — so we can see
+// is a meaningful CTA no matter where on the site it happens, so we can see
 // which pages actually push visitors toward contact / booking.
 const INTENT_TARGETS = ['/contact-us', '/salesforce-health-check'];
 
 /**
  * Single document-level click listener that reports a `cta_click` event with
- * the button label, its destination, and — most importantly — the page the
+ * the button label, its destination, and, most importantly, the page the
  * visitor clicked from. Renders nothing. Also fires for any element carrying a
  * `data-cta` attribute, so future CTAs can opt in explicitly.
  */

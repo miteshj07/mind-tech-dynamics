@@ -26,7 +26,7 @@ import EarlyAccessForm from '@/components/dealpulse/EarlyAccessForm';
 
 const SITE = 'https://www.meethemind.com';
 
-// DealPulse brand palette (page-scoped — do not touch global tokens)
+// DealPulse brand palette (page-scoped, do not touch global tokens)
 const INK = '#10241C';
 const CRIMSON = '#B31120';
 const FOREST = '#247854';
@@ -34,7 +34,7 @@ const MIST = '#EEF4F0';
 
 const gradientStrip = 'linear-gradient(90deg, #B31120 0%, #247854 100%)';
 
-// The "Standard Seven" — active out of the box (matches DP_NativeSignalConfig / Signal Management screen)
+// The "Standard Seven", active out of the box (matches DP_NativeSignalConfig / Signal Management screen)
 const signals = [
   { icon: Activity, name: 'Days Since Last Activity', desc: 'Days since the last completed Task or Event on the deal.' },
   { icon: CalendarX, name: 'No Future Scheduled Activity', desc: 'Nothing open is on the calendar today or later to move it forward.' },
@@ -50,7 +50,7 @@ const capabilities = [
   {
     icon: SlidersHorizontal,
     title: 'A glass-box rule engine',
-    desc: 'You decide what “High Risk” means — in plain conditions, no code. Every tier traces back to rules you can read and edit, not a proprietary model you have to trust.',
+    desc: 'You decide what “High Risk” means, in plain conditions, no code. Every tier traces back to rules you can read and edit, not a proprietary model you have to trust.',
   },
   {
     icon: LineChart,
@@ -60,7 +60,7 @@ const capabilities = [
   {
     icon: PlusCircle,
     title: 'No-code Custom Signals',
-    desc: 'Build your own signals from any related object — pick the source, the aggregate, and the threshold. They score right alongside the built-in seven.',
+    desc: 'Build your own signals from any related object, pick the source, the aggregate, and the threshold. They score right alongside the built-in seven.',
   },
   {
     icon: Building2,
@@ -75,7 +75,7 @@ const capabilities = [
   {
     icon: Bell,
     title: 'One digest, not a flood',
-    desc: 'When deals change tier, each owner gets a single grouped digest email and one in-app alert — never a separate message per deal.',
+    desc: 'When deals change tier, each owner gets a single grouped digest email and one in-app alert, never a separate message per deal.',
   },
 ];
 
@@ -86,7 +86,7 @@ const steps = [
   },
   {
     title: 'The engine scores your pipeline',
-    desc: 'Deterministic rules run over the built-in signals. Every score is traceable to the exact signals that fired — no black box, no model you can’t audit.',
+    desc: 'Deterministic rules run over the built-in signals. Every score is traceable to the exact signals that fired, no black box, no model you can’t audit.',
   },
   {
     title: 'Reps get briefs, leaders get the board',
@@ -98,7 +98,7 @@ const trustPillars = [
   { icon: Lock, title: 'Your data never leaves Salesforce', desc: 'No external callouts. Nothing is synced out to a third-party cloud.' },
   { icon: Eye, title: 'Deterministic, auditable scoring', desc: 'Every risk tier traces back to the exact signals and thresholds that fired.' },
   { icon: KeyRound, title: 'Respects your security model', desc: 'Honors your org’s sharing rules and field-level security out of the box.' },
-  { icon: Sparkles, title: 'Works with or without Einstein', desc: 'AI briefs run on your org’s own Einstein entitlement — never required.' },
+  { icon: Sparkles, title: 'Works with or without Einstein', desc: 'AI briefs run on your org’s own Einstein entitlement, never required.' },
 ];
 
 const gallery = [
@@ -106,7 +106,7 @@ const gallery = [
     key: 'brief',
     tab: 'Deal Brief',
     src: '/dealpulse/deal-brief.png',
-    caption: 'A color-coded risk brief on every Opportunity — the signals, the why, and the next action.',
+    caption: 'A color-coded risk brief on every Opportunity, the signals, the why, and the next action.',
     alt: 'DealPulse High Risk brief on a Salesforce Opportunity showing signals, explanation and action.',
   },
   {
@@ -120,21 +120,21 @@ const gallery = [
     key: 'rules',
     tab: 'Risk Rule Builder',
     src: '/dealpulse/risk-rules.png',
-    caption: 'Define what “High Risk” means — signals, thresholds, AND/OR logic. No code.',
+    caption: 'Define what “High Risk” means, signals, thresholds, AND/OR logic. No code.',
     alt: 'DealPulse Risk Rules editor with conditions and AND/OR filter logic for a risk tier.',
   },
   {
     key: 'signals',
     tab: 'Custom Signals',
     src: '/dealpulse/signal-management.png',
-    caption: 'Toggle built-in signals, set thresholds, or add your own — no code.',
+    caption: 'Toggle built-in signals, set thresholds, or add your own, no code.',
     alt: 'DealPulse Signal Management with built-in signals, on/off toggles and thresholds.',
   },
   {
     key: 'agent',
     tab: 'Deal Risk Agent',
     src: '/dealpulse/deal-risk-agent.png',
-    caption: 'Just ask — the read-only Deal Risk Agent answers from real signals.',
+    caption: 'Just ask, the read-only Deal Risk Agent answers from real signals.',
     alt: 'DealPulse Agentforce agent listing high-risk deals with amounts and reasons.',
   },
 ];
@@ -142,11 +142,11 @@ const gallery = [
 const faqs = [
   {
     q: 'Is DealPulse really 100% native?',
-    a: 'Yes. DealPulse is a packaged Salesforce app that runs entirely inside your org. It makes no external callouts and syncs no data out — your pipeline never leaves Salesforce.',
+    a: 'Yes. DealPulse is a packaged Salesforce app that runs entirely inside your org. It makes no external callouts and syncs no data out, your pipeline never leaves Salesforce.',
   },
   {
     q: 'What does it cost?',
-    a: 'Early access is free today. Commercial pricing is being finalized as part of the AppExchange listing process, so there are no dollar figures to share yet — early adopters get in before that lands.',
+    a: 'Early access is free today. Commercial pricing is being finalized as part of the AppExchange listing process, so there are no dollar figures to share yet, early adopters get in before that lands.',
   },
   {
     q: 'Do I need Einstein or Agentforce licenses?',
@@ -158,11 +158,11 @@ const faqs = [
   },
   {
     q: 'Which signals does it track?',
-    a: 'Seven built-in signals — Activity Gap, Close-Date Pushes, Stage Regression, Open High-Priority Cases, Missing Next Step, Amount Erosion, and Contact Engagement — plus no-code Custom Signals and industry packs for Manufacturing, Financial Services, Health, and CPQ.',
+    a: 'Seven built-in signals, Activity Gap, Close-Date Pushes, Stage Regression, Open High-Priority Cases, Missing Next Step, Amount Erosion, and Contact Engagement, plus no-code Custom Signals and industry packs for Manufacturing, Financial Services, Health, and CPQ.',
   },
   {
     q: 'Is it on AppExchange yet?',
-    a: 'The AppExchange listing is in progress. In the meantime, early-access installs are available now — request access and we’ll send you a private install link.',
+    a: 'The AppExchange listing is in progress. In the meantime, early-access installs are available now, request access and we’ll send you a private install link.',
   },
 ];
 
@@ -204,7 +204,7 @@ const DealPulse = () => {
   return (
     <>
       <Seo
-        title="DealPulse — Native Salesforce Deal Risk Intelligence | Meet The Mind"
+        title="DealPulse, Native Salesforce Deal Risk Intelligence | Meet The Mind"
         description="DealPulse is a 100% native Salesforce app that scores every open Opportunity, shows which risk signals are firing, and tells reps what to do next. No sync-out, no black box."
         canonical="/dealpulse"
         jsonLd={[softwareSchema, faqSchema]}
@@ -212,7 +212,7 @@ const DealPulse = () => {
 
       <EarlyAccessForm open={formOpen} onClose={() => setFormOpen(false)} />
 
-      {/* 1 · HERO — light background */}
+      {/* 1 · HERO, light background */}
       <section className="relative pt-28 pb-14" style={{ backgroundColor: MIST }}>
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
@@ -230,7 +230,7 @@ const DealPulse = () => {
                 Deal Risk Intelligence · 100% Native
               </p>
               <h1 className="text-4xl md:text-5xl font-bold leading-[1.1] mb-5" style={{ color: INK }}>
-                Know which deals are at risk — before your pipeline review.
+                Know which deals are at risk, before your pipeline review.
               </h1>
               <p className="text-lg text-gray-600 mb-7 leading-relaxed">
                 DealPulse is a 100% native Salesforce app that scores every open
@@ -278,7 +278,7 @@ const DealPulse = () => {
             <Activity size={18} style={{ color: CRIMSON }} className="mt-0.5 flex-shrink-0" />
             <span>
               <strong>DealPulse is production-ready and in the AppExchange listing process.</strong>{' '}
-              Pricing is being finalized with Salesforce — early access is free while we
+              Pricing is being finalized with Salesforce, early access is free while we
               complete the listing.
             </span>
           </p>
@@ -290,7 +290,7 @@ const DealPulse = () => {
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="heading-md mb-3 text-center">See DealPulse in under a minute</h2>
           <p className="text-gray-600 text-lg text-center mb-8">
-            A 51-second walkthrough of the brief, the board, and the rules — press play.
+            A 51-second walkthrough of the brief, the board, and the rules, press play.
           </p>
           <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl ring-1 ring-black/5 bg-gray-900">
             <video
@@ -313,7 +313,7 @@ const DealPulse = () => {
           <div className="space-y-4 text-lg text-gray-600 leading-relaxed">
             <p>
               By the time a deal comes up in the pipeline review, the warning signs have
-              been there for weeks — no activity, a pushed close date, a support fire in
+              been there for weeks, no activity, a pushed close date, a support fire in
               the background. Salesforce records what your reps <em>type</em>; it doesn’t
               tell you what your deals are actually <em>doing</em>.
             </p>
@@ -354,7 +354,7 @@ const DealPulse = () => {
           <div className="text-center max-w-2xl mx-auto mb-14">
             <h2 className="heading-md mb-4">Seven signals, live on every deal out of the box</h2>
             <p className="text-gray-600 text-lg">
-              Each one maps to something your reps already know matters — computed
+              Each one maps to something your reps already know matters, computed
               automatically from data already in Salesforce, on every open Opportunity.
             </p>
           </div>
@@ -375,8 +375,8 @@ const DealPulse = () => {
             })}
           </div>
           <p className="text-center text-gray-500 mt-10 max-w-2xl mx-auto">
-            Four more signals — <strong className="text-gray-700">Amount Erosion, Open High-Priority Cases,
-            Total Contacts,</strong> and <strong className="text-gray-700">Engaged Contacts</strong> — switch
+            Four more signals, <strong className="text-gray-700">Amount Erosion, Open High-Priority Cases,
+            Total Contacts,</strong> and <strong className="text-gray-700">Engaged Contacts</strong>, switch
             on per org, alongside a no-code Custom Signal builder and 20 industry-pack signals.
           </p>
         </div>
@@ -388,7 +388,7 @@ const DealPulse = () => {
           <div className="text-center max-w-2xl mx-auto mb-14">
             <h2 className="heading-md mb-4">More than a risk score</h2>
             <p className="text-gray-600 text-lg">
-              DealPulse is a full deal-risk workflow — you control the rules, watch the
+              DealPulse is a full deal-risk workflow. You control the rules, watch the
               momentum, and extend it to your business, all inside Salesforce.
             </p>
           </div>
@@ -417,7 +417,7 @@ const DealPulse = () => {
         <div className="container mx-auto px-4">
           <h2 className="heading-md mb-4 text-center">See it in Salesforce</h2>
           <p className="text-gray-600 text-lg text-center max-w-2xl mx-auto mb-12">
-            Real screens from the shipped app — no mockups.
+            Real screens from the shipped app, no mockups.
           </p>
 
           {/* tabs */}
@@ -458,7 +458,7 @@ const DealPulse = () => {
         </div>
       </section>
 
-      {/* 7 · NATIVE TRUST BLOCK — Ink dark band */}
+      {/* 7 · NATIVE TRUST BLOCK, Ink dark band */}
       <section className="py-14" style={{ backgroundColor: INK }}>
         <div className="container mx-auto px-4">
           <div className="inline-flex bg-white rounded-xl px-4 py-2 mb-10">
@@ -470,7 +470,7 @@ const DealPulse = () => {
             />
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-14 max-w-2xl">
-            Built to pass your security review — not work around it.
+            Built to pass your security review, not work around it.
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {trustPillars.map((p, i) => {
@@ -499,7 +499,7 @@ const DealPulse = () => {
           <h2 className="heading-md mb-4">Built by the consultants who see these deals every day</h2>
           <p className="text-gray-600 text-lg leading-relaxed mb-6">
             DealPulse came out of the patterns Meet The Mind sees across real RevOps
-            engagements — the same stalled-deal anatomy, over and over. The team that
+            engagements, the same stalled-deal anatomy, over and over. The team that
             built it is the team that supports it.
           </p>
           <div className="flex flex-col sm:flex-row gap-x-8 gap-y-2 justify-center">

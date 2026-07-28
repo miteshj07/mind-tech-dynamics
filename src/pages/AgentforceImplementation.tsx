@@ -10,17 +10,17 @@ const useCases = [
   {
     icon: <Zap size={28} />,
     title: 'Inbound Lead Qualification',
-    description: 'Agentforce agents engage every inbound lead instantly — asking qualification questions, enriching records from Apollo.io, and routing sales-ready prospects to the right rep. No lead waits hours for a response.',
+    description: 'Agentforce agents engage every inbound lead instantly, asking qualification questions, enriching records from Apollo.io, and routing sales-ready prospects to the right rep. No lead waits hours for a response.',
   },
   {
     icon: <Users size={28} />,
     title: '24/7 Customer Service Agents',
-    description: 'Deploy autonomous service agents grounded in your Salesforce knowledge base. They resolve common cases, deflect tickets, and escalate to humans with full context — reducing support load without sacrificing quality.',
+    description: 'Deploy autonomous service agents grounded in your Salesforce knowledge base. They resolve common cases, deflect tickets, and escalate to humans with full context, reducing support load without sacrificing quality.',
   },
   {
     icon: <BarChart3 size={28} />,
     title: 'Internal Sales Ops Automation',
-    description: 'Agents that handle repetitive CRM work — data entry, follow-up creation, record updates, and deal stage routing — so your reps spend time on revenue, not admin.',
+    description: 'Agents that handle repetitive CRM work, data entry, follow-up creation, record updates, and deal stage routing, so your reps spend time on revenue, not admin.',
   },
   {
     icon: <Bot size={28} />,
@@ -43,11 +43,11 @@ const deliverables = [
 const whyUs = [
   {
     title: 'Founder-led delivery',
-    desc: 'Mitesh Jain — 10+ year Salesforce-certified consultant — personally leads every Agentforce engagement. No junior handoffs.',
+    desc: 'Mitesh Jain, 10+ year Salesforce-certified consultant, personally leads every Agentforce engagement. No junior handoffs.',
   },
   {
     title: 'Apollo.io pairing',
-    desc: 'We uniquely combine Agentforce with Apollo.io outbound automation — agents qualify inbound while Apollo.io fills the top of funnel.',
+    desc: 'We uniquely combine Agentforce with Apollo.io outbound automation, agents qualify inbound while Apollo.io fills the top of funnel.',
   },
   {
     title: 'B2B revenue focus',
@@ -55,7 +55,7 @@ const whyUs = [
   },
   {
     title: 'Global delivery',
-    desc: 'Serving B2B teams in the US, UK, UAE, and Australia — timezone-friendly, async-first communication.',
+    desc: 'Serving B2B teams in the US, UK, UAE, and Australia, timezone-friendly, async-first communication.',
   },
 ];
 
@@ -66,7 +66,7 @@ const faqs = [
   },
   {
     q: 'Do we need to already be on Salesforce to use Agentforce?',
-    a: 'Yes — Agentforce runs natively inside Salesforce. If you\'re not yet on Salesforce, we can implement Sales Cloud and Agentforce together as a combined engagement.',
+    a: 'Yes, Agentforce runs natively inside Salesforce. If you\'re not yet on Salesforce, we can implement Sales Cloud and Agentforce together as a combined engagement.',
   },
   {
     q: 'What Salesforce licences are needed for Agentforce?',
@@ -74,7 +74,7 @@ const faqs = [
   },
   {
     q: 'Can Agentforce integrate with Apollo.io?',
-    a: 'Yes — and this is one of Meet The Mind\'s strongest differentiators. We wire Apollo.io lead data directly into Salesforce so Agentforce agents have enriched prospect context to qualify and route accurately.',
+    a: 'Yes, and this is one of Meet The Mind\'s strongest differentiators. We wire Apollo.io lead data directly into Salesforce so Agentforce agents have enriched prospect context to qualify and route accurately.',
   },
   {
     q: 'What happens after the agent is live?',
@@ -97,7 +97,7 @@ const AgentforceImplementation = () => {
     },
     areaServed: ['United States', 'United Kingdom', 'United Arab Emirates', 'Australia'],
     description:
-      'End-to-end Salesforce Agentforce implementation — scoping, agent design, Flow/Apex integration, grounding, testing, and launch. Specialising in lead qualification agents and B2B sales automation.',
+      'End-to-end Salesforce Agentforce implementation, scoping, agent design, Flow/Apex integration, grounding, testing, and launch. Specialising in lead qualification agents and B2B sales automation.',
   };
 
   const faqSchema = {
@@ -113,7 +113,7 @@ const AgentforceImplementation = () => {
   return (
     <>
       <Seo
-        title="Salesforce Agentforce Implementation Partner — Meet The Mind"
+        title="Salesforce Agentforce Implementation Partner, Meet The Mind"
         description="Certified Agentforce implementation partner. We design, build, and deploy Salesforce AI agents for B2B lead qualification, customer service, and sales ops automation. US, UK, UAE & Australia."
         canonical="/agentforce-implementation"
         jsonLd={[serviceSchema, faqSchema]}
@@ -121,7 +121,7 @@ const AgentforceImplementation = () => {
 
       <PageHeader
         title="Salesforce Agentforce Implementation"
-        subtitle="We design and deploy Salesforce Agentforce AI agents that qualify leads 24/7, automate service, and take real action inside your CRM — grounded in your live Salesforce data."
+        subtitle="We design and deploy Salesforce Agentforce AI agents that qualify leads 24/7, automate service, and take real action inside your CRM, grounded in your live Salesforce data."
       />
 
       {/* Intro */}
@@ -129,13 +129,13 @@ const AgentforceImplementation = () => {
         <div className="container mx-auto px-4 max-w-4xl">
           <p className="text-lg text-gray-700 leading-relaxed mb-5">
             Meet The Mind Technologies is a certified Salesforce Agentforce implementation partner. We help
-            B2B revenue teams deploy autonomous AI agents that go beyond scripted chatbots — agents that
+            B2B revenue teams deploy autonomous AI agents that go beyond scripted chatbots, agents that
             reason over live Salesforce data, take real CRM actions, and integrate directly with your
             Apollo.io outbound workflows.
           </p>
           <p className="text-lg text-gray-700 leading-relaxed mb-8">
-            Every Agentforce engagement is led personally by Mitesh Jain — Salesforce-certified with 10+
-            years of implementation experience — from use-case scoping through to post-launch optimisation.
+            Every Agentforce engagement is led personally by Mitesh Jain, Salesforce-certified with 10+
+            years of implementation experience, from use-case scoping through to post-launch optimisation.
           </p>
           <div className="flex flex-wrap gap-3">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand/10 text-brand text-sm font-semibold">
@@ -156,7 +156,7 @@ const AgentforceImplementation = () => {
         <div className="container mx-auto px-4">
           <h2 className="heading-md mb-4 text-center">Agentforce use cases we implement</h2>
           <p className="text-gray-500 text-center max-w-2xl mx-auto mb-12">
-            We scope every agent deployment around a specific revenue or service outcome — not generic AI capabilities.
+            We scope every agent deployment around a specific revenue or service outcome, not generic AI capabilities.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {useCases.map((u, i) => (
@@ -174,7 +174,7 @@ const AgentforceImplementation = () => {
       <section className="py-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="heading-md mb-4 text-center">What's included in every engagement</h2>
-          <p className="text-gray-500 text-center mb-10">End-to-end delivery — no separate change orders for testing, go-live, or optimisation.</p>
+          <p className="text-gray-500 text-center mb-10">End-to-end delivery, no separate change orders for testing, go-live, or optimisation.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {deliverables.map((d, i) => (
               <div key={i} className="flex items-start gap-3">

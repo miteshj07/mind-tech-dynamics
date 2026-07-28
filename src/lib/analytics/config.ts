@@ -1,6 +1,6 @@
 // Analytics configuration.
 //
-// GA4 and LinkedIn IDs are PUBLIC identifiers — they ship inside the client
+// GA4 and LinkedIn IDs are PUBLIC identifiers. They ship inside the client
 // bundle no matter what, so there is no secret to protect here. You can supply
 // them either way:
 //
@@ -13,8 +13,8 @@
 // Until an ID is present, the whole analytics layer stays dark (no scripts
 // load, every tracking call is a no-op). So it is safe to ship this as-is.
 
-const HARDCODED_GA_ID = 'G-4SCGB3ZDCD';  // Meet The Mind — GA4 web stream
-const HARDCODED_LINKEDIN_ID = '9644964';  // Meet The Mind — LinkedIn Insight Tag (partner ID)
+const HARDCODED_GA_ID = 'G-4SCGB3ZDCD';  // Meet The Mind, GA4 web stream
+const HARDCODED_LINKEDIN_ID = '9644964';  // Meet The Mind, LinkedIn Insight Tag (partner ID)
 
 export const GA_MEASUREMENT_ID = (
   (import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined) || HARDCODED_GA_ID || ''

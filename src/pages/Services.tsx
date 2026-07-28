@@ -56,7 +56,7 @@ const ServiceDetail = ({ title, description, icon, features, benefits }: Service
 const serviceListSchema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: 'Salesforce & Agentforce Services — Meet The Mind',
+  name: 'Salesforce & Agentforce Services, Meet The Mind',
   description: 'End-to-end Salesforce consulting services including Agentforce AI agent implementation, Apollo.io lead-generation automation, CRM implementation, customisation and integration.',
   provider: { '@type': 'Organization', name: 'Meet The Mind Technologies', url: 'https://www.meethemind.com/' },
   itemListElement: [
@@ -74,7 +74,7 @@ const Services = () => {
   const services = [
     {
       title: "Agentforce Implementation",
-      description: "We design and deploy Salesforce Agentforce AI agents that qualify leads, resolve service cases 24/7, and automate CRM tasks — grounded in your real Salesforce data.",
+      description: "We design and deploy Salesforce Agentforce AI agents that qualify leads, resolve service cases 24/7, and automate CRM tasks, grounded in your real Salesforce data.",
       icon: <Bot size={48} />,
       features: [
         "Agent use-case scoping and guardrails",
@@ -94,7 +94,7 @@ const Services = () => {
     },
     {
       title: "B2B Lead-Generation Automation",
-      description: "We build automated Apollo.io-to-Salesforce lead workflows — enrichment, deduplication, routing, and scoring — so your pipeline fills itself and no lead slips through the cracks.",
+      description: "We build automated Apollo.io-to-Salesforce lead workflows, enrichment, deduplication, routing, and scoring, so your pipeline fills itself and no lead slips through the cracks.",
       icon: <Workflow size={48} />,
       features: [
         "Apollo.io to Salesforce integration",

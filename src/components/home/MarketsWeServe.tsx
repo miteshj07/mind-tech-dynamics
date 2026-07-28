@@ -42,7 +42,7 @@ const MarketsWeServe = () => {
             Markets We Serve
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            We deliver Salesforce consulting and Agentforce implementation across four English-speaking markets — remote-first, timezone-flexible, and enterprise-ready.
+            We deliver Salesforce consulting and Agentforce implementation across four English-speaking markets, remote-first, timezone-flexible, and enterprise-ready.
           </p>
         </div>
 

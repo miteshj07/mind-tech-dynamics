@@ -7,9 +7,9 @@ import ContactCTA from '@/components/layout/ContactCTA';
 import Seo from '@/components/layout/Seo';
 
 const whatIsDataCloud = [
-  'Unifies customer data from every source — CRM, website, marketing, support, billing — into a single real-time profile',
+  'Unifies customer data from every source, CRM, website, marketing, support, billing, into a single real-time profile',
   'Streams data directly into Salesforce so Sales Cloud, Service Cloud, and Agentforce always work from live, complete data',
-  'Powers AI personalisation, lead scoring, and audience segmentation at scale — without a separate data warehouse',
+  'Powers AI personalisation, lead scoring, and audience segmentation at scale, without a separate data warehouse',
   'Replaces fragmented CDPs and ETL pipelines with a native Salesforce platform that your team can actually use',
 ];
 
@@ -17,12 +17,12 @@ const useCases = [
   {
     icon: <Target size={28} />,
     title: 'Unified B2B Customer Profiles',
-    description: 'Merge CRM contacts, website behaviour, marketing engagement, and support history into a single Data Cloud profile. Sales reps see the full picture — not just what\'s in Salesforce.',
+    description: 'Merge CRM contacts, website behaviour, marketing engagement, and support history into a single Data Cloud profile. Sales reps see the full picture, not just what\'s in Salesforce.',
   },
   {
     icon: <Zap size={28} />,
     title: 'Real-Time Lead Scoring',
-    description: 'Score leads in real time using Data Cloud calculated insights — combining Apollo.io firmographic data, website intent signals, email engagement, and CRM history into a single score that updates automatically.',
+    description: 'Score leads in real time using Data Cloud calculated insights, combining Apollo.io firmographic data, website intent signals, email engagement, and CRM history into a single score that updates automatically.',
   },
   {
     icon: <RefreshCw size={28} />,
@@ -32,7 +32,7 @@ const useCases = [
   {
     icon: <Users size={28} />,
     title: 'Agentforce Grounding',
-    description: 'Data Cloud is the memory layer for Agentforce AI agents. Agents grounded in Data Cloud have access to complete, real-time customer context — enabling more accurate lead qualification, case resolution, and next-best-action recommendations.',
+    description: 'Data Cloud is the memory layer for Agentforce AI agents. Agents grounded in Data Cloud have access to complete, real-time customer context, enabling more accurate lead qualification, case resolution, and next-best-action recommendations.',
   },
   {
     icon: <BarChart3 size={28} />,
@@ -47,30 +47,30 @@ const useCases = [
 ];
 
 const implementation = [
-  ['Data source audit', 'We identify every system that holds customer data — CRM, marketing tools, billing platforms, product analytics — and map what needs to flow into Data Cloud and why.'],
+  ['Data source audit', 'We identify every system that holds customer data, CRM, marketing tools, billing platforms, product analytics, and map what needs to flow into Data Cloud and why.'],
   ['Data model design', 'We design your Data Cloud data model: which objects map to which Data Cloud entities, how records are matched and merged, and which calculated fields you need.'],
   ['Connector & ingestion setup', 'We configure Salesforce-native connectors (Sales Cloud, Marketing Cloud) and build custom ingestion for external sources (Apollo.io, QuickBooks, third-party APIs) using Data Cloud ingestion APIs.'],
-  ['Identity resolution', 'We configure Data Cloud\'s identity resolution rules — matching contacts and accounts across sources by email, domain, and custom identifiers to build accurate unified profiles.'],
+  ['Identity resolution', 'We configure Data Cloud\'s identity resolution rules, matching contacts and accounts across sources by email, domain, and custom identifiers to build accurate unified profiles.'],
   ['Calculated insights & segments', 'We build calculated insights (lead scores, engagement recency, revenue potential) and audience segments that feed directly into Salesforce Flows and Agentforce agents.'],
-  ['Activation & testing', 'We activate unified profiles and segments into Sales Cloud, Agentforce, and Marketing Cloud — then test data freshness, match rates, and segment accuracy before go-live.'],
+  ['Activation & testing', 'We activate unified profiles and segments into Sales Cloud, Agentforce, and Marketing Cloud, then test data freshness, match rates, and segment accuracy before go-live.'],
 ];
 
 const faqs = [
   {
     q: 'What is Salesforce Data Cloud?',
-    a: 'Salesforce Data Cloud (formerly Customer Data Platform / CDP) is Salesforce\'s real-time data platform that unifies customer data from every source into a single profile inside Salesforce. Unlike a traditional CDP, it runs natively inside Salesforce — so unified data is immediately available in Sales Cloud, Service Cloud, Marketing Cloud, and Agentforce without ETL pipelines or data exports.',
+    a: 'Salesforce Data Cloud (formerly Customer Data Platform / CDP) is Salesforce\'s real-time data platform that unifies customer data from every source into a single profile inside Salesforce. Unlike a traditional CDP, it runs natively inside Salesforce, so unified data is immediately available in Sales Cloud, Service Cloud, Marketing Cloud, and Agentforce without ETL pipelines or data exports.',
   },
   {
     q: 'How is Data Cloud different from a standard Salesforce CRM?',
-    a: 'Standard Salesforce CRM stores the data your team manually enters. Data Cloud continuously ingests data from every system — website, marketing, billing, support, product — and unifies it into a real-time profile. The result: Sales Cloud records are automatically enriched with context that previously lived in 5 different tools.',
+    a: 'Standard Salesforce CRM stores the data your team manually enters. Data Cloud continuously ingests data from every system, website, marketing, billing, support, product, and unifies it into a real-time profile. The result: Sales Cloud records are automatically enriched with context that previously lived in 5 different tools.',
   },
   {
     q: 'Do we need Marketing Cloud to use Data Cloud?',
-    a: 'No. Data Cloud has its own licence and works with Sales Cloud, Service Cloud, and Agentforce independently. Marketing Cloud is one of many activation targets — not a prerequisite.',
+    a: 'No. Data Cloud has its own licence and works with Sales Cloud, Service Cloud, and Agentforce independently. Marketing Cloud is one of many activation targets, not a prerequisite.',
   },
   {
     q: 'Can Data Cloud integrate with Apollo.io?',
-    a: 'Yes. We use the Data Cloud ingestion API to stream Apollo.io prospect data — firmographics, intent signals, sequence engagement — into Data Cloud profiles. This enriches your Salesforce contacts automatically and powers more accurate lead scoring and Agentforce grounding.',
+    a: 'Yes. We use the Data Cloud ingestion API to stream Apollo.io prospect data, firmographics, intent signals, sequence engagement, into Data Cloud profiles. This enriches your Salesforce contacts automatically and powers more accurate lead scoring and Agentforce grounding.',
   },
   {
     q: 'What licences are needed for Salesforce Data Cloud?',
@@ -82,7 +82,7 @@ const faqs = [
   },
   {
     q: 'Does Meet The Mind implement Data Cloud for B2B companies specifically?',
-    a: 'Yes — our Data Cloud implementations are designed entirely for B2B revenue teams. We focus on use cases that drive pipeline: lead scoring from behavioural and firmographic data, Apollo.io enrichment, Agentforce agent grounding, and outbound audience segmentation.',
+    a: 'Yes, our Data Cloud implementations are designed entirely for B2B revenue teams. We focus on use cases that drive pipeline: lead scoring from behavioural and firmographic data, Apollo.io enrichment, Agentforce agent grounding, and outbound audience segmentation.',
   },
 ];
 
@@ -101,7 +101,7 @@ const SalesforceDataCloud = () => {
     },
     areaServed: ['United States', 'United Kingdom', 'United Arab Emirates', 'Australia'],
     description:
-      'Salesforce Data Cloud implementation for B2B revenue teams — unified customer profiles, real-time lead scoring, Apollo.io integration, Agentforce grounding, and audience segmentation. Meet The Mind Technologies.',
+      'Salesforce Data Cloud implementation for B2B revenue teams, unified customer profiles, real-time lead scoring, Apollo.io integration, Agentforce grounding, and audience segmentation. Meet The Mind Technologies.',
   };
 
   const faqSchema = {
@@ -117,7 +117,7 @@ const SalesforceDataCloud = () => {
   return (
     <>
       <Seo
-        title="Salesforce Data Cloud Consulting — B2B Implementation | Meet The Mind"
+        title="Salesforce Data Cloud Consulting, B2B Implementation | Meet The Mind"
         description="Salesforce Data Cloud implementation for B2B teams. Unified customer profiles, real-time lead scoring, Apollo.io integration, and Agentforce AI grounding. US, UK, UAE & Australia."
         canonical="/salesforce-data-cloud"
         jsonLd={[serviceSchema, faqSchema]}
@@ -125,7 +125,7 @@ const SalesforceDataCloud = () => {
 
       <PageHeader
         title="Salesforce Data Cloud Consulting"
-        subtitle="We implement Salesforce Data Cloud for B2B revenue teams — unifying customer data from every source into a real-time profile that powers Agentforce AI agents, lead scoring, and outbound segmentation."
+        subtitle="We implement Salesforce Data Cloud for B2B revenue teams, unifying customer data from every source into a real-time profile that powers Agentforce AI agents, lead scoring, and outbound segmentation."
       />
 
       {/* What is Data Cloud */}
@@ -137,7 +137,7 @@ const SalesforceDataCloud = () => {
             </div>
             <div>
               <h2 className="text-2xl font-bold mb-2">What is Salesforce Data Cloud?</h2>
-              <p className="text-gray-500">Salesforce's fastest-growing product — and the foundation every modern Salesforce stack is moving toward.</p>
+              <p className="text-gray-500">Salesforce's fastest-growing product, and the foundation every modern Salesforce stack is moving toward.</p>
             </div>
           </div>
           <div className="space-y-4 mb-8">
@@ -150,8 +150,7 @@ const SalesforceDataCloud = () => {
           </div>
           <div className="bg-brand/5 border border-brand/20 rounded-xl p-6">
             <p className="text-gray-700 leading-relaxed">
-              <strong>Meet The Mind's position:</strong> We implement Data Cloud specifically for B2B revenue teams
-              — connecting Apollo.io outbound data, Salesforce CRM records, and external sources into unified
+              <strong>Meet The Mind's position:</strong> We implement Data Cloud specifically for B2B revenue teams, connecting Apollo.io outbound data, Salesforce CRM records, and external sources into unified
               profiles that feed Agentforce agents and Salesforce Flow automation. The result is a revenue stack
               where every agent, every rep, and every automation works from the same complete, real-time data.
             </p>
@@ -164,7 +163,7 @@ const SalesforceDataCloud = () => {
         <div className="container mx-auto px-4">
           <h2 className="heading-md mb-4 text-center">Data Cloud use cases we implement</h2>
           <p className="text-gray-500 text-center max-w-2xl mx-auto mb-12">
-            Each implementation is scoped around a specific revenue outcome — not generic data unification for its own sake.
+            Each implementation is scoped around a specific revenue outcome, not generic data unification for its own sake.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {useCases.map((u, i) => (
@@ -182,7 +181,7 @@ const SalesforceDataCloud = () => {
       <section className="py-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="heading-md mb-4 text-center">Our Data Cloud implementation process</h2>
-          <p className="text-gray-500 text-center mb-12">A structured 6-phase approach — from data source audit to live unified profiles.</p>
+          <p className="text-gray-500 text-center mb-12">A structured 6-phase approach, from data source audit to live unified profiles.</p>
           <ol className="space-y-6">
             {implementation.map(([title, desc], i) => (
               <li key={i} className="flex items-start">
@@ -207,11 +206,11 @@ const SalesforceDataCloud = () => {
             {[
               {
                 title: 'Apollo.io + Data Cloud specialist',
-                desc: 'We\'re the only Salesforce consultancy that builds Apollo.io outbound data natively into Data Cloud profiles — giving you enriched, intent-aware prospect records without manual exports.',
+                desc: 'We\'re the only Salesforce consultancy that builds Apollo.io outbound data natively into Data Cloud profiles, giving you enriched, intent-aware prospect records without manual exports.',
               },
               {
                 title: 'Agentforce-first architecture',
-                desc: 'Every Data Cloud implementation we build is designed to ground Agentforce AI agents. Data Cloud without Agentforce is half the value — we connect both from day one.',
+                desc: 'Every Data Cloud implementation we build is designed to ground Agentforce AI agents. Data Cloud without Agentforce is half the value. We connect both from day one.',
               },
               {
                 title: 'B2B revenue team focus',

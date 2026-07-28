@@ -20,11 +20,11 @@ const HealthCheckBanner = () => {
               <Search size={28} className="text-white" />
             </div>
             <div>
-              <p className="text-white/70 text-sm font-semibold uppercase tracking-widest mb-1">Free — No Obligation</p>
+              <p className="text-white/70 text-sm font-semibold uppercase tracking-widest mb-1">Free, No Obligation</p>
               <h2 className="text-2xl md:text-3xl font-black mb-2">Free Salesforce Health Check</h2>
               <p className="text-white/80 text-base leading-relaxed max-w-xl">
-                We audit your Salesforce org across 6 areas — data quality, automation, security,
-                integrations, reporting, and adoption — and deliver a written report with a
+                We audit your Salesforce org across 6 areas, data quality, automation, security,
+                integrations, reporting, and adoption, and deliver a written report with a
                 prioritised fix list within 5 business days.
               </p>
             </div>

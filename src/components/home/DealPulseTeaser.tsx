@@ -26,7 +26,7 @@ const DealPulseTeaser = () => {
               />
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-              Know which deals are at risk — before your pipeline review.
+              Know which deals are at risk, before your pipeline review.
             </h2>
             <p className="text-gray-300 text-lg mb-8 max-w-xl">
               DealPulse is our 100% native Salesforce app that scores every open

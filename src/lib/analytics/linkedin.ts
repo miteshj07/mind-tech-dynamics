@@ -1,7 +1,7 @@
 // LinkedIn Insight Tag.
 //
 // Enables LinkedIn-sourced traffic reporting and lets you retarget visitors who
-// did not convert on their first visit — the single most valuable audience for
+// did not convert on their first visit, the single most valuable audience for
 // a B2B Salesforce consultancy. Stays dark until a Partner ID is configured.
 
 import { LINKEDIN_PARTNER_ID, ANALYTICS_DEBUG } from './config';

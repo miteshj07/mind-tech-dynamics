@@ -98,7 +98,7 @@ const AssessmentForm = ({ open, onClose }: AssessmentFormProps) => {
             </div>
             <h3 className="text-2xl font-bold mb-3">Request received</h3>
             <p className="text-gray-600 mb-6">
-              Thanks — we'll be in touch to schedule your readiness assessment and walk
+              Thanks, we'll be in touch to schedule your readiness assessment and walk
               through your org's score with you.
             </p>
             <button className="btn-primary" onClick={close}>

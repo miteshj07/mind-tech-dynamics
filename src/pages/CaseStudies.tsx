@@ -166,7 +166,7 @@ const CaseStudies = () => {
   const caseStudiesSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Salesforce & Agentforce Case Studies — Meet The Mind',
+    name: 'Salesforce & Agentforce Case Studies, Meet The Mind',
     description: caseStudiesSection.subtitle,
     url: 'https://www.meethemind.com/case-studies',
     itemListElement: caseStudiesSection.studies.map((study: CaseStudy, index: number) => ({

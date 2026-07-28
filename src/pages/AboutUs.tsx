@@ -95,7 +95,7 @@ const AboutUs = () => {
       />
       <PageHeader
         title="About Meet The Mind"
-        subtitle="Salesforce consulting built on 10+ years of hands-on CRM expertise — delivered globally."
+        subtitle="Salesforce consulting built on 10+ years of hands-on CRM expertise, delivered globally."
       />
 
       {/* Our Story */}
@@ -148,11 +148,11 @@ const AboutUs = () => {
                   <p className="text-brand font-semibold mb-4">Founder &amp; Lead Salesforce Consultant</p>
 
                   <p className="text-gray-700 mb-4">
-                    Mitesh Jain is a 5x Salesforce Certified consultant and Agentblazer Innovator who has spent over a decade building CRM and automation systems for B2B revenue teams. Holding certifications across the Salesforce Platform, Sales Cloud, and CRM Analytics, he founded Meet The Mind Technologies to give ambitious businesses direct access to senior Salesforce expertise — without the overhead of a large consultancy.
+                    Mitesh Jain is a 5x Salesforce Certified consultant and Agentblazer Innovator who has spent over a decade building CRM and automation systems for B2B revenue teams. Holding certifications across the Salesforce Platform, Sales Cloud, and CRM Analytics, he founded Meet The Mind Technologies to give ambitious businesses direct access to senior Salesforce expertise, without the overhead of a large consultancy.
                   </p>
 
                   <p className="text-gray-700 mb-5">
-                    With clients across the US, UK, UAE, and Australia, Mitesh brings a global perspective to every engagement — from Agentforce AI agent rollouts to Apollo.io lead-gen automation wired directly into Salesforce. As a Salesforce Partner and Double Star Ranger with 230+ Trailhead badges, he stays at the cutting edge of the platform.
+                    With clients across the US, UK, UAE, and Australia, Mitesh brings a global perspective to every engagement, from Agentforce AI agent rollouts to Apollo.io lead-gen automation wired directly into Salesforce. As a Salesforce Partner and Double Star Ranger with 230+ Trailhead badges, he stays at the cutting edge of the platform.
                   </p>
 
                   {/* Trailhead stats */}

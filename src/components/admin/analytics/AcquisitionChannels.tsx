@@ -21,7 +21,7 @@ const AcquisitionChannels = ({ channels }: Props) => {
   if (!data.length) {
     return (
       <p className="text-sm text-gray-500 py-8 text-center">
-        No channel data yet — this fills in once GA4 records traffic.
+        No channel data yet. This fills in once GA4 records traffic.
       </p>
     );
   }

@@ -61,9 +61,9 @@ const PrivacyPolicy = () => {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Legal Basis for Processing (GDPR)</h2>
               <p className="mb-3">For visitors in the European Economic Area, we process personal data under the following lawful bases:</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Legitimate interests</strong> — responding to your enquiries and running our business</li>
-                <li><strong>Consent</strong> — where you have explicitly opted in to receive communications</li>
-                <li><strong>Contractual necessity</strong> — when processing is required to deliver services you have engaged us for</li>
+                <li><strong>Legitimate interests</strong>, responding to your enquiries and running our business</li>
+                <li><strong>Consent</strong>, where you have explicitly opted in to receive communications</li>
+                <li><strong>Contractual necessity</strong>, when processing is required to deliver services you have engaged us for</li>
               </ul>
             </div>
 
@@ -78,9 +78,9 @@ const PrivacyPolicy = () => {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Third-Party Services</h2>
               <p className="mb-3">We use the following third-party services, each governed by their own privacy policies:</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Supabase</strong> — database and backend infrastructure (EU and US data centres)</li>
-                <li><strong>Vercel</strong> — website hosting and CDN</li>
-                <li><strong>Google Analytics</strong> (if enabled) — anonymised website traffic analytics</li>
+                <li><strong>Supabase</strong>, database and backend infrastructure (EU and US data centres)</li>
+                <li><strong>Vercel</strong>, website hosting and CDN</li>
+                <li><strong>Google Analytics</strong> (if enabled), anonymised website traffic analytics</li>
               </ul>
             </div>
 

@@ -41,7 +41,7 @@ const TermsOfService = () => {
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Intellectual Property</h2>
               <p>
-                All content on this website — including text, graphics, logos, images, and software — is the property of Meet The Mind Technologies or its content suppliers and is protected by applicable copyright and intellectual property laws. You may not reproduce, distribute, or create derivative works without our express written permission.
+                All content on this website, including text, graphics, logos, images, and software, is the property of Meet The Mind Technologies or its content suppliers and is protected by applicable copyright and intellectual property laws. You may not reproduce, distribute, or create derivative works without our express written permission.
               </p>
             </div>
 

@@ -49,7 +49,7 @@ const SitemapPage = () => {
     <>
       <Seo
         title="Sitemap | Meet The Mind Technologies"
-        description="Full site map of meethemind.com — navigate to any page on our Salesforce consulting website."
+        description="Full site map of meethemind.com, navigate to any page on our Salesforce consulting website."
         canonical="/sitemap"
       />
       <PageHeader

@@ -2,7 +2,7 @@
 //
 // Router changes do not reload the page, so GA's automatic page_view would only
 // ever fire once (on the homepage). We disable the automatic hit and send a
-// page_view manually on every route change — see RouteAnalytics.
+// page_view manually on every route change, see RouteAnalytics.
 
 import { GA_MEASUREMENT_ID, ANALYTICS_DEBUG } from './config';
 

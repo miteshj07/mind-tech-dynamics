@@ -16,12 +16,12 @@ const whyColumns = [
   {
     icon: Layers,
     title: 'Born from real engagements',
-    desc: 'Every app starts as a pattern we saw solving the same problem across multiple RevOps engagements — not a feature invented in a vacuum.',
+    desc: 'Every app starts as a pattern we saw solving the same problem across multiple RevOps engagements, not a feature invented in a vacuum.',
   },
   {
     icon: ShieldCheck,
     title: 'Native-first, security-reviewed',
-    desc: 'Built to run entirely inside your Salesforce org — no data leaving, honoring your sharing model and field-level security.',
+    desc: 'Built to run entirely inside your Salesforce org, no data leaving, honoring your sharing model and field-level security.',
   },
   {
     icon: LifeBuoy,
@@ -39,13 +39,13 @@ const Apps = () => {
     <>
       <Seo
         title="Salesforce Apps | DealPulse & Native Apps by Meet The Mind"
-        description="Product-grade native Salesforce apps built, run, and supported by Meet The Mind — DealPulse for deal-risk intelligence and GroundTruth for Agentforce data readiness."
+        description="Product-grade native Salesforce apps built, run, and supported by Meet The Mind, DealPulse for deal-risk intelligence and GroundTruth for Agentforce data readiness."
         canonical="/apps"
       />
 
       <PageHeader
         title="Salesforce Apps by Meet The Mind"
-        subtitle="Product-grade apps we build, run, and support on the Salesforce platform — born from the same patterns we deploy for consulting clients."
+        subtitle="Product-grade apps we build, run, and support on the Salesforce platform, born from the same patterns we deploy for consulting clients."
       />
 
       {/* Tile grid */}
@@ -67,7 +67,7 @@ const Apps = () => {
                   Deal Risk Intelligence · 100% Native
                 </p>
                 <p className="text-gray-600 mb-6 flex-grow">
-                  Know which deals are at risk before your pipeline review — and exactly
+                  Know which deals are at risk before your pipeline review, and exactly
                   why. DealPulse scores every open Opportunity, shows the signals that are
                   firing, and tells the rep what to do next.
                 </p>
@@ -109,7 +109,7 @@ const Apps = () => {
             </div>
           </div>
 
-          {/* Ghost tile — more to come */}
+          {/* Ghost tile, more to come */}
           <div className="max-w-4xl mx-auto mt-8">
             <div className="rounded-2xl border border-dashed border-gray-200 bg-gray-50 py-8 px-8 flex flex-col sm:flex-row items-center justify-center gap-4 text-center sm:text-left">
               <Boxes size={30} className="text-gray-300 flex-shrink-0" />

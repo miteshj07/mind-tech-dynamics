@@ -7,10 +7,10 @@ const SITE = 'https://www.meethemind.com';
 const UPDATED = 'July 2026';
 
 const signals = [
-  { icon: Activity, name: 'Activity gap', desc: 'No logged calls, emails, or meetings for an extended stretch — the deal has gone quiet.' },
-  { icon: CalendarClock, name: 'Close-date slippage', desc: 'The close date has been pushed forward once or repeatedly — a classic sign of a deal that is not really progressing.' },
+  { icon: Activity, name: 'Activity gap', desc: 'No logged calls, emails, or meetings for an extended stretch, so the deal has gone quiet.' },
+  { icon: CalendarClock, name: 'Close-date slippage', desc: 'The close date has been pushed forward once or repeatedly, a classic sign of a deal that is not really progressing.' },
   { icon: TrendingDown, name: 'Stage regression', desc: 'The opportunity moved backward to an earlier stage instead of forward.' },
-  { icon: ListChecks, name: 'Missing next step', desc: 'No defined next action — nothing is scheduled to move the deal ahead.' },
+  { icon: ListChecks, name: 'Missing next step', desc: 'No defined next action, so nothing is scheduled to move the deal ahead.' },
   { icon: Hourglass, name: 'Stage stagnation', desc: 'The deal has sat in the same stage far longer than a healthy deal should.' },
   { icon: Users, name: 'Weak engagement', desc: 'Few or no engaged buying-side contacts, or a single-threaded deal with one champion.' },
 ];
@@ -19,7 +19,7 @@ const approaches = [
   {
     name: 'Manual deal reviews & questionnaires',
     how: 'Reps answer risk questions or apply a sales methodology; a score is derived from their input.',
-    tradeoff: 'Subjective and manual. It reflects what the rep believes — the same optimism bias you are trying to correct — and does not scale to every deal.',
+    tradeoff: 'Subjective and manual. It reflects what the rep believes (the same optimism bias you are trying to correct) and does not scale to every deal.',
   },
   {
     name: 'Black-box revenue intelligence',
@@ -29,12 +29,12 @@ const approaches = [
   {
     name: 'Automatic, native, signal-based',
     how: 'A deterministic engine scores every open opportunity from signals already in the CRM, on-platform, and explains which signals fired.',
-    tradeoff: 'You have to define what "risk" means for your business — but the scoring is transparent, explainable, and nothing leaves your CRM.',
+    tradeoff: 'You have to define what "risk" means for your business, but the scoring is transparent, explainable, and nothing leaves your CRM.',
   },
 ];
 
 const checklist = [
-  ['Is it automatic, or does it depend on rep input?', 'The deals most likely to be at risk are the ones a rep is quietly avoiding — so anything that relies on manual scoring misses them.'],
+  ['Is it automatic, or does it depend on rep input?', 'The deals most likely to be at risk are the ones a rep is quietly avoiding, so anything that relies on manual scoring misses them.'],
   ['Does it explain why, or just hand you a number?', 'A score with no reasons is not actionable and not defensible. Look for the specific signals behind every verdict.'],
   ['Does your pipeline data leave the CRM?', 'Syncing deals out to an external platform turns every deployment into a security review. Native tools avoid it entirely.'],
   ['Can you see and edit the rules?', 'If the logic is a black box, you cannot tune it to your sales motion or explain a score to your CRO.'],
@@ -45,11 +45,11 @@ const checklist = [
 const faqs = [
   {
     q: 'What is deal risk intelligence?',
-    a: 'Deal risk intelligence is the practice of automatically scoring every open sales opportunity for the risk that it stalls or slips — using signals already in the CRM — so revenue teams can act before a deal quietly dies. Unlike a manual deal review, it is continuous, evidence-based, and surfaces why a deal is at risk, not just that it is.',
+    a: 'Deal risk intelligence is the practice of automatically scoring every open sales opportunity for the risk that it stalls or slips, using signals already in the CRM, so revenue teams can act before a deal quietly dies. Unlike a manual deal review, it is continuous and evidence-based, and it surfaces why a deal is at risk, not just that it is.',
   },
   {
     q: 'How is deal risk intelligence different from revenue intelligence?',
-    a: 'Revenue intelligence is a broad category covering forecasting, conversation intelligence, and pipeline analytics — usually across an external platform. Deal risk intelligence is the narrower, more actionable slice: scoring individual open opportunities for risk and telling a rep what to do next. You can do deal risk intelligence natively inside Salesforce without adopting a full revenue-intelligence suite.',
+    a: 'Revenue intelligence is a broad category covering forecasting, conversation intelligence, and pipeline analytics, usually delivered across an external platform. Deal risk intelligence is the narrower, more actionable slice: scoring individual open opportunities for risk and telling a rep what to do next. You can do deal risk intelligence natively inside Salesforce without adopting a full revenue-intelligence suite.',
   },
   {
     q: 'What signals indicate a deal is at risk?',
@@ -61,7 +61,7 @@ const faqs = [
   },
   {
     q: 'Do you need AI to do deal risk intelligence?',
-    a: 'No. The most transparent approach is deterministic — explicit, admin-editable rules over CRM signals, with no model to train and no credits to spend. AI can add a plain-English narrative on top, but the risk classification itself does not require it.',
+    a: 'No. The most transparent approach is deterministic: explicit, admin-editable rules over CRM signals, with no model to train and no credits to spend. AI can add a plain-English narrative on top, but the risk classification itself does not require it.',
   },
   {
     q: 'Can you do deal risk intelligence natively in Salesforce?',
@@ -99,7 +99,7 @@ const DealRiskIntelligence = () => {
     <>
       <Seo
         title="What Is Deal Risk Intelligence? A Guide for Revenue Teams | Meet The Mind"
-        description="Deal risk intelligence is the practice of automatically scoring every open opportunity for the risk it stalls or slips — using CRM signals. Learn the signals, the approaches, and how to evaluate a tool."
+        description="Deal risk intelligence is the practice of automatically scoring every open opportunity for the risk it stalls or slips, using CRM signals. Learn the signals, the approaches, and how to evaluate a tool."
         canonical="/deal-risk-intelligence"
         jsonLd={[articleSchema, faqSchema]}
       />
@@ -127,10 +127,10 @@ const DealRiskIntelligence = () => {
           <div className="rounded-2xl bg-brand/5 border border-brand/20 p-6 md:p-8">
             <p className="text-xs font-semibold tracking-widest uppercase text-brand mb-3">In short</p>
             <p className="text-lg md:text-xl text-gray-800 leading-relaxed">
-              <strong>Deal risk intelligence</strong> is the practice of <strong>automatically scoring every open
-              sales opportunity</strong> for the risk that it stalls or slips — using signals already in your CRM —
+              <strong>Deal risk intelligence</strong> is the practice of automatically scoring every open
+              sales opportunity for the risk that it stalls or slips, using signals already in your CRM,
               so revenue teams can act before a deal quietly dies. Unlike a manual deal review, it is
-              <strong> continuous, evidence-based,</strong> and surfaces <em>why</em> a deal is at risk, not just that it is.
+              continuous and evidence-based, and it surfaces <em>why</em> a deal is at risk, not just that it is.
             </p>
           </div>
         </div>
@@ -150,15 +150,15 @@ const DealRiskIntelligence = () => {
             </p>
             <p>
               By the time the risk shows up in a forecast, it is often too late to save the deal. Deal risk
-              intelligence closes that gap by doing the analysis automatically — on every open opportunity, every
-              day — and putting the answer where reps and managers already work.
+              intelligence closes that gap by doing the analysis automatically, on every open opportunity every
+              day, and putting the answer where reps and managers already work.
             </p>
           </div>
 
           <div>
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">The signals that predict a deal is at risk</h2>
             <p className="mb-6">
-              Deal risk intelligence does not need new data — the signals are already sitting in your CRM, in the
+              Deal risk intelligence does not need new data. The signals are already sitting in your CRM, in the
               activity history, opportunity history, and related records. The most predictive ones:
             </p>
             <div className="grid sm:grid-cols-2 gap-5 not-prose">
@@ -228,8 +228,8 @@ const DealRiskIntelligence = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Deal risk intelligence vs. revenue intelligence</h2>
             <p className="mb-4">
               The two terms are often used interchangeably, but they are not the same. <strong>Revenue
-              intelligence</strong> is a broad platform category — forecasting, conversation intelligence, pipeline
-              analytics — typically delivered by syncing your data into an external system. <strong>Deal risk
+              intelligence</strong> is a broad platform category (forecasting, conversation intelligence, pipeline
+              analytics) typically delivered by syncing your data into an external system. <strong>Deal risk
               intelligence</strong> is the narrower, more actionable slice: scoring individual open opportunities for
               risk and telling a rep what to do next.
             </p>
@@ -261,7 +261,7 @@ const DealRiskIntelligence = () => {
             <p className="text-gray-300 mb-6 max-w-2xl">
               <strong className="text-white">DealPulse</strong>, built by Meet The Mind, is a 100% native Salesforce
               app that scores every open Opportunity from the signals already in your CRM, shows exactly why each
-              deal is at risk, and tells the rep what to do next — with nothing leaving your org.
+              deal is at risk, and tells the rep what to do next, with nothing leaving your org.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/dealpulse" className="btn-primary">

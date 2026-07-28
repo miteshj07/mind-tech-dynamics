@@ -59,7 +59,7 @@ const Careers = () => {
   };
   return <>
       <Seo
-        title="Careers | Meet The Mind — Salesforce & Agentforce Consultants"
+        title="Careers | Meet The Mind, Salesforce & Agentforce Consultants"
         description="Join Meet The Mind and build Salesforce & Agentforce solutions for B2B clients across the US, UK, UAE and Australia."
         canonical="/careers"
       />

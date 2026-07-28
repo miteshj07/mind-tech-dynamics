@@ -16,4 +16,4 @@ export const formatDuration = (seconds: number): string => {
   return m > 0 ? `${m}m ${rem}s` : `${rem}s`;
 };
 
-export const formatPosition = (p: number): string => (p ? p.toFixed(1) : '—');
+export const formatPosition = (p: number): string => (p ? p.toFixed(1) : ', ');

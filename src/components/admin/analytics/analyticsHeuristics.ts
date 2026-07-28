@@ -8,7 +8,7 @@ import type {
   TopPage,
 } from '@/types/analytics';
 
-// Pages below this view count are too low-traffic to judge — ignore for risk.
+// Pages below this view count are too low-traffic to judge, ignore for risk.
 const MIN_PAGE_VIEWS = 20;
 
 /** Average engagement time per view, in seconds. */
@@ -30,7 +30,7 @@ export const dropoffRisk = (page: TopPage): DropoffRisk => {
 const asPct = (fraction: number): string => `${(fraction * 100).toFixed(1)}%`;
 
 /**
- * Founder Action Panel: 1 win, 1 bottleneck, 3 tasks — all derived from the
+ * Founder Action Panel: 1 win, 1 bottleneck, 3 tasks, all derived from the
  * pulled snapshot only. Degrades gracefully when data is thin.
  */
 export const buildActionPanel = (snapshot: AnalyticsSnapshot): ActionPanel => {
@@ -44,7 +44,7 @@ export const buildActionPanel = (snapshot: AnalyticsSnapshot): ActionPanel => {
 
   // ── WIN ──────────────────────────────────────────────────
   let win =
-    'Not enough traffic yet to call a clear win — this fills in as data accumulates.';
+    'Not enough traffic yet to call a clear win. This fills in as data accumulates.';
   if (topChannel && topChannel.sessions > 0) {
     win = `${topChannel.channel} is your top traffic source with ${topChannel.sessions} sessions in the last 28 days.`;
     if (topQuery && topQuery.clicks > 0) {
@@ -65,26 +65,26 @@ export const buildActionPanel = (snapshot: AnalyticsSnapshot): ActionPanel => {
     .sort((a, b) => b.impressions - a.impressions)[0];
 
   let bottleneck =
-    'No obvious bottleneck yet — keep an eye on engagement as traffic grows.';
+    'No obvious bottleneck yet, keep an eye on engagement as traffic grows.';
   if (riskyPage) {
     bottleneck = `Your high-traffic page ${riskyPage.path} has low engagement (~${Math.round(
       avgEngagementSeconds(riskyPage),
-    )}s avg over ${riskyPage.views} views) — visitors are landing but not staying.`;
+    )}s avg over ${riskyPage.views} views), visitors are landing but not staying.`;
   } else if (seoGap) {
     bottleneck = `"${seoGap.query}" gets ${seoGap.impressions} impressions but only ${asPct(
       seoGap.ctr,
-    )} CTR at avg position ${seoGap.position.toFixed(1)} — visible in search, but not clicked.`;
+    )} CTR at avg position ${seoGap.position.toFixed(1)}, visible in search, but not clicked.`;
   } else if (kpis && kpis.engagementRate > 0 && kpis.engagementRate < 0.5) {
     bottleneck = `Site-wide engagement rate is ${asPct(
       kpis.engagementRate,
-    )} — under half of sessions are engaged. Something's losing people early.`;
+    )}, under half of sessions are engaged. Something's losing people early.`;
   }
 
   // ── TASKS ────────────────────────────────────────────────
   const tasks: string[] = [];
   if (seoGap) {
     tasks.push(
-      `Rewrite the page title + meta description for "${seoGap.query}" — ${seoGap.impressions} impressions at ${asPct(
+      `Rewrite the page title + meta description for "${seoGap.query}", ${seoGap.impressions} impressions at ${asPct(
         seoGap.ctr,
       )} CTR is unclaimed traffic.`,
     );
@@ -96,7 +96,7 @@ export const buildActionPanel = (snapshot: AnalyticsSnapshot): ActionPanel => {
   }
   if (topChannel && topChannel.sessions > 0) {
     tasks.push(
-      `Double down on ${topChannel.channel} — it's already your #1 source. Publish/post more of what's working there this week.`,
+      `Double down on ${topChannel.channel}, it's already your #1 source. Publish/post more of what's working there this week.`,
     );
   }
   if (topQuery && topQuery.clicks > 0) {

@@ -7,7 +7,7 @@ export const careersSection = {
     title: "Life at Meet The Mind",
     description: [
       "At Meet The Mind Technologies, we're building a team of passionate Salesforce experts who are committed to delivering exceptional solutions for our clients. We believe in fostering an environment where innovation thrives, learning is continuous, and work-life balance is respected.",
-      "Our culture is built on collaboration, technical excellence, and putting people first—both our team members and our clients. If you're looking to grow your career in the Salesforce ecosystem while working on impactful projects with a supportive team, we'd love to hear from you."
+      "Our culture is built on collaboration, technical excellence, and putting people first, both our team members and our clients. If you're looking to grow your career in the Salesforce ecosystem while working on impactful projects with a supportive team, we'd love to hear from you."
     ],
     images: [
       "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",

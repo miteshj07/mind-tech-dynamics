@@ -55,7 +55,7 @@ const EarlyAccessForm = ({ open, onClose }: EarlyAccessFormProps) => {
       return;
     }
 
-    // Fire the notification email (non-blocking — success even if this fails).
+    // Fire the notification email (non-blocking, success even if this fails).
     supabase.functions.invoke('send-contact-email', { body: payload }).catch(() => {});
 
     setStatus('success');
@@ -91,7 +91,7 @@ const EarlyAccessForm = ({ open, onClose }: EarlyAccessFormProps) => {
             </div>
             <h3 className="text-2xl font-bold mb-3">You're on the list!</h3>
             <p className="text-gray-600 mb-6">
-              Thanks — we'll email you a private install link and a short setup guide
+              Thanks, we'll email you a private install link and a short setup guide
               shortly. DealPulse installs in a sandbox in about 15 minutes.
             </p>
             <button className="btn-primary" onClick={close}>

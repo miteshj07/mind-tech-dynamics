@@ -10,7 +10,7 @@ export const generateSlug = (title: string): string => {
 };
 
 /**
- * Resolve a post's slug — use an explicit `slug` field if the author set one,
+ * Resolve a post's slug, use an explicit `slug` field if the author set one,
  * otherwise derive it from the title. Keeps existing post URLs stable.
  */
 export const getPostSlug = (post: { slug?: string; title: string }): string => {

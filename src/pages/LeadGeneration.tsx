@@ -9,7 +9,7 @@ const steps = [
   ['Source & enrich in Apollo.io', 'We define your ideal customer profile and build targeted lists in Apollo.io, enriched with verified contact and firmographic data.'],
   ['Sync to Salesforce', 'Leads flow into Salesforce automatically with field mapping, so no record is ever re-keyed by hand.'],
   ['Deduplicate & clean', 'Matching rules prevent duplicates and keep your database clean as new leads arrive.'],
-  ['Route & assign', 'Logic-based assignment rules route each lead to the right rep or queue instantly — by territory, segment, or round-robin.'],
+  ['Route & assign', 'Logic-based assignment rules route each lead to the right rep or queue instantly, by territory, segment, or round-robin.'],
   ['Score & prioritize', 'Lead scoring surfaces the hottest prospects first, and tasks/alerts trigger timely follow-up.'],
   ['Measure & optimize', 'Dashboards track source, conversion, and pipeline so you can double down on what works.'],
 ];
@@ -28,14 +28,14 @@ const outcomes = [
   {
     icon: <Send size={40} />,
     title: 'Faster, fairer follow-up',
-    description: 'Instant routing and scoring mean every lead reaches the right rep quickly — no leads slipping through the cracks.',
+    description: 'Instant routing and scoring mean every lead reaches the right rep quickly, no leads slipping through the cracks.',
   },
 ];
 
 const faqs = [
   {
     q: 'What is automated B2B lead-generation in Salesforce?',
-    a: 'It is a workflow that captures, enriches, deduplicates, routes, and scores B2B leads automatically inside Salesforce — so your pipeline fills and follow-up happens without manual data entry. Meet The Mind builds these workflows using Apollo.io and Salesforce.',
+    a: 'It is a workflow that captures, enriches, deduplicates, routes, and scores B2B leads automatically inside Salesforce, so your pipeline fills and follow-up happens without manual data entry. Meet The Mind builds these workflows using Apollo.io and Salesforce.',
   },
   {
     q: 'How do you connect Apollo.io to Salesforce?',
@@ -47,7 +47,7 @@ const faqs = [
   },
   {
     q: 'Can this work with Agentforce AI agents?',
-    a: 'Yes. Agentforce agents can qualify and respond to inbound leads 24/7, then hand them into the same automated routing and scoring workflow — combining AI agents with reliable pipeline automation.',
+    a: 'Yes. Agentforce agents can qualify and respond to inbound leads 24/7, then hand them into the same automated routing and scoring workflow, combining AI agents with reliable pipeline automation.',
   },
   {
     q: 'Which markets does Meet The Mind serve?',
@@ -68,7 +68,7 @@ const LeadGeneration = () => {
     provider: { '@type': 'Organization', name: 'Meet The Mind Technologies', url: 'https://www.meethemind.com/' },
     areaServed: ['United States', 'United Kingdom', 'United Arab Emirates', 'Australia'],
     description:
-      'Automated B2B lead-generation workflows connecting Apollo.io to Salesforce — enrichment, deduplication, routing, and scoring to keep your pipeline full.',
+      'Automated B2B lead-generation workflows connecting Apollo.io to Salesforce, enrichment, deduplication, routing, and scoring to keep your pipeline full.',
   };
 
   const faqSchema = {
@@ -85,14 +85,14 @@ const LeadGeneration = () => {
     <>
       <Seo
         title="B2B Lead-Generation Automation (Apollo.io → Salesforce) | Meet The Mind"
-        description="We build automated B2B lead-generation workflows connecting Apollo.io to Salesforce — enrichment, deduplication, routing and scoring. Serving the US, UK, UAE & Australia."
+        description="We build automated B2B lead-generation workflows connecting Apollo.io to Salesforce, enrichment, deduplication, routing and scoring. Serving the US, UK, UAE & Australia."
         canonical="/b2b-lead-generation"
         jsonLd={[serviceSchema, faqSchema]}
       />
 
       <PageHeader
         title="B2B Lead-Generation Automation"
-        subtitle="Automated Apollo.io-to-Salesforce workflows — enrichment, deduplication, routing, and scoring that keep your pipeline full."
+        subtitle="Automated Apollo.io-to-Salesforce workflows, enrichment, deduplication, routing, and scoring that keep your pipeline full."
       />
 
       <section className="py-16">
@@ -105,7 +105,7 @@ const LeadGeneration = () => {
             path from prospect to assigned, prioritized lead.
           </p>
           <p className="text-gray-600 text-lg">
-            The result is a repeatable, measurable lead-generation workflow — so your reps spend time selling
+            The result is a repeatable, measurable lead-generation workflow, so your reps spend time selling
             instead of cleaning data.
           </p>
         </div>

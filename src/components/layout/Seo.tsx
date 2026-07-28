@@ -38,7 +38,7 @@ function upsertLink(rel: string, href?: string) {
  *
  * Title, description, canonical and Open Graph tags are written imperatively in
  * useLayoutEffect (synchronous, before paint) instead of via react-helmet-async
- * — Helmet's deferred DOM updates race with the react-snap prerenderer and
+ *, Helmet's deferred DOM updates race with the react-snap prerenderer and
  * produced non-deterministic <title> tags. JSON-LD is rendered as a normal body
  * element so the prerenderer always captures it. JSON-LD is valid anywhere in
  * the document.

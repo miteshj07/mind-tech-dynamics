@@ -76,7 +76,7 @@ const ContactUs = () => {
     message: '',
   });
 
-  // "Send a message" (form) vs "Book a call" (Calendly) — one ask at a time.
+  // "Send a message" (form) vs "Book a call" (Calendly), one ask at a time.
   const [activeTab, setActiveTab] = useState<'call' | 'message'>('message');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -167,7 +167,7 @@ const ContactUs = () => {
               </div>
             </div>
             
-            {/* Book a call OR send a message — one ask at a time */}
+            {/* Book a call OR send a message, one ask at a time */}
             <div className="bg-white rounded-xl shadow-lg p-8">
               <div role="tablist" aria-label="Get in touch" className="grid grid-cols-2 gap-1 p-1 mb-8 bg-gray-100 rounded-lg">
                 <button

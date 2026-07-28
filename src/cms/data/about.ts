@@ -6,7 +6,7 @@ export const aboutUsSection = {
     content: [
       "Founded in 2015, Meet The Mind Technologies began with a simple mission: to help businesses harness the full potential of Salesforce through expert guidance and custom solutions.",
       "What started as a small team of passionate Salesforce consultants has grown into a comprehensive solutions provider trusted by companies across industries and continents.",
-      "Our journey has been defined by our commitment to client success, technical excellence, and continuous innovation. As Salesforce has evolved, so have we—constantly expanding our expertise to deliver cutting-edge solutions that drive measurable business outcomes."
+      "Our journey has been defined by our commitment to client success, technical excellence, and continuous innovation. As Salesforce has evolved, so have we, constantly expanding our expertise to deliver cutting-edge solutions that drive measurable business outcomes."
     ],
     image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
   },

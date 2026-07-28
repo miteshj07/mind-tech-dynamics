@@ -90,11 +90,11 @@ const AnalyticsTab = () => {
   const ga4Range =
     snapshot.range_start && snapshot.range_end
       ? `${snapshot.range_start} → ${snapshot.range_end}`
-      : '—';
+      : ', ';
   const gscRange =
     snapshot.gsc_totals?.rangeStart && snapshot.gsc_totals?.rangeEnd
       ? `${snapshot.gsc_totals.rangeStart} → ${snapshot.gsc_totals.rangeEnd}`
-      : '—';
+      : ', ';
 
   return (
     <div className="space-y-6">

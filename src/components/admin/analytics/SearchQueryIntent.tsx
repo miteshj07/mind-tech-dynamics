@@ -39,7 +39,7 @@ const SearchQueryIntent = ({ queries, totals }: Props) => {
       <Totals totals={totals} />
       {rows.length === 0 ? (
         <p className="text-sm text-gray-500 py-6 text-center">
-          No search-query data yet — Search Console lags ~2–3 days and needs traffic to accumulate.
+          No search-query data yet, Search Console lags ~2–3 days and needs traffic to accumulate.
         </p>
       ) : (
         <div className="overflow-x-auto">

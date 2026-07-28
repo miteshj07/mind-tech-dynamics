@@ -22,7 +22,7 @@ import AssessmentForm from '@/components/groundtruth/AssessmentForm';
 
 const SITE = 'https://www.meethemind.com';
 
-// GroundTruth palette — sampled from the logo (page-scoped; global tokens untouched)
+// GroundTruth palette, sampled from the logo (page-scoped; global tokens untouched)
 const NAVY = '#1C3157';
 const TEAL = '#159AA0';
 const MIST = '#EEF3F8';
@@ -42,7 +42,7 @@ const dimensions = [
     icon: Clock,
     color: '#1E86AE',
     name: 'Freshness',
-    desc: 'Is the record current — or is your agent citing a deal nobody has touched in 90 days?',
+    desc: 'Is the record current, or is your agent citing a deal nobody has touched in 90 days?',
   },
   {
     icon: GitCompareArrows,
@@ -60,7 +60,7 @@ const dimensions = [
     icon: BadgeCheck,
     color: '#63459F',
     name: 'Integrity',
-    desc: 'Are values structurally valid — real picklist values, not free text an agent can’t reason over?',
+    desc: 'Are values structurally valid, real picklist values, not free text an agent can’t reason over?',
   },
   {
     icon: EyeOff,
@@ -81,7 +81,7 @@ const steps = [
   },
   {
     title: 'Remediate and re-check',
-    desc: 'Fix fields, merge duplicates, or accept false positives in-app — then re-scan to clear the go-live gate before your agents ship.',
+    desc: 'Fix fields, merge duplicates, or accept false positives in-app, then re-scan to clear the go-live gate before your agents ship.',
   },
 ];
 
@@ -89,7 +89,7 @@ const capabilities = [
   {
     icon: SlidersHorizontal,
     title: 'Two scores that mean something',
-    desc: 'A portable Benchmark score — your go-live gate — computed only from the standard rulebook, plus an Org-Specific Readiness Score that layers in your own rules.',
+    desc: 'A portable Benchmark score, your go-live gate, computed only from the standard rulebook, plus an Org-Specific Readiness Score that layers in your own rules.',
   },
   {
     icon: ListChecks,
@@ -99,7 +99,7 @@ const capabilities = [
   {
     icon: Wrench,
     title: 'Human-in-the-loop remediation',
-    desc: 'Fix fields inline, merge duplicate groups past Salesforce’s native three-record cap, or suppress accepted false positives — with a full audit trail.',
+    desc: 'Fix fields inline, merge duplicate groups past Salesforce’s native three-record cap, or suppress accepted false positives, with a full audit trail.',
   },
   {
     icon: Layers,
@@ -109,19 +109,19 @@ const capabilities = [
   {
     icon: Lock,
     title: 'Security-respecting by design',
-    desc: 'Scores reflect the whole org, but per-record detail honours each viewer’s record access — even for administrators.',
+    desc: 'Scores reflect the whole org, but per-record detail honours each viewer’s record access, even for administrators.',
   },
   {
     icon: Bot,
     title: 'A runtime guardrail for agents',
-    desc: 'Agentforce and Flow can check readiness before they act — so an agent can decline to answer on data that isn’t ready.',
+    desc: 'Agentforce and Flow can check readiness before they act, so an agent can decline to answer on data that isn’t ready.',
   },
 ];
 
 const trustPillars = [
   { title: 'Your data never leaves Salesforce', desc: 'No external callouts, no data egress. The scan runs entirely on-platform.' },
   { title: 'Respects your security model', desc: 'Org-wide scoring for an honest picture; per-record detail gated to the viewer’s access.' },
-  { title: 'Deterministic and auditable', desc: 'Every score traces to declarative rules you can read — no black-box model.' },
+  { title: 'Deterministic and auditable', desc: 'Every score traces to declarative rules you can read, no black-box model.' },
   { title: 'Agentforce-optional', desc: 'The base package runs without Agentforce; the runtime guardrail lights up when you have it.' },
 ];
 
@@ -130,21 +130,21 @@ const gallery = [
     key: 'dashboard',
     tab: 'Readiness Dashboard',
     src: '/groundtruth/shot-dashboard.png',
-    caption: 'Your Readiness Score, the Benchmark go-live gate, and all six dimensions scored — with open issues broken out by object.',
+    caption: 'Your Readiness Score, the Benchmark go-live gate, and all six dimensions scored, with open issues broken out by object.',
     alt: 'GroundTruth Readiness dashboard showing a 92.29 readiness score, benchmark 95, and the six dimension bars.',
   },
   {
     key: 'health',
     tab: 'Findings',
     src: '/groundtruth/shot-data-health.png',
-    caption: 'Every open issue on the records you own — filter by dimension, search, and resolve in place.',
+    caption: 'Every open issue on the records you own, filter by dimension, search, and resolve in place.',
     alt: 'GroundTruth My Data Health list of open data issues with dimension filters and resolve actions.',
   },
   {
     key: 'merge',
     tab: 'Resolve & Merge',
     src: '/groundtruth/shot-resolve-merge.png',
-    caption: 'Merge duplicates with field-level survivorship — pick the record to keep, then keep the best value from any of them.',
+    caption: 'Merge duplicates with field-level survivorship, pick the record to keep, then keep the best value from any of them.',
     alt: 'GroundTruth Resolve Data Issues modal merging duplicate leads with field-level survivorship.',
   },
   {
@@ -158,7 +158,7 @@ const gallery = [
     key: 'agent',
     tab: 'Agentforce Guardrail',
     src: '/groundtruth/shot-agentforce.png',
-    caption: 'Agents can ask whether a record is safe to act on — and get a straight answer before they touch a customer.',
+    caption: 'Agents can ask whether a record is safe to act on, and get a straight answer before they touch a customer.',
     alt: 'Agentforce conversation asking GroundTruth whether a contact has data issues before emailing them.',
   },
 ];
@@ -170,19 +170,19 @@ const faqs = [
   },
   {
     q: 'Do I need Agentforce to use it?',
-    a: 'No. The base package is Agentforce-free — you can score and clean your data on any supported edition. If you do run Agentforce or Flow, the runtime guardrail lets agents check readiness before they act.',
+    a: 'No. The base package is Agentforce-free. You can score and clean your data on any supported edition. If you do run Agentforce or Flow, the runtime guardrail lets agents check readiness before they act.',
   },
   {
     q: 'What is a "Readiness Score"?',
-    a: 'A 0–100 measure of how ready your CRM data is for AI agents, rolled up from six dimensions. We show a portable Benchmark score — comparable across orgs and the go-live gate at 85+ — and an Org-Specific score that includes your own rules.',
+    a: 'A 0–100 measure of how ready your CRM data is for AI agents, rolled up from six dimensions. We show a portable Benchmark score, comparable across orgs and the go-live gate at 85+, and an Org-Specific score that includes your own rules.',
   },
   {
     q: 'What are the six dimensions?',
-    a: 'Completeness, Freshness, Consistency, Uniqueness, Integrity, and Exposure — each scored on the records and fields that actually matter to your agents.',
+    a: 'Completeness, Freshness, Consistency, Uniqueness, Integrity, and Exposure, each scored on the records and fields that actually matter to your agents.',
   },
   {
     q: 'How does it handle data security?',
-    a: 'The scan reads org-wide so the score reflects reality, but per-record finding detail respects each viewer’s record access — even administrators only see detail for records they are allowed to see.',
+    a: 'The scan reads org-wide so the score reflects reality, but per-record finding detail respects each viewer’s record access, even administrators only see detail for records they are allowed to see.',
   },
   {
     q: 'Is it on AppExchange yet?',
@@ -223,22 +223,22 @@ const GroundTruth = () => {
   return (
     <>
       <Seo
-        title="GroundTruth — Trusted Data Layer for Agentforce | Meet The Mind"
-        description="GroundTruth scores your Salesforce data's readiness for Agentforce across six dimensions, shows which records will trip an agent up, and helps you fix them — without data leaving your org."
+        title="GroundTruth, Trusted Data Layer for Agentforce | Meet The Mind"
+        description="GroundTruth scores your Salesforce data's readiness for Agentforce across six dimensions, shows which records will trip an agent up, and helps you fix them, without data leaving your org."
         canonical="/groundtruth"
         jsonLd={[softwareSchema, faqSchema]}
       />
 
       <AssessmentForm open={formOpen} onClose={() => setFormOpen(false)} />
 
-      {/* 1 · HERO — light */}
+      {/* 1 · HERO, light */}
       <section className="relative pt-28 pb-14" style={{ backgroundColor: MIST }}>
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
             <div>
               <img
                 src="/groundtruth/groundtruth-logo.png"
-                alt="GroundTruth — Trusted Data Layer"
+                alt="GroundTruth, Trusted Data Layer"
                 className="h-24 w-auto mb-6 -ml-1"
                 width={560}
                 height={334}
@@ -252,7 +252,7 @@ const GroundTruth = () => {
               <p className="text-lg text-gray-600 mb-7 leading-relaxed">
                 GroundTruth scores your CRM's readiness for Agentforce across six
                 dimensions, shows you exactly which records will trip an agent up, and
-                helps you fix them — all without your data ever leaving Salesforce.
+                helps you fix them, all without your data ever leaving Salesforce.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <button className="btn-primary text-base px-7 py-3" onClick={() => setFormOpen(true)}>
@@ -305,7 +305,7 @@ const GroundTruth = () => {
           <div className="space-y-4 text-lg text-gray-600 leading-relaxed">
             <p>
               Agentforce answers by reading your CRM. When a record is blank, stale,
-              duplicated, or contradicts itself, the agent doesn't hesitate — it answers
+              duplicated, or contradicts itself, the agent doesn't hesitate. It answers
               anyway, wrong, in a confident voice your customer believes. The failure
               doesn't look like a bug. It looks like a fluent, plausible, incorrect
               sentence.
@@ -313,7 +313,7 @@ const GroundTruth = () => {
             <p>
               You can't see that risk by scrolling through records, and you can't fix it
               after an agent has already quoted the wrong number to a customer. GroundTruth
-              measures it up front — every record, every rule — so you know your data is
+              measures it up front, every record, every rule, so you know your data is
               ready before you turn agents loose on it.
             </p>
           </div>
@@ -347,7 +347,7 @@ const GroundTruth = () => {
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h2 className="heading-md mb-4">Six dimensions of data readiness</h2>
             <p className="text-gray-600 text-lg">
-              Every one of them is a way an agent can be confidently wrong — scored
+              Every one of them is a way an agent can be confidently wrong, scored
               automatically on the records and fields that matter.
             </p>
           </div>
@@ -380,7 +380,7 @@ const GroundTruth = () => {
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h2 className="heading-md mb-4">More than a score</h2>
             <p className="text-gray-600 text-lg">
-              GroundTruth is a full readiness workflow — measure it, understand it, fix it,
+              GroundTruth is a full readiness workflow, measure it, understand it, fix it,
               and prove it, all inside Salesforce.
             </p>
           </div>
@@ -409,7 +409,7 @@ const GroundTruth = () => {
         <div className="container mx-auto px-4">
           <h2 className="heading-md mb-3 text-center">See it in Salesforce</h2>
           <p className="text-gray-600 text-lg text-center max-w-2xl mx-auto mb-10">
-            Real screens from the shipped app — no mockups.
+            Real screens from the shipped app, no mockups.
           </p>
 
           <div className="flex flex-wrap justify-center gap-2 mb-8">
@@ -455,7 +455,7 @@ const GroundTruth = () => {
             height={334}
           />
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 max-w-2xl">
-            Built to pass your security review — not work around it.
+            Built to pass your security review, not work around it.
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {trustPillars.map((p, i) => (
@@ -512,7 +512,7 @@ const GroundTruth = () => {
       <section className="py-14" style={{ backgroundColor: NAVY }}>
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-5 max-w-2xl mx-auto">
-            See how ready your data is — before your agents go live.
+            See how ready your data is, before your agents go live.
           </h2>
           <p className="text-gray-300 text-lg mb-4 max-w-xl mx-auto">
             A free readiness assessment on your own org, run with our team.

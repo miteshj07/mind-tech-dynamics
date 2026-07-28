@@ -81,7 +81,7 @@ const FounderBio = () => {
           >
             <p className="text-lg text-gray-700 leading-relaxed mb-6">
               Mitesh Jain is the founder of Meet The Mind Technologies and leads every client
-              engagement directly — no junior handoffs, no account managers as middlemen.
+              engagement directly, no junior handoffs, no account managers as middlemen.
               Over 10 years, he has designed and deployed Salesforce Agentforce AI agents,
               Apollo.io-to-Salesforce lead automation workflows, and Sales Cloud implementations
               for B2B revenue teams across the US, UK, UAE, and Australia.
@@ -90,7 +90,7 @@ const FounderBio = () => {
             <p className="text-gray-600 leading-relaxed mb-8">
               Meet The Mind Technologies implements Salesforce + Agentforce + Apollo.io
               automation to help B2B SaaS, FinTech, and Professional Services companies
-              turn their CRM into a pipeline engine — measurable ROI, no black-box delivery.
+              turn their CRM into a pipeline engine, measurable ROI, no black-box delivery.
             </p>
 
             {/* Certifications */}

@@ -10,12 +10,12 @@ const faqs = [
   {
     question: 'What is Agentforce and how can it benefit my business?',
     answer:
-      'Agentforce is Salesforce\'s AI-agent platform that lets you deploy autonomous digital workers — for lead qualification, customer service, internal operations, and more — directly inside your Salesforce environment. For B2B businesses, this typically means 24/7 prospect engagement and dramatically faster pipeline velocity without adding headcount.',
+      'Agentforce is Salesforce\'s AI-agent platform that lets you deploy autonomous digital workers, for lead qualification, customer service, internal operations, and more, directly inside your Salesforce environment. For B2B businesses, this typically means 24/7 prospect engagement and dramatically faster pipeline velocity without adding headcount.',
   },
   {
     question: 'How does the Apollo.io to Salesforce lead-generation automation work?',
     answer:
-      'We connect Apollo.io\'s prospecting database to your Salesforce CRM using a 6-step automated workflow: Apollo identifies and enriches contacts based on your ICP, sequences them with personalised outreach, and automatically creates Leads or Contacts in Salesforce — complete with engagement history, scoring, and owner assignment — so your reps only touch warm, qualified prospects.',
+      'We connect Apollo.io\'s prospecting database to your Salesforce CRM using a 6-step automated workflow: Apollo identifies and enriches contacts based on your ICP, sequences them with personalised outreach, and automatically creates Leads or Contacts in Salesforce, complete with engagement history, scoring, and owner assignment, so your reps only touch warm, qualified prospects.',
   },
   {
     question: 'Do you work with businesses outside Australia?',
@@ -30,7 +30,7 @@ const faqs = [
   {
     question: 'Is Meet The Mind Technologies a certified Salesforce Partner?',
     answer:
-      'Yes. Meet The Mind Technologies is a Salesforce Partner. Our founder Mitesh Jain holds five Salesforce certifications — including Platform Administrator, Platform App Builder, Platform Developer I, Sales Cloud Consultant, and CRM Analytics & Einstein Discovery Consultant — and holds Agentblazer Innovator status for 2025.',
+      'Yes. Meet The Mind Technologies is a Salesforce Partner. Our founder Mitesh Jain holds five Salesforce certifications, including Platform Administrator, Platform App Builder, Platform Developer I, Sales Cloud Consultant, and CRM Analytics & Einstein Discovery Consultant, and holds Agentblazer Innovator status for 2025.',
   },
 ];
 
@@ -58,7 +58,7 @@ const FaqItem = ({ faq, index }: { faq: typeof faqs[0]; index: number }) => {
   );
 };
 
-// FAQPage JSON-LD — rendered inline so react-snap captures it deterministically
+// FAQPage JSON-LD, rendered inline so react-snap captures it deterministically
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',

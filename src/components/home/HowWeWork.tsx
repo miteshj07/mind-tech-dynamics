@@ -9,7 +9,7 @@ const STEPS = [
     icon: Search,
     title: 'Discovery Call',
     description:
-      'We start with a focused 45-minute conversation to understand your revenue goals, current Salesforce setup, and the biggest friction points in your pipeline. No generic questionnaires — just direct questions from Mitesh, who will personally lead your engagement.',
+      'We start with a focused 45-minute conversation to understand your revenue goals, current Salesforce setup, and the biggest friction points in your pipeline. No generic questionnaires, just direct questions from Mitesh, who will personally lead your engagement.',
     deliverable: 'Scope summary + recommended approach',
   },
   {
@@ -17,7 +17,7 @@ const STEPS = [
     icon: ClipboardList,
     title: 'Audit & Assessment',
     description:
-      'We conduct a structured Salesforce health check — reviewing your data model, automation flows, lead routing logic, and Apollo.io integration points. We identify exactly what needs to be built, fixed, or optimised before writing a single line of code.',
+      'We conduct a structured Salesforce health check, reviewing your data model, automation flows, lead routing logic, and Apollo.io integration points. We identify exactly what needs to be built, fixed, or optimised before writing a single line of code.',
     deliverable: 'Prioritised action plan with effort estimates',
   },
   {
@@ -55,7 +55,7 @@ const HowWeWork = () => {
           </p>
           <h2 className="text-4xl font-bold mb-4">How We Work</h2>
           <p className="text-gray-400 text-lg">
-            Every engagement follows the same four-phase process — designed for
+            Every engagement follows the same four-phase process, designed for
             B2B revenue teams that need measurable results, not months of
             discovery theatre.
           </p>
@@ -74,7 +74,7 @@ const HowWeWork = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                {/* Step number — large background watermark */}
+                {/* Step number, large background watermark */}
                 <span className="absolute top-6 right-6 text-7xl font-black text-white/5 select-none group-hover:text-brand/10 transition-colors duration-300">
                   {step.number}
                 </span>

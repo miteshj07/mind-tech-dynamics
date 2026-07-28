@@ -28,7 +28,7 @@ const ContentPerformance = ({ pages }: Props) => {
   if (!rows.length) {
     return (
       <p className="text-sm text-gray-500 py-6 text-center">
-        No page data yet — top pages appear once GA4 records views.
+        No page data yet, top pages appear once GA4 records views.
       </p>
     );
   }
