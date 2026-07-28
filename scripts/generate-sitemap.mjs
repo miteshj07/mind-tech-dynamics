@@ -28,6 +28,7 @@ const STATIC_ROUTES = [
   '/dealpulse',
   '/groundtruth',
   '/deal-risk-intelligence',
+  '/dealpulse-vs-clari',
 ];
 
 // ── Routes to never index ─────────────────────────────────────────────────────

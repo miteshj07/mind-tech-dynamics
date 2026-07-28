@@ -509,6 +509,9 @@ const DealPulse = () => {
             <Link to="/deal-risk-intelligence" className="text-brand font-semibold hover:underline">
               New to deal risk intelligence? Read the guide →
             </Link>
+            <Link to="/dealpulse-vs-clari" className="text-brand font-semibold hover:underline">
+              Comparing tools? DealPulse vs Clari →
+            </Link>
           </div>
         </div>
       </section>

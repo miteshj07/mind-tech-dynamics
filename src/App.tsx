@@ -33,6 +33,7 @@ import AppsPage from "@/pages/Apps";
 import DealPulsePage from "@/pages/DealPulse";
 import GroundTruthPage from "@/pages/GroundTruth";
 import DealRiskIntelligencePage from "@/pages/DealRiskIntelligence";
+import DealPulseVsClariPage from "@/pages/DealPulseVsClari";
 import CareersPage from "@/pages/Careers";
 import ContactUsPage from "@/pages/ContactUs";
 import AdminPage from "@/pages/Admin";
@@ -73,6 +74,7 @@ const App = () => {
                 <Route path="/dealpulse" element={<PageTransition><DealPulsePage /></PageTransition>} />
                 <Route path="/groundtruth" element={<PageTransition><GroundTruthPage /></PageTransition>} />
                 <Route path="/deal-risk-intelligence" element={<PageTransition><DealRiskIntelligencePage /></PageTransition>} />
+                <Route path="/dealpulse-vs-clari" element={<PageTransition><DealPulseVsClariPage /></PageTransition>} />
                 <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
                 <Route path="/contact-us" element={<PageTransition><ContactUsPage /></PageTransition>} />
                 <Route path="/contact" element={<Navigate to="/contact-us" replace />} />
