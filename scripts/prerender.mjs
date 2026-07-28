@@ -50,6 +50,7 @@ const STATIC_ROUTES = [
   '/blog',
   '/apps',
   '/dealpulse',
+  '/groundtruth',
   '/careers',
   '/contact-us',
   '/privacy-policy',
