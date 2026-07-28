@@ -159,7 +159,8 @@ const DealRiskIntelligence = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">The signals that predict a deal is at risk</h2>
             <p className="mb-6">
               Deal risk intelligence does not need new data. The signals are already sitting in your CRM, in the
-              activity history, opportunity history, and related records. The most predictive ones:
+              activity history, opportunity history, and related records. The most predictive ones (each defined in
+              our <Link to="/deal-risk-glossary" className="text-brand hover:underline">deal risk glossary</Link>):
             </p>
             <div className="grid sm:grid-cols-2 gap-5 not-prose">
               {signals.map((s, i) => {

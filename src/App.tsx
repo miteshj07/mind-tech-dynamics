@@ -35,6 +35,7 @@ import GroundTruthPage from "@/pages/GroundTruth";
 import DealRiskIntelligencePage from "@/pages/DealRiskIntelligence";
 import DealPulseVsClariPage from "@/pages/DealPulseVsClari";
 import SalesforceDealRiskAppsPage from "@/pages/SalesforceDealRiskApps";
+import DealRiskGlossaryPage from "@/pages/DealRiskGlossary";
 import CareersPage from "@/pages/Careers";
 import ContactUsPage from "@/pages/ContactUs";
 import AdminPage from "@/pages/Admin";
@@ -77,6 +78,7 @@ const App = () => {
                 <Route path="/deal-risk-intelligence" element={<PageTransition><DealRiskIntelligencePage /></PageTransition>} />
                 <Route path="/dealpulse-vs-clari" element={<PageTransition><DealPulseVsClariPage /></PageTransition>} />
                 <Route path="/salesforce-deal-risk-apps" element={<PageTransition><SalesforceDealRiskAppsPage /></PageTransition>} />
+                <Route path="/deal-risk-glossary" element={<PageTransition><DealRiskGlossaryPage /></PageTransition>} />
                 <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
                 <Route path="/contact-us" element={<PageTransition><ContactUsPage /></PageTransition>} />
                 <Route path="/contact" element={<Navigate to="/contact-us" replace />} />
