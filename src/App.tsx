@@ -36,6 +36,8 @@ import DealRiskIntelligencePage from "@/pages/DealRiskIntelligence";
 import DealPulseVsClariPage from "@/pages/DealPulseVsClari";
 import SalesforceDealRiskAppsPage from "@/pages/SalesforceDealRiskApps";
 import DealRiskGlossaryPage from "@/pages/DealRiskGlossary";
+import AgentforceDataReadinessPage from "@/pages/AgentforceDataReadiness";
+import GroundTruthVsDemandToolsPage from "@/pages/GroundTruthVsDemandTools";
 import CareersPage from "@/pages/Careers";
 import ContactUsPage from "@/pages/ContactUs";
 import AdminPage from "@/pages/Admin";
@@ -79,6 +81,8 @@ const App = () => {
                 <Route path="/dealpulse-vs-clari" element={<PageTransition><DealPulseVsClariPage /></PageTransition>} />
                 <Route path="/salesforce-deal-risk-apps" element={<PageTransition><SalesforceDealRiskAppsPage /></PageTransition>} />
                 <Route path="/deal-risk-glossary" element={<PageTransition><DealRiskGlossaryPage /></PageTransition>} />
+                <Route path="/agentforce-data-readiness" element={<PageTransition><AgentforceDataReadinessPage /></PageTransition>} />
+                <Route path="/groundtruth-vs-demandtools" element={<PageTransition><GroundTruthVsDemandToolsPage /></PageTransition>} />
                 <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
                 <Route path="/contact-us" element={<PageTransition><ContactUsPage /></PageTransition>} />
                 <Route path="/contact" element={<Navigate to="/contact-us" replace />} />

@@ -16,6 +16,35 @@ function stripLeadingH1(md: string): string {
   return md.replace(/^#\s+.+\n?/, '').trimStart();
 }
 
+// Collapse inline markdown to plain text for use in JSON-LD answer strings.
+function toPlainText(md: string): string {
+  return md
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links -> text
+    .replace(/\*\*([^*]+)\*\*/g, '$1')        // bold
+    .replace(/\*([^*]+)\*/g, '$1')            // italic
+    .replace(/`([^`]+)`/g, '$1')              // code
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Parse a "## Frequently asked questions" section (### question + answer paragraphs)
+// out of the post body into FAQPage entries, so Q&A blocks in any post become
+// structured data automatically. Returns [] when no FAQ section is present.
+function extractFaqs(md: string): { q: string; a: string }[] {
+  const m = md.match(/\n##\s+Frequently asked questions\s*\n([\s\S]*)$/i);
+  if (!m) return [];
+  const body = m[1];
+  const blocks = body.split(/\n###\s+/).slice(1); // drop text before first ###
+  const faqs: { q: string; a: string }[] = [];
+  for (const block of blocks) {
+    const nl = block.indexOf('\n');
+    const q = (nl === -1 ? block : block.slice(0, nl)).trim();
+    const a = toPlainText(nl === -1 ? '' : block.slice(nl + 1));
+    if (q && a) faqs.push({ q, a });
+  }
+  return faqs;
+}
+
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
@@ -97,13 +126,26 @@ const BlogPost = () => {
     keywords: (post.tags || []).join(', '),
   };
 
+  const faqs = extractFaqs(post.content || '');
+  const faqSchema = faqs.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map(f => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      }
+    : null;
+
   return (
     <>
       <Seo
         title={`${post.metaTitle || post.title} | Meet The Mind Blog`}
         description={post.metaDescription || post.excerpt}
         canonical={canonical}
-        jsonLd={articleSchema}
+        jsonLd={faqSchema ? [articleSchema, faqSchema] : articleSchema}
       />
 
       {/* Page background */}

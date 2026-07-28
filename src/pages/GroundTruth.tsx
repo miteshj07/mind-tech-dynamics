@@ -490,6 +490,40 @@ const GroundTruth = () => {
         </div>
       </section>
 
+      {/* 8b · LEARN MORE */}
+      <section className="pb-14">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="grid sm:grid-cols-2 gap-5">
+            <Link
+              to="/agentforce-data-readiness"
+              className="group rounded-xl border border-gray-200 bg-white p-6 hover:border-gray-300 hover:shadow-sm transition-all"
+            >
+              <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: TEAL }}>Guide</p>
+              <h3 className="font-semibold mb-1" style={{ color: NAVY }}>Agentforce data readiness</h3>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                What readiness means, the six dimensions, and how to gate go-live on a score.
+              </p>
+              <span className="inline-flex items-center text-brand text-sm font-medium mt-3 group-hover:underline">
+                Read the guide <ArrowRight size={15} className="ml-1" />
+              </span>
+            </Link>
+            <Link
+              to="/groundtruth-vs-demandtools"
+              className="group rounded-xl border border-gray-200 bg-white p-6 hover:border-gray-300 hover:shadow-sm transition-all"
+            >
+              <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: TEAL }}>Comparison</p>
+              <h3 className="font-semibold mb-1" style={{ color: NAVY }}>GroundTruth vs. DemandTools</h3>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Readiness scoring vs. data cleansing, and why many teams use both.
+              </p>
+              <span className="inline-flex items-center text-brand text-sm font-medium mt-3 group-hover:underline">
+                See the comparison <ArrowRight size={15} className="ml-1" />
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* 9 · FAQ */}
       <section className="py-14" style={{ backgroundColor: MIST }}>
         <div className="container mx-auto px-4 max-w-3xl">
