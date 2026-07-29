@@ -47,6 +47,17 @@ const Footer = () => {
                   </Link>
                 </li>
               ))}
+              {/* Products — site-wide links to the hub pages (SEO authority + discovery) */}
+              <li>
+                <Link to="/dealpulse" className="text-gray-300 hover:text-brand transition-colors">
+                  DealPulse
+                </Link>
+              </li>
+              <li>
+                <Link to="/groundtruth" className="text-gray-300 hover:text-brand transition-colors">
+                  GroundTruth
+                </Link>
+              </li>
             </ul>
           </div>
 
