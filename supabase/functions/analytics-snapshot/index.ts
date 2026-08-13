@@ -288,9 +288,36 @@ serve(async (req) => {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // Public URL (verify_jwt=false) → the shared secret is the real gate.
-  if (req.headers.get("x-cron-secret") !== Deno.env.get("CRON_SECRET")) {
+  const url = new URL(req.url);
+  // Accept the shared secret via header (cron / curl) or query param (so a
+  // plain GET works too). Public URL (verify_jwt=false) → this secret is the
+  // real gate — no service_role key involved, RLS on the table is unaffected.
+  const providedSecret =
+    req.headers.get("x-cron-secret") ?? url.searchParams.get("secret");
+  if (providedSecret !== Deno.env.get("CRON_SECRET")) {
     return json({ success: false, error: "unauthorized" }, 401);
+  }
+
+  // GET ?latest=1 — read-only: return the most recent stored snapshot without
+  // triggering a fresh Google pull. Lets the assistant fetch current numbers
+  // on request without needing admin login or a service_role key.
+  if (req.method === "GET" && url.searchParams.get("latest") === "1") {
+    try {
+      const supabase = createClient(
+        Deno.env.get("SUPABASE_URL")!,
+        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+      );
+      const { data, error } = await supabase
+        .from("analytics_snapshots")
+        .select("*")
+        .order("snapshot_date", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (error) throw new Error(error.message);
+      return json({ success: true, snapshot: data });
+    } catch (e) {
+      return json({ success: false, error: (e as Error).message }, 500);
+    }
   }
 
   try {
