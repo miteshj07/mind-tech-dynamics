@@ -31,7 +31,10 @@ export const supabaseService = {
     }
   },
   
-  async updateCmsContent(section: string, content: any) {
+  // `options.silent` suppresses the user-facing error toast. Used by the
+  // CmsProvider's best-effort default seeding, which is expected to fail for
+  // anonymous visitors once cms_content writes are admin-only under RLS.
+  async updateCmsContent(section: string, content: any, options?: { silent?: boolean }) {
     try {
       console.log('\n=== Starting CMS Content Update ===');
       console.log('Section:', section);
@@ -167,11 +170,13 @@ export const supabaseService = {
         console.error('Supabase error details:', (error as any).details);
       }
       
-      toast.error('Failed to update content');
+      if (!options?.silent) {
+        toast.error('Failed to update content');
+      }
       throw error;
     }
   },
-  
+
   // Image Management
   async uploadImage(file: File): Promise<UploadImageResult> {
     const fileExt = file.name.split('.').pop();

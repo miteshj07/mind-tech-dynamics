@@ -34,28 +34,39 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         
       // If no content is returned, we'll use the default data
       if (!cmsContent || cmsContent.length === 0) {
-        console.log("No CMS content found in Supabase. Initializing with default data...");
-        // Initialize the database with our default content
-        for (const [section, sectionData] of Object.entries(cmsDefaultData)) {
-          console.log(`Initializing section: ${section}`);
-          await supabaseService.updateCmsContent(section, sectionData);
-        }
-        
-        // Now try to fetch the content again
-        const refreshedContent = await supabaseService.fetchCmsContent();
-        console.log("Refreshed CMS content after initialization:", refreshedContent);
-        
-        if (refreshedContent && refreshedContent.length > 0) {
-          // Transform the fetched data to match our expected structure
-          const transformedData: any = { ...cmsDefaultData };
-          refreshedContent.forEach((item: any) => {
-            transformedData[item.section] = item.data;
-          });
-          setData(transformedData);
-          console.log('Initialized CMS content in Supabase and loaded it');
-        } else {
-          console.error("Failed to initialize CMS content");
-          throw new Error("Failed to initialize CMS content");
+        console.log("No CMS content found in Supabase. Attempting to seed default data...");
+        // Best-effort: try to seed the database with our default content.
+        // Under the locked-down RLS policies (see supabase/security-hotfix.sql)
+        // cms_content writes are admin-only, so for anonymous visitors these
+        // writes are EXPECTED to fail. That is not an error condition for the
+        // public site: we simply render the bundled defaults from memory.
+        try {
+          for (const [section, sectionData] of Object.entries(cmsDefaultData)) {
+            await supabaseService.updateCmsContent(section, sectionData, { silent: true });
+          }
+
+          // Seeding succeeded (admin session): load what we just wrote.
+          const refreshedContent = await supabaseService.fetchCmsContent();
+
+          if (refreshedContent && refreshedContent.length > 0) {
+            // Transform the fetched data to match our expected structure
+            const transformedData: any = { ...cmsDefaultData };
+            refreshedContent.forEach((item: any) => {
+              transformedData[item.section] = item.data;
+            });
+            setData(transformedData);
+            console.log('Initialized CMS content in Supabase and loaded it');
+          } else {
+            setData(cmsDefaultData);
+          }
+        } catch (seedError) {
+          // Expected for anon visitors (RLS blocks the write). Fall back to
+          // the bundled defaults — no crash, no error state, no toast.
+          console.warn(
+            'CMS seed skipped (writes are admin-only under RLS); using bundled defaults.',
+            seedError
+          );
+          setData(cmsDefaultData);
         }
       } else {
         // Transform the fetched data to match our expected structure
