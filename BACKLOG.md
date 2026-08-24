@@ -12,18 +12,20 @@ Status: ⬜ open · 🔧 fix provided (apply pending) · ✅ done.
 
 ## 🔴 CRITICAL — do first
 
-### SEC-1 · Contact-lead PII is publicly readable `[SEC]` 🔧
+### SEC-1 · Contact-lead PII is publicly readable `[SEC]` ✅
 - **Confirmed:** the public anon key returns full `inquiries` rows (name, email, phone, company, message). Anyone can dump every lead.
 - **Where:** `public.inquiries` (no migration); written at `src/hooks/useContactForm.ts:29`, `src/components/dealpulse/EarlyAccessForm.tsx:51`.
 - **Fix:** enable RLS; keep `INSERT` open (form still works), make `SELECT` admin-only. *(Hotfix SQL already provided in chat.)*
+- **Status 2026-08-24:** `supabase/security-hotfix.sql` applied by MJ; QA-verified — anon SELECT returns 0 rows, anon INSERT still works (201). Pending: dashboard policy-list confirmation.
 
 ### SEC-2 · `user_roles` was unprotected = admin-takeover risk `[SEC]` ✅
 - The authorization table itself. If writable, any user could grant themselves `admin`.
 - **Status: fixed this session** — recreated with RLS on, read-own-role only, no public write policy.
 
-### SEC-3 · `cms_content` publicly writable → stored XSS `[SEC]` ⬜
+### SEC-3 · `cms_content` publicly writable → stored XSS `[SEC]` ✅
 - `cms_content` is anon-readable (confirmed) and likely anon-**writable** (the app writes defaults with the anon key: `src/cms/context/CmsContext.tsx:39-42`). Three homepage titles render it as raw HTML via `dangerouslySetInnerHTML` — `src/components/home/Testimonials.tsx:51`, `SuccessMetrics.tsx:26`, `WhyChooseUs.tsx:101`. An attacker could overwrite a title with `<img src=x onerror=…>` → script runs for **every visitor, including the admin**.
 - **Fix (two layers):** (1) RLS — public `SELECT`, admin-only writes. (2) Stop rendering CMS strings as HTML — drop `dangerouslySetInnerHTML` (render as text) or sanitize with DOMPurify.
+- **Status 2026-08-24:** BOTH layers done — rendering already sanitized via DOMPurify (`src/lib/sanitize.ts`, commit 01651aa); RLS applied by MJ via security-hotfix.sql; QA-verified — anon UPDATE affects 0 rows, public SELECT intact, seed path fails soft (branch fix/critical-security).
 
 ---
 
@@ -42,9 +44,10 @@ Status: ⬜ open · 🔧 fix provided (apply pending) · ✅ done.
 - `verify_jwt=false` + CORS `*` + no rate-limit/captcha, and email HTML is built from unescaped input (`supabase/functions/send-contact-email/index.ts:42-50`). Anyone can spam `RESEND_TO` or inject phishing HTML into the admin's notification email.
 - **Fix:** HTML-escape every interpolated value; validate `email`; add abuse control (Turnstile/hCaptcha token, per-IP rate limit, or a shared header secret from the site).
 
-### SEC-5 · `images` metadata table anon read/write `[SEC]` ⬜
+### SEC-5 · `images` metadata table anon read/write `[SEC]` ✅
 - Anon-readable (confirmed); leaks storage paths/filenames, and if writable lets anyone pollute/delete the gallery. `src/services/supabase-service.ts:206/235/269`.
 - **Fix:** RLS admin-only `FOR ALL`. Also review the `cms` Storage bucket policies on `storage.objects` (uploads/deletes should be admin-only).
+- **Status 2026-08-24:** RLS applied by MJ via security-hotfix.sql; QA-verified — anon SELECT returns 0 rows. Still open: `cms` Storage bucket policy review in dashboard (hotfix SQL section 6).
 
 ### PERF-1 · No code-splitting → one ~1.5 MB JS bundle `[SEO][PERF]` ⬜
 - `src/App.tsx` imports all ~23 pages statically; no `manualChunks`. Admin-only recharts + DealPulse media ship to every visitor. Hurts LCP/TBT (Core Web Vitals = ranking factor).
