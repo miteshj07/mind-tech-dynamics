@@ -215,7 +215,30 @@ async function pullGa4(token: string, propertyId: string) {
     engagementRate: num(r?.metricValues?.[3]?.value),
   }));
 
-  return { kpis, channels, topPages };
+  // (d) Browser / OS / device breakdown — for spotting bot/scraper traffic
+  // (a pile of sessions on one obscure browser+OS combo with near-zero
+  // engagement is the signature to look for).
+  const techReport = await ga4RunReport(token, propertyId, {
+    dateRanges: [{ startDate: "28daysAgo", endDate: "yesterday" }],
+    dimensions: [{ name: "browser" }, { name: "operatingSystem" }, { name: "deviceCategory" }],
+    metrics: [
+      { name: "sessions" },
+      { name: "engagementRate" },
+      { name: "averageSessionDuration" },
+    ],
+    orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
+    limit: 15,
+  });
+  const techBreakdown = (techReport.rows ?? []).map((r: any) => ({
+    browser: r?.dimensionValues?.[0]?.value ?? "(unknown)",
+    os: r?.dimensionValues?.[1]?.value ?? "(unknown)",
+    device: r?.dimensionValues?.[2]?.value ?? "(unknown)",
+    sessions: num(r?.metricValues?.[0]?.value),
+    engagementRate: num(r?.metricValues?.[1]?.value),
+    avgSessionDuration: num(r?.metricValues?.[2]?.value),
+  }));
+
+  return { kpis, channels, topPages, techBreakdown };
 }
 
 // ── Google Search Console ────────────────────────────────────
@@ -333,6 +356,7 @@ serve(async (req) => {
     let kpis: unknown = {};
     let channels: unknown = [];
     let topPages: unknown = [];
+    let techBreakdown: unknown = [];
     let topQueries: unknown = [];
     let gscTotals: unknown = {};
     let ga4_ok = false;
@@ -345,6 +369,7 @@ serve(async (req) => {
       kpis = ga4.kpis;
       channels = ga4.channels;
       topPages = ga4.topPages;
+      techBreakdown = ga4.techBreakdown;
       ga4_ok = true;
     } catch (e) {
       console.error("GA4 pull failed:", (e as Error).message);
@@ -368,6 +393,7 @@ serve(async (req) => {
       kpis,
       channels,
       top_pages: topPages,
+      tech_breakdown: techBreakdown,
       top_queries: topQueries,
       gsc_totals: gscTotals,
       ga4_ok,
