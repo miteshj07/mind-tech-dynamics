@@ -54,6 +54,27 @@ export const caseStudiesSection = {
         "Outstanding balances trigger automated reminder journeys",
         "A unified student-and-financial view across Education Cloud and QuickBooks"
       ]
+    },
+    {
+      title: "Moodle Course Progress, Live in Salesforce",
+      client: "Lakewood University",
+      industry: "Education",
+      metric: "Weekly Moodle course-progress now on every student record, with no logging into Moodle",
+      image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      tags: ["Education", "Moodle", "Integration", "Student Success"],
+      challenge: "Lakewood University's Success Coaches needed to see how far each student had actually progressed through their courses, but that figure lived in Moodle, not Salesforce. Lakewood already had a weekly push from Moodle that supplied GPA, lesson numbers, and last login, but not course-progress percentage, the number a coach reaches for first. To get it, a coach had to log into Moodle and check course by course, student by student. It was manual, it did not scale across a caseload, and the earliest warning sign of a disengaging student sat in a system the coaching team did not live in.",
+      solution: "We built a weekly, scheduled Salesforce integration with Moodle's Web Services API that fills exactly that gap. A scheduled Apex batch reads each student's course-progress percentage from Moodle every week and writes it onto the existing Success Coach records the current push already creates, rather than building a second, parallel set of records. It contributes only the progress field, so it never fights the push over GPA or lessons, and reports stay consistent. It is configuration-driven, so new programs and courses are added without a code change, and it is built to respect Moodle's security: the API token is sent in the request body, never in the URL, so it never lands in Moodle's access logs.",
+      results: [
+        "Course progress now sits in Salesforce next to GPA and lessons, so coaches no longer log into Moodle to check it by hand",
+        "The manual, per-student check is replaced by an automated weekly sync across the whole caseload",
+        "A stalled progress percentage is now visible in the coaching workflow, where someone can act on it early",
+        "The sync updates existing records instead of creating parallel ones, so there is one trustworthy progress number per student",
+        "New programs and courses are added through configuration, not new code"
+      ],
+      images: [
+        { src: "/case-studies/moodle-academic-trajectory.png", caption: "The Academic Trajectory view inside Salesforce: actual course completion plotted against the expected weekly pace, updated automatically from Moodle. Demo data." },
+        { src: "/case-studies/moodle-review-history.png", caption: "The weekly review history and per-course progress a Success Coach sees in Salesforce, including when a standing crosses into unsatisfactory. Demo data." }
+      ]
     }
   ]
 };

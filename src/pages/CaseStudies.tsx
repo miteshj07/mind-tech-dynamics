@@ -20,6 +20,7 @@ interface CaseStudy {
   logo?: string;
   tags: string[];
   fullCaseStudyLink?: string;
+  images?: { src: string; caption?: string }[];
 }
 
 interface CaseStudyCardProps {
@@ -147,6 +148,27 @@ const CaseStudyDialog = ({ study, open, onOpenChange }: {
                 ))}
               </ul>
             </section>
+
+            {study.images && study.images.length > 0 && (
+              <section>
+                <h3 className="text-xl font-semibold mb-3">See it in action</h3>
+                <div className="space-y-6">
+                  {study.images.map((img, i) => (
+                    <figure key={i}>
+                      <img
+                        src={img.src}
+                        alt={img.caption || `${study.title} screenshot ${i + 1}`}
+                        className="w-full rounded-md border border-gray-200"
+                        loading="lazy"
+                      />
+                      {img.caption && (
+                        <figcaption className="text-sm text-gray-500 mt-2">{img.caption}</figcaption>
+                      )}
+                    </figure>
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
         </div>
       </DialogContent>
