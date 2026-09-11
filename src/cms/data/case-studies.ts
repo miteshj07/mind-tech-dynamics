@@ -75,6 +75,26 @@ export const caseStudiesSection = {
         { src: "/case-studies/moodle-academic-trajectory.png", caption: "The Academic Trajectory view inside Salesforce: actual course completion plotted against the expected weekly pace, updated automatically from Moodle. Demo data." },
         { src: "/case-studies/moodle-review-history.png", caption: "The weekly review history and per-course progress a Success Coach sees in Salesforce, including when a standing crosses into unsatisfactory. Demo data." }
       ]
+    },
+    {
+      title: "One-Click Microsoft 365 Provisioning from Salesforce",
+      client: "Lakewood University",
+      industry: "Education",
+      metric: "Manual Microsoft 365 account setup replaced with one click, delivered to production in 3 days",
+      image: "https://images.unsplash.com/photo-1633419461186-7d40a38105ec?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      tags: ["Education", "Microsoft 365", "Microsoft Graph", "Integration"],
+      challenge: "Every new Lakewood student needed a Microsoft 365 account, and someone created each one by hand in the Microsoft Admin Center: type the student's name, work around duplicate names, assign a license, set a password, then copy the details back into Salesforce. It was slow, it did not scale with enrollment, and it carried a security gap, students were often set up with a single shared password and there was no audit trail of who was provisioned or when.",
+      solution: "We built a native Salesforce to Microsoft 365 integration on the Microsoft Graph API. From the student record in Salesforce, a staff member clicks one button and the account is created end to end: the username follows Lakewood's existing house convention, duplicate names are resolved automatically, an Office 365 A1 license is assigned, a unique password is generated for each student, the new address is written back onto the record, a branded welcome email is sent, and every attempt is written to a full audit log. It all runs inside Salesforce with permission-scoped access, so there is no second system for staff to learn.",
+      results: [
+        "A multi-step Admin Center task became a single click from the record staff already work in",
+        "Built, tested, and deployed to production in three working days, not three weeks",
+        "Every student now receives a unique password instead of a shared one, backed by a full audit trail",
+        "The Office 365 A1 license is assigned automatically as part of the same click",
+        "The work surfaced 1,613 inactive records still holding licensed Microsoft 365 accounts that can now be reclaimed"
+      ],
+      images: [
+        { src: "/case-studies/m365-provisioning.png", caption: "One button on the student record provisions the Microsoft 365 account end to end: username, licence, unique password, welcome email, and a full audit log, all via Microsoft Graph inside Salesforce. Demo data." }
+      ]
     }
   ]
 };
