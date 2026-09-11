@@ -20,7 +20,7 @@ const ORG_TYPES = [
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
 const EarlyAccessForm = ({ open, onClose }: EarlyAccessFormProps) => {
-  const [form, setForm] = useState({ name: '', email: '', company: '', orgType: '' });
+  const [form, setForm] = useState({ name: '', email: '', company: '', orgType: '', website: '' });
   const [status, setStatus] = useState<Status>('idle');
 
   if (!open) return null;
@@ -46,6 +46,7 @@ const EarlyAccessForm = ({ open, onClose }: EarlyAccessFormProps) => {
       phone: null,
       service: 'DealPulse Early Access',
       message: `DealPulse early-access request. Org type: ${form.orgType || 'Not specified'}.`,
+      website: form.website, // honeypot
     };
 
     const { error: dbError } = await supabase.from('inquiries').insert([payload]);
@@ -63,7 +64,7 @@ const EarlyAccessForm = ({ open, onClose }: EarlyAccessFormProps) => {
 
   const close = () => {
     setStatus('idle');
-    setForm({ name: '', email: '', company: '', orgType: '' });
+    setForm({ name: '', email: '', company: '', orgType: '', website: '' });
     onClose();
   };
 
@@ -109,6 +110,17 @@ const EarlyAccessForm = ({ open, onClose }: EarlyAccessFormProps) => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Honeypot: hidden from real users via CSS + tabIndex; bots that fill every field trip it. */}
+              <input
+                type="text"
+                name="website"
+                value={form.website}
+                onChange={handleChange}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute -left-[9999px] w-px h-px overflow-hidden"
+              />
               <div>
                 <label htmlFor="ea-name" className="block text-sm font-medium text-gray-700 mb-1">
                   Name *

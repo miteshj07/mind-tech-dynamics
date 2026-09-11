@@ -11,6 +11,7 @@ interface ContactFormData {
   phone: string;
   service: string;
   message: string;
+  website?: string; // honeypot — must stay empty
 }
 
 export const useContactForm = () => {

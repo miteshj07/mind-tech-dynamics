@@ -74,6 +74,7 @@ const ContactUs = () => {
     phone: '',
     service: '',
     message: '',
+    website: '', // honeypot — real users never see or fill this
   });
 
   // "Send a message" (form) vs "Book a call" (Calendly), one ask at a time.
@@ -215,7 +216,7 @@ const ContactUs = () => {
                     className="btn-primary"
                     onClick={() => {
                       setFormSuccess(false);
-                      setFormState({ name: '', company: '', email: '', phone: '', service: '', message: '' });
+                      setFormState({ name: '', company: '', email: '', phone: '', service: '', message: '', website: '' });
                     }}
                   >
                     Send Another Message
@@ -225,6 +226,17 @@ const ContactUs = () => {
                 <>
                   <h2 className="text-2xl font-bold mb-6">{contactSection.form.title}</h2>
                   <form onSubmit={onSubmitForm}>
+                    {/* Honeypot: hidden from real users via CSS + tabIndex; bots that fill every field trip it. */}
+                    <input
+                      type="text"
+                      name="website"
+                      value={formState.website}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      className="absolute -left-[9999px] w-px h-px overflow-hidden"
+                    />
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
