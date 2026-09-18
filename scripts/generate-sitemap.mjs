@@ -17,6 +17,7 @@ const STATIC_ROUTES = [
   '/apollo-io-salesforce-integration',
   '/salesforce-revops',
   '/salesforce-health-check',
+  '/salesforce-health-check/data',
   '/salesforce-data-cloud',
   '/b2b-lead-generation',
   '/about-us',

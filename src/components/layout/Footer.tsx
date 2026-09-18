@@ -47,7 +47,7 @@ const Footer = () => {
                   </Link>
                 </li>
               ))}
-              {/* Products — site-wide links to the hub pages (SEO authority + discovery) */}
+              {/* Products and free tools, site-wide links to the hub pages (SEO authority + discovery) */}
               <li>
                 <Link to="/dealpulse" className="text-gray-300 hover:text-brand transition-colors">
                   DealPulse
@@ -56,6 +56,16 @@ const Footer = () => {
               <li>
                 <Link to="/groundtruth" className="text-gray-300 hover:text-brand transition-colors">
                   GroundTruth
+                </Link>
+              </li>
+              <li>
+                <Link to="/salesforce-health-check" className="text-gray-300 hover:text-brand transition-colors">
+                  Free Salesforce Health Check
+                </Link>
+              </li>
+              <li>
+                <Link to="/salesforce-health-check/data" className="text-gray-300 hover:text-brand transition-colors">
+                  Health check: data and privacy
                 </Link>
               </li>
             </ul>

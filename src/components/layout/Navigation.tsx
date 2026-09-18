@@ -113,7 +113,7 @@ const Navigation = () => {
             to="/salesforce-health-check"
             className="font-semibold text-brand border border-brand/40 px-4 py-2 rounded-full hover:bg-brand/5 transition-colors text-sm whitespace-nowrap"
           >
-            Free SF Audit
+            Free Salesforce Health Check
           </Link>
           <Button className="btn-primary">
             <Link to="/contact-us">Book a Free Consultation</Link>
@@ -181,7 +181,7 @@ const Navigation = () => {
               className="font-semibold text-brand py-2 border-b border-gray-100"
               onClick={() => setIsOpen(false)}
             >
-              Free Salesforce Audit
+              Free Salesforce Health Check
             </Link>
             <Button className="btn-primary mt-4">
               <Link to="/contact-us" onClick={() => setIsOpen(false)}>

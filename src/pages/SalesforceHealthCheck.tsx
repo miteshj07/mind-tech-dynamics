@@ -1,271 +1,351 @@
-
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle, AlertCircle, Clock, ShieldCheck, BarChart3, Workflow, Database, Zap, ArrowRight } from 'lucide-react';
-import ContactCTA from '@/components/layout/ContactCTA';
+import {
+  ShieldCheck, ListChecks, SearchCheck, ArrowRight, CheckCircle, XCircle, ChevronDown,
+} from 'lucide-react';
 import Seo from '@/components/layout/Seo';
 
-const auditAreas = [
+const CHECK_START = 'https://check.meethemind.com/start';
+const CHECK_SANDBOX = 'https://check.meethemind.com/start?env=sandbox';
+const CONTACT = 'mailto:partners@meethemind.com';
+
+// GA click event, no new tracking or cookies (uses the existing GA if present)
+const track = (name: string) => {
+  try { (window as unknown as { gtag?: (...a: unknown[]) => void }).gtag?.('event', name); } catch { /* noop */ }
+};
+
+const RunButton = ({ className = '' }: { className?: string }) => (
+  <a
+    href={CHECK_START}
+    onClick={() => track('run_free_check_click')}
+    className={`inline-flex items-center justify-center gap-2 bg-brand hover:bg-brand-dark text-white font-semibold py-3.5 px-8 rounded-md transition-colors ${className}`}
+  >
+    Run the free check <ArrowRight size={18} />
+  </a>
+);
+
+const SandboxLink = () => (
+  <a
+    href={CHECK_SANDBOX}
+    onClick={() => track('run_free_check_sandbox_click')}
+    className="text-sm text-gray-500 underline hover:text-brand transition-colors"
+  >
+    Running this on a sandbox?
+  </a>
+);
+
+const cards = [
   {
-    icon: <Database size={24} />,
-    title: 'Data Quality & Hygiene',
-    points: ['Duplicate records audit', 'Missing required fields analysis', 'Data validation rule gaps', 'Stale records and inactive users'],
+    icon: <SearchCheck size={24} />,
+    title: "What Salesforce's own tools leave out",
+    body: "Salesforce's Health Check gives you a score. This check tells you which integrations stop working on which Salesforce deadline, who can fix each item and in what order, with a link to the Setup page that shows each finding.",
   },
   {
-    icon: <Workflow size={24} />,
-    title: 'Automation & Flows',
-    points: ['Inactive or conflicting Flows', 'Process Builder migrations needed', 'Workflow rule deprecation risk', 'Governor limit exposure'],
+    icon: <ListChecks size={24} />,
+    title: 'Every finding is free',
+    body: 'Each one comes with its criticality, the Salesforce deadline where there is one, what to do and who can do it, so your own admin or developer can work through it. If you would rather we did the work, email us and we come back with a fixed price and a date.',
   },
   {
     icon: <ShieldCheck size={24} />,
-    title: 'Security & Permissions',
-    points: ['Profile and permission set review', 'Field-level security gaps', 'Sharing rule conflicts', 'Login policy assessment'],
-  },
-  {
-    icon: <BarChart3 size={24} />,
-    title: 'Reporting & Dashboards',
-    points: ['Unused or broken reports', 'Missing pipeline visibility metrics', 'Forecast accuracy gaps', 'Dashboard ownership and staleness'],
-  },
-  {
-    icon: <Zap size={24} />,
-    title: 'Integrations & APIs',
-    points: ['Third-party integration health', 'Apollo.io sync status', 'API usage vs limits', 'Connected app permissions'],
-  },
-  {
-    icon: <CheckCircle size={24} />,
-    title: 'Adoption & Usage',
-    points: ['Login frequency by user', 'Feature adoption gaps', 'Training opportunities identified', 'Quick wins for rep productivity'],
+    title: 'Built so you can check us',
+    body: "Setup data and metadata only, never customer records. The only name and email we keep are those of the person who approves the check. The report prints when our access was revoked and what Salesforce answered, and tells you where in Setup to confirm it.",
   },
 ];
 
-const whatYouGet = [
-  { title: 'Written audit report', desc: 'A clear, prioritised document covering every area reviewed, with specific findings, not generic recommendations.' },
-  { title: 'Priority matrix', desc: 'Issues ranked by impact and effort: what to fix today, this quarter, and what to plan for next year.' },
-  { title: 'Quick wins list', desc: 'A shortlist of changes you or your admin can make immediately, no paid engagement required.' },
-  { title: '45-min debrief call', desc: 'Mitesh walks you through the findings, answers questions, and recommends next steps. No sales pressure.' },
+const looksAt = [
+  "Integrations on sign-in methods Salesforce is retiring, with the date each one stops: the Use Any API Auth permission for SOAP login() from 1 December 2026, password-based and browser-based OAuth sign-in from 20 February 2027, and SOAP login() on API versions 31 to 64 in Summer '27",
+  'Integrations that depend on one person\'s login, and integrations that keep failing to sign in',
+  'Admin access: whether passkeys (security keys, Touch ID, Windows Hello) are switched on, now that Salesforce requires them for admins, and how many people hold admin-level permissions',
+  'Outside apps that still hold access to your data, including ones nobody has used in six months or no admin approved',
+  'AI agents: whether generative AI is on, which agents are active, and whether any agent user holds admin-level permissions',
+  'Workflow Rules and Process Builder still running after Salesforce stopped fixing them, and flows with no error handling',
+  'Paid licenses with no login in 90 days, installed packages with no sign of use or on deprecated versions, and storage close to its limit',
+  'Your Security Health Check score and the high-risk settings behind it',
 ];
 
-const whoIsItFor = [
-  'You\'ve had Salesforce for 12+ months but suspect it\'s underused',
-  'Your team has grown and the original setup no longer fits',
-  'You\'re seeing data quality issues but don\'t know the root cause',
-  'You want to implement Agentforce or Apollo.io but aren\'t sure the foundation is solid',
-  'A previous implementation left you with technical debt',
-  'You\'re paying for Salesforce features your team doesn\'t use',
+const weRead = [
+  'Workflow Rules, Process Builders and Flows: definitions and active flags, run through Lightning Flow Scanner',
+  'Connected apps: app names, installed state, last-used dates and use counts',
+  'Login History: login type, subtype, API type, API version, application and status, grouped by Salesforce user ID',
+  'Users: active flag, last login date, created date, license type and profile, as counts',
+  'Admin-level access: which active users hold Modify All Data, View All Data, Customize Application or Author Apex, by Salesforce user ID, with the profile or permission set that grants it',
+  'Security settings, including whether security keys and built-in authenticators are allowed, and whether Einstein generative AI is on',
+  "AI agents: each agent's name, type and active status, how many users can build agents, and which users are on an agent license",
+  'The Security Health Check score and its risk settings',
+  'Installed packages: versions, flags, licenses and seat counts, and signs of use as counts',
+  'Setup Audit Trail: counts of package install and upgrade events, from the action and date only, never the entry text',
+  'API request usage and storage against their limits',
+];
+
+const weNever = [
+  'Customer records of any object: no Accounts, Contacts, Leads, Opportunities, Cases, custom object records, files or attachments',
+  'Token values',
+  'Names, usernames or email addresses of anyone except the person who approves the check',
+  'Report results, dashboards, email content, Chatter, site traffic or event logs',
+];
+
+const steps = [
+  'Click Run the free check. A System Administrator has to approve it; if that is not you, forward this page to your admin. Start and approve in the same browser, because a link forwarded halfway through will not start a check.',
+  'Salesforce shows its own approval screen for "MTM Org Health Check", with the permission line "Manage user data via APIs (api)". That is Salesforce\'s wording. Click Allow. The screen appears every time, even for someone who approved it before.',
+  'If Salesforce shows an "OAuth Error" page instead, with the code OAUTH_APPROVAL_ERROR_GENERIC, the org blocks apps nobody has installed yet, a Salesforce security change from September 2025. An admin can either give the person running the check the Approve Uninstalled Connected Apps permission through a permission set, or install MTM Org Health Check from Setup, Connected Apps OAuth Usage. Then open the link again. Stuck? Email partners@meethemind.com and we will walk you through it.',
+  'The scan usually takes under a minute. When it finishes we revoke our access and record the time and Salesforce\'s answer.',
+  'Mitesh reviews every report before it goes out. Once approved, the report link is emailed to the Salesforce user who approved the check, at the verified email address on their Salesforce user record; if Salesforce has not verified it, Mitesh sends the link by hand after confirming who asked. You get it within one working day. Reply to that email if any finding looks wrong and it is corrected.',
+];
+
+const forWhom = [
+  'The admin who inherited the org, with no documentation and automation the previous person never wrote down. The report is the inventory, and every headline number can be checked in Setup before anyone acts on it.',
+  'The solo admin with no developer to hand the migration to and no time to read Login History by hand.',
+  'The owner or head of operations at a company or small college where nobody owns Salesforce, who pays the invoice and has never seen what is inside. Page one is written for you: what we found, what to fix first, and by when.',
 ];
 
 const faqs = [
   {
-    q: 'Is the Salesforce health check really free?',
-    a: 'Yes, completely free, no strings attached. We review your org, deliver a written report, and hold a debrief call at no cost. Some clients then choose to engage us for remediation work; many don\'t. Either way, you get a clear picture of where your Salesforce org stands.',
+    q: 'You are asking me to approve an outside app after the Salesloft Drift incident. Why should I?',
+    a: 'You should not take it on trust. The check reads setup data and metadata only and revokes its access when the scan finishes. The report prints the revoke time and Salesforce\'s answer, and tells you which Setup page shows our app and how to revoke it yourself, so the proof comes from Salesforce rather than from us. If Salesforce does not confirm the revoke, the report says so plainly and Mitesh follows up. One of the findings is the list of outside apps that still hold access to your org.',
   },
   {
-    q: 'What access do you need to my Salesforce org?',
-    a: 'We request read-only System Administrator access for the duration of the audit. We do not make any changes to your org during the health check. Access can be revoked immediately after the debrief call.',
+    q: 'What does "access revoked" mean in practice?',
+    a: 'When the scan finishes, we ask Salesforce to revoke our token and record the time and Salesforce\'s answer; the report prints both. After that the app cannot reach your org again unless someone approves it again. Setup, Connected Apps OAuth Usage keeps a line showing that you approved the app. That line is not access, and Revoke removes it.',
   },
   {
-    q: 'How long does the health check take?',
-    a: 'We complete the audit within 5 business days of receiving org access. The debrief call is typically scheduled within 2 days of the report delivery.',
+    q: 'Is this GDPR compliant, and will you sign a DPA?',
+    a: 'We do not read your customers\' personal data, because we do not read records. We do read setup data that includes Salesforce user IDs and login times, which count as personal data of your staff under UK and EU law, and we keep the name and email of the person who approves the check. The privacy notice and a data processing agreement are covered on the data and privacy page. UK and EU organisations can ask for the DPA to be signed before they approve the check.',
   },
   {
-    q: 'What size org is the health check suited for?',
-    a: 'The health check is best suited for orgs with 5–250 Salesforce users. Larger enterprise orgs are welcome, contact us to discuss scope and timeline.',
+    q: 'Production or sandbox?',
+    a: 'Production, because the findings are about what is running. A sandbox has different apps, login history and users. If your policy requires a sandbox first, run it there with the sandbox link, read the report, then run production.',
   },
   {
-    q: 'Can you audit a Salesforce org that uses Apollo.io or Agentforce?',
-    a: 'Yes, and we specifically look at Apollo.io integration health, data sync gaps, and Agentforce readiness as part of our audit scope. These are areas most generic Salesforce audits miss entirely.',
+    q: 'Can I run it again after fixing things?',
+    a: 'Yes. The same link works as many times as you like. Each run is a fresh check with a new report, so you can see what changed.',
+  },
+  {
+    q: 'What happens after I get the report?',
+    a: 'Mitesh may email you once to ask whether it was useful, and you can tell us to stop at any time. If you want the fixes done, write to partners@meethemind.com with the fix numbers and we come back with a fixed price and a date. If a finding is wrong, write and it gets corrected.',
+  },
+  {
+    q: 'Does the report include a price?',
+    a: 'No. The report tells you what to fix and in what order, so your own team can do it. If you want us to do it, email us with the fixes you care about and we quote a fixed price and a date.',
+  },
+  {
+    q: 'Salesforce shows an OAuth Error, or says the API is off. Now what?',
+    a: 'OAuth Error: see step 3 above. API off: Starter Suite and Free Suite have no API, and Professional and Pro Suite need the Web Services API add-on, so the check cannot run there.',
   },
 ];
 
 const SalesforceHealthCheck = () => {
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
-  const serviceSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    name: 'Free Salesforce Health Check Audit',
-    serviceType: 'Salesforce org audit and health check',
-    provider: {
-      '@type': 'Organization',
-      name: 'Meet The Mind Technologies',
-      url: 'https://www.meethemind.com/',
-    },
-    areaServed: ['United States', 'United Kingdom', 'United Arab Emirates', 'Australia'],
-    offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'USD',
-      description: 'Free Salesforce health check audit covering data quality, automation, security, reporting, integrations, and adoption.',
-    },
-    description:
-      'Free Salesforce health check audit for B2B revenue teams. Covers data quality, Flow automation, security, reporting, integrations, and user adoption. Written report + 45-minute debrief. Meet The Mind Technologies.',
-  };
-
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqs.map((f) => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
-    })),
+    mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
   };
 
   return (
     <>
       <Seo
-        title="Free Salesforce Health Check Audit, Meet The Mind Technologies"
-        description="Free Salesforce org health check for B2B teams. We audit data quality, automation, security, integrations, and adoption, then deliver a written report and 45-min debrief. No cost, no obligation."
+        title="Free Salesforce Org Health Check | Meet The Mind Technologies"
+        description="A free check of your Salesforce org: integrations that stop working on Salesforce's upcoming deadlines, admin access, outside apps, idle licenses and automation Salesforce no longer fixes. Reviewed by a Salesforce partner and emailed to you."
         canonical="/salesforce-health-check"
-        jsonLd={[serviceSchema, faqSchema]}
+        jsonLd={faqSchema}
       />
 
       {/* Hero */}
-      <section className="pt-32 pb-16 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand/20 border border-brand/30 text-brand text-sm font-semibold mb-6">
-            <Zap size={14} /> Free, No Cost, No Obligation
-          </div>
-          <h1 className="text-4xl md:text-5xl font-black mb-6 leading-tight">
-            Free Salesforce<br />
-            <span className="text-brand">Health Check Audit</span>
-          </h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-            We audit your Salesforce org across 6 areas, deliver a prioritised written report,
-            and walk you through the findings on a 45-minute call, completely free.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-            <Link
-              to="/contact-us"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand text-white font-bold rounded-lg hover:bg-brand/90 transition-colors text-lg"
-            >
-              Book Your Free Audit <ArrowRight size={20} />
-            </Link>
-          </div>
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400">
-            <span className="flex items-center gap-2"><CheckCircle size={16} className="text-brand" /> Read-only org access</span>
-            <span className="flex items-center gap-2"><CheckCircle size={16} className="text-brand" /> 5 business day turnaround</span>
-            <span className="flex items-center gap-2"><CheckCircle size={16} className="text-brand" /> Written report + debrief call</span>
-            <span className="flex items-center gap-2"><CheckCircle size={16} className="text-brand" /> No sales pressure</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Who is it for */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="heading-md mb-4 text-center">Is this for you?</h2>
-          <p className="text-gray-500 text-center mb-10">The health check is most valuable when one or more of these applies:</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {whoIsItFor.map((w, i) => (
-              <div key={i} className="flex items-start gap-3 bg-gray-50 rounded-xl p-5">
-                <AlertCircle className="text-brand flex-shrink-0 mt-0.5" size={18} />
-                <span className="text-gray-700">{w}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* What we audit */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="heading-md mb-4 text-center">What we audit</h2>
-          <p className="text-gray-500 text-center max-w-2xl mx-auto mb-12">
-            6 areas covering the full health of your Salesforce org, not a surface-level check.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {auditAreas.map((area, i) => (
-              <div key={i} className="bg-white rounded-xl p-7 shadow-sm border border-gray-100">
-                <div className="text-brand mb-4">{area.icon}</div>
-                <h3 className="text-lg font-semibold mb-4">{area.title}</h3>
-                <ul className="space-y-2">
-                  {area.points.map((p, j) => (
-                    <li key={j} className="flex items-center gap-2 text-sm text-gray-600">
-                      <CheckCircle size={14} className="text-brand flex-shrink-0" />
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* What you get */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="heading-md mb-4 text-center">What you receive</h2>
-          <p className="text-gray-500 text-center mb-12">Everything delivered within 5 business days of org access.</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {whatYouGet.map((w, i) => (
-              <div key={i} className="bg-gray-900 text-white rounded-xl p-7">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-7 h-7 rounded-full bg-brand flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-                    {i + 1}
-                  </div>
-                  <h3 className="font-semibold text-lg">{w.title}</h3>
-                </div>
-                <p className="text-gray-400 text-sm leading-relaxed">{w.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Timing strip */}
-      <section className="py-12 bg-brand text-white">
+      <section className="pt-32 pb-14 bg-gray-50 border-b border-gray-100">
         <div className="container mx-auto px-4 max-w-3xl">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <Clock size={40} className="flex-shrink-0 opacity-80" />
-              <div>
-                <p className="font-bold text-xl">Ready in 5 business days</p>
-                <p className="text-white/80">From org access to written report delivered to your inbox.</p>
-              </div>
-            </div>
-            <Link
-              to="/contact-us"
-              className="flex-shrink-0 inline-flex items-center gap-2 px-8 py-4 bg-white text-brand font-bold rounded-lg hover:bg-gray-100 transition-colors whitespace-nowrap"
-            >
-              Book Free Audit <ArrowRight size={18} />
-            </Link>
+          <h1 className="text-4xl md:text-5xl font-bold leading-[1.12] text-gray-900 mb-6">
+            What is actually running in your Salesforce org, and what to fix first.
+          </h1>
+          <p className="text-lg text-gray-600 leading-relaxed mb-8">
+            A free health check for the admin who got handed the org and the owner who pays for it. We read setup
+            data and metadata only, revoke our access as soon as the scan ends, and email every finding in plain
+            language, in the order we would fix them. Page one is a summary for whoever owns the org. No meeting
+            needed to read any of it.
+          </p>
+          <div className="flex flex-wrap items-center gap-5">
+            <RunButton />
+            <SandboxLink />
           </div>
+          <p className="text-sm text-gray-500 mt-4">
+            A System Administrator approves it on Salesforce's own screen. The scan takes about a minute.
+          </p>
+        </div>
+      </section>
+
+      {/* Three cards */}
+      <section className="py-14">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {cards.map((c, i) => (
+              <div key={i} className="rounded-xl border border-gray-100 bg-white p-7 shadow-sm">
+                <div className="w-12 h-12 rounded-lg bg-brand/10 text-brand flex items-center justify-center mb-4">
+                  {c.icon}
+                </div>
+                <h3 className="font-semibold text-lg text-gray-900 mb-2">{c.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{c.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* What the check looks at */}
+      <section className="py-14 bg-gray-50 border-y border-gray-100">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">What the check looks at</h2>
+          <ul className="space-y-4">
+            {looksAt.map((t, i) => (
+              <li key={i} className="flex gap-3 text-gray-700 leading-relaxed">
+                <CheckCircle size={20} className="text-brand flex-shrink-0 mt-1" />
+                <span>{t}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="text-gray-600 mt-8 leading-relaxed">
+            Runs on Enterprise, Unlimited, Performance, Core, Advanced, Max, Agentforce 1, Nonprofit Cloud and
+            Education Cloud orgs, and on Professional or Pro Suite orgs that have the Web Services API add-on.
+            Starter Suite and Free Suite do not expose the API, so the check cannot run there.
+          </p>
+          <p className="text-gray-600 mt-4 leading-relaxed">
+            Every report is reviewed by Mitesh Jain, founder of Meet The Mind Technologies, a registered Salesforce
+            Consulting Partner.
+          </p>
+        </div>
+      </section>
+
+      {/* What we read / never read */}
+      <section className="py-14">
+        <div className="container mx-auto px-4 max-w-5xl">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="rounded-xl border border-gray-100 bg-white p-7">
+              <h3 className="font-bold text-lg text-gray-900 mb-1 flex items-center gap-2">
+                <CheckCircle size={20} className="text-brand" /> We read
+              </h3>
+              <p className="text-sm text-gray-500 mb-4">
+                setup data and metadata, through the Metadata API, the Tooling API and setup objects
+              </p>
+              <ul className="space-y-3">
+                {weRead.map((t, i) => (
+                  <li key={i} className="text-sm text-gray-700 leading-relaxed flex gap-2">
+                    <span className="text-brand mt-1">·</span><span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-xl border border-gray-100 bg-white p-7">
+              <h3 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+                <XCircle size={20} className="text-gray-400" /> We never read
+              </h3>
+              <ul className="space-y-3">
+                {weNever.map((t, i) => (
+                  <li key={i} className="text-sm text-gray-700 leading-relaxed flex gap-2">
+                    <span className="text-gray-400 mt-1">·</span><span>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <p className="text-gray-600 mt-8 max-w-3xl leading-relaxed">
+            The api scope is what Salesforce offers for this work, and it permits writes. We use it to read, we
+            write nothing, and we revoke our access when the scan finishes.
+          </p>
+          <p className="mt-4">
+            <Link to="/salesforce-health-check/data" className="text-brand font-semibold hover:underline">
+              Object and field names, retention and sub-processors
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section className="py-14 bg-gray-50 border-y border-gray-100">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">How it works</h2>
+          <ol className="space-y-6">
+            {steps.map((s, i) => (
+              <li key={i} className="flex gap-4">
+                <span className="flex-shrink-0 w-9 h-9 rounded-full bg-brand text-white font-bold flex items-center justify-center">
+                  {i + 1}
+                </span>
+                <p className="text-gray-700 leading-relaxed">{s}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="text-gray-600 mt-8 leading-relaxed">
+            If Salesforce answers API_DISABLED_FOR_ORG after Allow, the edition has no API access (Starter, Free
+            Suite, or Professional without the Web Services API add-on). The page says so in plain words and the
+            check stops there.
+          </p>
+        </div>
+      </section>
+
+      {/* Send this to your admin */}
+      <section className="py-14">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Send this to your admin</h2>
+          <p className="text-gray-700 leading-relaxed">
+            Only a System Administrator can approve the check. If you are the owner, president or head of
+            operations, forward this page to whoever administers Salesforce and ask them to run it. Page one of the
+            report is written for you, with the admin's fixes behind it. If nobody administers your Salesforce,
+            write to <a href={CONTACT} className="text-brand hover:underline">partners@meethemind.com</a> and Mitesh
+            will tell you which login can run it.
+          </p>
+        </div>
+      </section>
+
+      {/* Who this is for */}
+      <section className="py-14 bg-gray-50 border-y border-gray-100">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">Who this is for</h2>
+          <ul className="space-y-4 mb-8">
+            {forWhom.map((t, i) => (
+              <li key={i} className="flex gap-3 text-gray-700 leading-relaxed">
+                <CheckCircle size={20} className="text-brand flex-shrink-0 mt-1" />
+                <span>{t}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="text-gray-600 leading-relaxed">
+            Not for: data quality, duplicate records, report accuracy, user adoption or renewal negotiation. Those
+            need records or your contract, and we read neither.
+          </p>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="py-16">
+      <section className="py-14">
         <div className="container mx-auto px-4 max-w-3xl">
-          <h2 className="heading-md mb-10 text-center">Health check FAQs</h2>
-          <div className="space-y-5">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Frequently asked questions</h2>
+          <div className="space-y-3">
             {faqs.map((f, i) => (
-              <div key={i} className="bg-gray-50 rounded-xl p-6">
-                <h3 className="font-semibold text-gray-900 mb-2 flex items-start gap-2">
-                  <CheckCircle className="text-brand mt-0.5 flex-shrink-0" size={18} />
-                  {f.q}
-                </h3>
-                <p className="text-gray-600 ml-7">{f.a}</p>
-              </div>
+              <details key={i} className="group rounded-lg border border-gray-200 bg-white">
+                <summary className="flex items-center justify-between cursor-pointer px-5 py-4 font-semibold text-gray-900 list-none">
+                  <span>{f.q}</span>
+                  <ChevronDown size={18} className="text-gray-400 flex-shrink-0 transition-transform group-open:rotate-180" />
+                </summary>
+                <p className="px-5 pb-5 text-gray-600 leading-relaxed">{f.a}</p>
+              </details>
             ))}
-          </div>
-          <div className="text-center mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/salesforce-revops" className="text-brand font-semibold hover:underline inline-flex items-center gap-1">
-              Salesforce RevOps automation <ArrowRight size={16} />
-            </Link>
-            <Link to="/agentforce-implementation" className="text-brand font-semibold hover:underline inline-flex items-center gap-1">
-              Agentforce implementation <ArrowRight size={16} />
-            </Link>
           </div>
         </div>
       </section>
 
-      <ContactCTA
-        heading="Book your free Salesforce health check"
-        subheading="Takes 10 minutes to set up. We handle everything else, org access, audit, report, and debrief, within 5 business days."
-        buttonText="Book Free Health Check"
-      />
+      {/* Final CTA */}
+      <section className="py-16 bg-gray-900">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 max-w-2xl mx-auto">
+            See what is running in your org, and what to fix first.
+          </h2>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <RunButton />
+            <SandboxLink />
+          </div>
+          <p className="text-gray-400 text-sm mt-5">
+            A System Administrator approves it on Salesforce's own screen. The scan takes about a minute.
+          </p>
+        </div>
+      </section>
     </>
   );
 };

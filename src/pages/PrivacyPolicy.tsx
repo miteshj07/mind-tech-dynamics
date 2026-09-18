@@ -126,7 +126,20 @@ const PrivacyPolicy = () => {
             </div>
 
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Contact Us</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Salesforce Org Health Check</h2>
+              <p>
+                When someone runs our free Salesforce Org Health Check, we collect the approving user's name,
+                username, email, Salesforce user ID and time zone, and the company details from Salesforce's
+                Company Information, to send the report and follow up. We keep these for 12 months. For this data
+                Meet The Mind Technologies is the controller. Full details, including exactly what the check reads
+                and how to revoke it, are on the{' '}
+                <a href="/salesforce-health-check/data" className="text-brand hover:underline">health check data and privacy page</a>.
+                Questions, contact partners@meethemind.com.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Contact Us</h2>
               <p>
                 If you have questions or concerns about this Privacy Policy or how we handle your data, please contact us:
               </p>
