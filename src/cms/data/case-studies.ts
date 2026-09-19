@@ -95,6 +95,26 @@ export const caseStudiesSection = {
       images: [
         { src: "/case-studies/m365-provisioning.png", caption: "One button on the student record provisions the Microsoft 365 account end to end: username, licence, unique password, welcome email, and a full audit log, all via Microsoft Graph inside Salesforce. Demo data." }
       ]
+    },
+    {
+      title: "A Student Self-Service Portal on a Salesforce Site",
+      client: "Lakewood University",
+      industry: "Education",
+      metric: "Students see their own progress, schedule and standing, without emailing a coach",
+      image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      tags: ["Education", "Salesforce Site", "Student Success", "Apex"],
+      challenge: "Everything a Lakewood student might want to know, how far through the program they are, whether they are on pace, what is due next, and what it would take to get back into good standing, already lived in Salesforce. But it lived on the staff side. Students could not see it, so they emailed their Success Coach to ask, and coaches answered the same questions one email at a time. It did not scale, and the answer a student needed most, am I ok and what do I do next, was the slowest to arrive.",
+      solution: "We built a student self-service portal on a public Salesforce Site. Each student signs in and sees only their own record: their academic trajectory against the expected pace using the same engine the coaching team relies on, their class schedule with the next courses due highlighted and calculated from their own program start date, the messages Lakewood has sent them, a welcome video, and a plain read on what it takes to get back into good standing. The public page runs as a guest user with the minimum it needs, the page and its controller and no object permissions, and the trajectory calculation was refactored so one engine safely serves both the coach view and the portal. Sign-in is gated, throttled and logged, so a page anyone can reach still only ever shows a student their own data.",
+      results: [
+        "Students self-serve their progress, schedule and standing instead of emailing a coach to ask",
+        "The schedule shows what is due next, calculated from each student's program start date",
+        "The messages Lakewood sent appear in the portal, so nothing gets lost in an inbox",
+        "Built least-privilege: the public page runs with only the page and its controller, no object access",
+        "Sign-in is throttled and logged, and sign-ins are tracked by device and browser to show adoption"
+      ],
+      images: [
+        { src: "/case-studies/student-portal.png", caption: "The student portal on a Salesforce Site: each student's own progress against the expected pace, their class schedule with what is due next, and the messages the school has sent them. Demo data." }
+      ]
     }
   ]
 };
