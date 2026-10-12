@@ -115,6 +115,23 @@ export const caseStudiesSection = {
       images: [
         { src: "/case-studies/student-portal.png", caption: "The student portal on a Salesforce Site: each student's own progress against the expected pace, their class schedule with what is due next, and the messages the school has sent them. Demo data." }
       ]
+    },
+    {
+      title: "A Phone Readiness Interview, Scored in Salesforce",
+      client: "Private online university (VA VET TEC program)",
+      industry: "Education",
+      metric: "Every applicant sits the same interview, with a readiness score the admissions team can explain",
+      image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+      tags: ["Education", "Agentforce", "Einstein Trust Layer", "Apex"],
+      challenge: "A university running a VA VET TEC program needed every applicant to sit the same structured readiness interview by phone, scored against a published rubric, with the result informing an admissions decision. That put two hard constraints on the build: the question wording had to be identical for every caller, because two applicants answering differently worded questions are not being assessed on the same thing, and each answer had to be stored exactly as spoken. The instinctive approach, letting one AI agent phrase the questions, decide what the caller said, and produce a score, hands the parts that must be defensible to a process that is allowed to vary.",
+      solution: "We built the interview so Salesforce is the system of record and the scoring authority, and the generative model does exactly one job. The question text is fixed on the voice flow, so every caller hears the identical wording. When the call ends, the transcript is split into answers by matching against that same fixed text, so each answer is stored verbatim with no model deciding what the caller said. A signed Salesforce endpoint identifies the caller mid-call in under half a second and links the call to the right interview, so a dropped call resumes where it left off. Scoring then happens inside Salesforce: one Apex-built prompt carries the rubric and the verbatim answers to the Einstein Models API, through the Einstein Trust Layer, and the model returns a score and a written reason for each answer. Apex computes every total, section score, and band, so the number the admissions team sees is reproducible and traces back to specific answers.",
+      results: [
+        "The question wording is identical for every caller, so applicants are assessed on the same interview",
+        "Every answer is stored exactly as spoken, captured by matching the transcript to the fixed question text with no model in the loop",
+        "The score is reproducible and auditable: the AI judges each answer with a written reason, and Apex computes every total",
+        "Answers that feed the decision pass through the Einstein Trust Layer, so they are not retained by the model provider or used for training",
+        "Thin answers and borderline totals pull in a human reviewer, and an attempt to steer the score routes to a person"
+      ]
     }
   ]
 };
