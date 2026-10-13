@@ -158,7 +158,7 @@ const faqs = [
   },
   {
     q: 'Which signals does it track?',
-    a: 'Seven built-in signals, Activity Gap, Close-Date Pushes, Stage Regression, Open High-Priority Cases, Missing Next Step, Amount Erosion, and Contact Engagement, plus no-code Custom Signals and industry packs for Manufacturing, Financial Services, Health, and CPQ.',
+    a: 'Seven built-in signals out of the box: Days Since Last Activity, No Future Scheduled Activity, Close Date Push Count, Stage Regressed, Stage Stagnation, Next Step Blank, and Opportunity Age. Four more (Amount Erosion, Open High-Priority Cases, Total Contacts, and Engaged Contacts) switch on per org, plus no-code Custom Signals and industry packs for Manufacturing, Financial Services, Health, and CPQ.',
   },
   {
     q: 'Is it on AppExchange yet?',
