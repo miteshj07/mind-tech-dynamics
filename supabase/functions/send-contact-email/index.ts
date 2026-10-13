@@ -1,6 +1,7 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { Resend } from "npm:resend@1.0.0";
+import { createClient } from "npm:@supabase/supabase-js@2";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -82,15 +83,50 @@ serve(async (req) => {
   }
 
   try {
-    const { name, email, phone, company, service, message } = await req.json();
+    const body = await req.json();
 
     // Reject invalid submissions (also protects the attacker-controlled reply_to).
-    if (!isValidEmail(email)) {
+    if (!isValidEmail(body?.email)) {
       return new Response(
         JSON.stringify({ success: false, error: "A valid email address is required." }),
         { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }
+
+    // Only send for a real inquiry row inserted in the last 10 minutes that
+    // hasn't been notified yet, and claim it atomically. Calling this endpoint
+    // directly (without a guarded insert) or repeatedly sends nothing. The
+    // email is built from the stored row, not the request body.
+    const db = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    );
+    const since = new Date(Date.now() - 10 * 60 * 1000).toISOString();
+    const { data: pending } = await db
+      .from("inquiries")
+      .select("id")
+      .eq("email", body.email)
+      .is("notified_at", null)
+      .gte("created_at", since)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    const { data: row } = pending
+      ? await db
+          .from("inquiries")
+          .update({ notified_at: new Date().toISOString() })
+          .eq("id", pending.id)
+          .is("notified_at", null)
+          .select("name, email, phone, company, service, message")
+          .maybeSingle()
+      : { data: null };
+    if (!row) {
+      return new Response(
+        JSON.stringify({ success: false, error: "No matching submission." }),
+        { status: 404, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+    const { name, email, phone, company, service, message } = row;
 
     console.log("Received contact form submission for interest:", service || "general");
 
