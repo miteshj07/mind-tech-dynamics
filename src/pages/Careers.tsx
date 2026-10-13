@@ -4,22 +4,6 @@ import ContactCTA from '@/components/layout/ContactCTA';
 import Seo from '@/components/layout/Seo';
 import { Award, Laptop, Users, BookOpen, Rocket } from 'lucide-react';
 import { useCms } from '@/cms/context/CmsContext';
-interface JobPostingProps {
-  title: string;
-  location: string;
-  type: string;
-  description: string;
-  requirements: string[];
-}
-const JobPosting = ({
-  title,
-  location,
-  type,
-  description,
-  requirements
-}: JobPostingProps) => {
-  return;
-};
 interface BenefitCardProps {
   icon: React.ReactNode;
   title: string;
@@ -87,13 +71,13 @@ const Careers = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 bg-gray-50 rounded-xl p-6">
             {careersSection.benefits.items.map((benefit: any, index: number) => <BenefitCard key={index} icon={getIconComponent(benefit.icon)} title={benefit.title} description={benefit.description} />)}
           </div>
-          
-          
-          <div className="space-y-6">
-            {careersSection.openings.jobs.map((job: any, index: number) => <JobPosting key={index} title={job.title} location={job.location} type={job.type} description={job.description} requirements={job.requirements} />)}
+
+          <div className="text-center max-w-2xl mx-auto">
+            <h2 className="heading-md mb-4">Open roles</h2>
+            <p className="text-gray-600">
+              We don't have any open positions right now. Experienced Salesforce people are always welcome to get in touch for future roles.
+            </p>
           </div>
-          
-          
         </div>
       </section>
       
