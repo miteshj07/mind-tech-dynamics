@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 
 const SITE = 'https://www.meethemind.com';
+const FOUNDER_LINKEDIN = 'https://www.linkedin.com/in/miteshj07/';
 
 // Strip a leading H1 from markdown so we don't duplicate the title shown in the header
 function stripLeadingH1(md: string): string {
@@ -108,6 +109,8 @@ const BlogPost = () => {
 
   const canonical = `/blog/${post.slug}`;
 
+  const isFounder = post.author === 'Mitesh Jain';
+
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -116,7 +119,16 @@ const BlogPost = () => {
     image: post.image ? [post.image] : undefined,
     datePublished: post.datePublished,
     dateModified: post.datePublished,
-    author: { '@type': 'Person', name: post.author || 'Meet The Mind Technologies' },
+    author: isFounder
+      ? {
+          '@type': 'Person',
+          '@id': `${SITE}/about-us#mitesh-jain`,
+          name: 'Mitesh Jain',
+          jobTitle: 'Founder & CEO, Meet The Mind Technologies',
+          url: `${SITE}/about-us`,
+          sameAs: [FOUNDER_LINKEDIN, 'https://www.salesforce.com/trailblazer/mjain31'],
+        }
+      : { '@type': 'Person', name: post.author || 'Meet The Mind Technologies' },
     publisher: {
       '@type': 'Organization',
       name: 'Meet The Mind Technologies',
@@ -241,9 +253,18 @@ const BlogPost = () => {
             </div>
             <div>
               <p className="font-semibold text-gray-900 text-sm">{post.author}</p>
-              <p className="text-gray-500 text-sm mt-0.5">
-                Salesforce consultant with 10 years of Sales and Service Cloud implementation experience.
-              </p>
+              {isFounder ? (
+                <p className="text-gray-500 text-sm mt-0.5">
+                  Founder of Meet The Mind. 5x Salesforce Certified, Agentblazer Innovator 2025, 10+ years building Salesforce for B2B revenue teams.{' '}
+                  <Link to="/about-us" className="text-brand hover:underline">About</Link>
+                  {' · '}
+                  <a href={FOUNDER_LINKEDIN} target="_blank" rel="noopener noreferrer" className="text-brand hover:underline">LinkedIn</a>
+                </p>
+              ) : (
+                <p className="text-gray-500 text-sm mt-0.5">
+                  Salesforce consultant with 10 years of Sales and Service Cloud implementation experience.
+                </p>
+              )}
             </div>
           </div>
 

@@ -37,6 +37,7 @@ const trailheadStats = [
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': 'https://www.meethemind.com/about-us#mitesh-jain',
   name: 'Mitesh Jain',
   jobTitle: 'Founder & CEO',
   worksFor: {
