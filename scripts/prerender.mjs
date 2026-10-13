@@ -186,6 +186,27 @@ async function main() {
       if (/^\/blog\/.+/.test(route)) {
         await page.waitForSelector('article', { timeout: 25000 }).catch(() => {});
       }
+      // React renders `Book a call{" "}<Icon/>` as two adjacent text nodes, but
+      // serializing merges them into one, so hydration sees "Book a call " where
+      // it expects "Book a call" and throws away the whole page (#418/#423).
+      // Separate adjacent text nodes with <!-- --> exactly like renderToString
+      // does; React's hydration skips comments.
+      await page.evaluate(() => {
+        const walker = document.createTreeWalker(document.getElementById('root'), NodeFilter.SHOW_TEXT);
+        const texts = [];
+        while (walker.nextNode()) texts.push(walker.currentNode);
+        for (const t of texts) {
+          if (t.nextSibling && t.nextSibling.nodeType === Node.TEXT_NODE) {
+            t.after(document.createComment(' '));
+          }
+        }
+        // Embed the data the page fetched (src/lib/prerenderData.ts) so the
+        // client's first render uses it too. Escape "<" so content can't close
+        // the script tag.
+        const s = document.createElement('script');
+        s.textContent = `window.__PRERENDER_DATA__=${JSON.stringify(window.__PRERENDER_DATA__ || {}).replace(/</g, '\\u003c')}`;
+        document.head.prepend(s);
+      });
       const html = await page.content();
 
       const outDir = route === '/' ? DIST : join(DIST, route);

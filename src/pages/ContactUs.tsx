@@ -47,6 +47,9 @@ const ContactUs = () => {
   const { handleSubmit, isSubmitting, formSuccess, setFormSuccess } = useContactForm();
 
   useEffect(() => {
+    // Skip during prerender: the widget's injected iframe would be baked into
+    // the snapshot and break hydration (prerender.mjs sets this user agent).
+    if (navigator.userAgent === 'ReactSnap') return;
     if (document.querySelector('script[src*="calendly"]')) return;
     const script = document.createElement('script');
     script.src = 'https://assets.calendly.com/assets/external/widget.js';

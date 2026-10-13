@@ -8,6 +8,7 @@ import ContactCTA from '@/components/layout/ContactCTA';
 import { CalendarDays, Clock, User, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
+import { getPrerendered, setPrerendered } from '@/lib/prerenderData';
 
 const SITE = 'https://www.meethemind.com';
 const FOUNDER_LINKEDIN = 'https://www.linkedin.com/in/miteshj07/';
@@ -46,19 +47,42 @@ function extractFaqs(md: string): { q: string; a: string }[] {
   return faqs;
 }
 
+function mapRow(row: any) {
+  if (!row) return null;
+  return {
+    slug: row.slug,
+    title: row.title,
+    excerpt: row.excerpt || '',
+    content: row.content ? stripLeadingH1(row.content) : '',
+    image: row.featured_image || null,
+    tags: row.tags || [],
+    author: row.author || 'MeetTheMind',
+    date: row.published_at
+      ? new Date(row.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
+      : '',
+    readTime: row.reading_time ? `${row.reading_time} min read` : '5 min read',
+    metaTitle: row.meta_title,
+    metaDescription: row.meta_description,
+    datePublished: row.published_at,
+  };
+}
+
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const { data } = useCms();
   const { sharedComponents } = data;
 
-  const [post, setPost] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  // Seed from the prerender snapshot's row (if any) so hydration matches.
+  const [post, setPost] = useState<any>(() => mapRow(getPrerendered(`blog_post:${slug}`)));
+  const [loading, setLoading] = useState(() => !getPrerendered(`blog_post:${slug}`));
 
   useEffect(() => {
     window.scrollTo(0, 0);
     if (!slug) return;
-    setLoading(true);
+    const cached = getPrerendered(`blog_post:${slug}`);
+    setPost(mapRow(cached));
+    setLoading(!cached);
     supabase
       .from('blog_posts')
       .select('*')
@@ -67,22 +91,8 @@ const BlogPost = () => {
       .single()
       .then(({ data: row }) => {
         if (row) {
-          setPost({
-            slug: row.slug,
-            title: row.title,
-            excerpt: row.excerpt || '',
-            content: row.content ? stripLeadingH1(row.content) : '',
-            image: row.featured_image || null,
-            tags: row.tags || [],
-            author: row.author || 'MeetTheMind',
-            date: row.published_at
-              ? new Date(row.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-              : '',
-            readTime: row.reading_time ? `${row.reading_time} min read` : '5 min read',
-            metaTitle: row.meta_title,
-            metaDescription: row.meta_description,
-            datePublished: row.published_at,
-          });
+          setPrerendered(`blog_post:${slug}`, row);
+          setPost(mapRow(row));
         }
         setLoading(false);
       });

@@ -3,6 +3,16 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from "@/components/ui/sonner";
 import { supabaseService, UploadImageResult } from '@/services/supabase-service';
 import * as cmsDefaultData from '../data';
+import { getPrerendered, setPrerendered } from '@/lib/prerenderData';
+
+// Overlay fetched cms_content rows (one per section) on the bundled defaults.
+const withRows = (rows: any[]): typeof cmsDefaultData => {
+  const merged: any = { ...cmsDefaultData };
+  rows.forEach((item: any) => {
+    merged[item.section] = item.data;
+  });
+  return merged;
+};
 
 // Define the shape of our context
 interface CmsContextType {
@@ -18,7 +28,11 @@ interface CmsContextType {
 const CmsContext = createContext<CmsContextType | undefined>(undefined);
 
 export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [data, setData] = useState<typeof cmsDefaultData>(cmsDefaultData);
+  // Start from the rows the prerender embedded (if any) so hydration matches.
+  const [data, setData] = useState<typeof cmsDefaultData>(() => {
+    const rows = getPrerendered<any[]>('cms_content');
+    return rows?.length ? withRows(rows) : cmsDefaultData;
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -49,12 +63,7 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           const refreshedContent = await supabaseService.fetchCmsContent();
 
           if (refreshedContent && refreshedContent.length > 0) {
-            // Transform the fetched data to match our expected structure
-            const transformedData: any = { ...cmsDefaultData };
-            refreshedContent.forEach((item: any) => {
-              transformedData[item.section] = item.data;
-            });
-            setData(transformedData);
+            setData(withRows(refreshedContent));
             console.log('Initialized CMS content in Supabase and loaded it');
           } else {
             setData(cmsDefaultData);
@@ -69,12 +78,8 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           setData(cmsDefaultData);
         }
       } else {
-        // Transform the fetched data to match our expected structure
-        const transformedData: any = { ...cmsDefaultData };
-        cmsContent.forEach((item: any) => {
-          transformedData[item.section] = item.data;
-        });
-        setData(transformedData);
+        setPrerendered('cms_content', cmsContent);
+        setData(withRows(cmsContent));
         console.log('Loaded CMS content from Supabase');
       }
     } catch (err) {

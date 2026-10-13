@@ -7,6 +7,7 @@ import { useCms } from '@/cms/context/CmsContext';
 import BlogCard from '@/components/blog/BlogCard';
 import NewsletterSignup from '@/components/blog/NewsletterSignup';
 import { supabase } from '@/integrations/supabase/client';
+import { getPrerendered, setPrerendered } from '@/lib/prerenderData';
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1522204523234-8729aa6e3d5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
 
@@ -16,13 +17,12 @@ function mapPost(row: any) {
     title: row.title,
     excerpt: row.excerpt || '',
     date: row.published_at
-      ? new Date(row.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+      ? new Date(row.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
       : '',
     readTime: row.reading_time ? `${row.reading_time} min read` : '5 min read',
     author: row.author || 'MeetTheMind',
     image: row.featured_image || FALLBACK_IMAGE,
     tags: row.tags || [],
-    content: row.content,
     metaTitle: row.meta_title,
     metaDescription: row.meta_description,
   };
@@ -33,17 +33,22 @@ const Blog = () => {
   const { blogSection, seoMetadata, sharedComponents } = data;
 
   const [activeCategory, setActiveCategory] = useState<string>('All');
-  const [livePosts, setLivePosts] = useState<any[]>([]);
-  const [loadingPosts, setLoadingPosts] = useState(true);
+  // Seed from the prerender snapshot's rows (if any) so hydration matches.
+  const [livePosts, setLivePosts] = useState<any[]>(() => (getPrerendered<any[]>('blog_posts') || []).map(mapPost));
+  const [loadingPosts, setLoadingPosts] = useState(() => !getPrerendered('blog_posts'));
 
   useEffect(() => {
     supabase
       .from('blog_posts')
-      .select('*')
+      // No `content`: cards don't show it, and these rows get embedded in the prerendered page.
+      .select('slug, title, excerpt, published_at, reading_time, author, featured_image, tags, meta_title, meta_description')
       .eq('status', 'published')
       .order('published_at', { ascending: false })
       .then(({ data: rows }) => {
-        if (rows) setLivePosts(rows.map(mapPost));
+        if (rows) {
+          setPrerendered('blog_posts', rows);
+          setLivePosts(rows.map(mapPost));
+        }
         setLoadingPosts(false);
       });
   }, []);
