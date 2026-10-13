@@ -41,8 +41,10 @@ import AgentforceDataReadinessPage from "@/pages/AgentforceDataReadiness";
 import GroundTruthVsDemandToolsPage from "@/pages/GroundTruthVsDemandTools";
 import CareersPage from "@/pages/Careers";
 import ContactUsPage from "@/pages/ContactUs";
-import AdminPage from "@/pages/Admin";
-import AdminLogin from "@/pages/AdminLogin";
+// Admin is never prerendered (always a fresh client render), so it can load on
+// demand without hydration mismatches; keeps recharts out of visitors' bundle.
+const AdminPage = React.lazy(() => import("@/pages/Admin"));
+const AdminLogin = React.lazy(() => import("@/pages/AdminLogin"));
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfService from "@/pages/TermsOfService";
 import SitemapPage from "@/pages/SitemapPage";
@@ -91,12 +93,12 @@ const App = () => {
                 <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
                 <Route path="/terms-of-service" element={<PageTransition><TermsOfService /></PageTransition>} />
                 <Route path="/sitemap" element={<PageTransition><SitemapPage /></PageTransition>} />
-                <Route path="/admin-login" element={<PageTransition><AdminLogin /></PageTransition>} />
+                <Route path="/admin-login" element={<PageTransition><React.Suspense fallback={null}><AdminLogin /></React.Suspense></PageTransition>} />
                 <Route 
                   path="/admin" 
                   element={
                     <ProtectedRoute>
-                      <PageTransition><AdminPage /></PageTransition>
+                      <PageTransition><React.Suspense fallback={null}><AdminPage /></React.Suspense></PageTransition>
                     </ProtectedRoute>
                   } 
                 />
