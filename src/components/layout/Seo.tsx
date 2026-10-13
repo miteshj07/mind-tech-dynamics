@@ -9,7 +9,13 @@ interface SeoProps {
   canonical?: string;
   /** One JSON-LD object or an array of them. */
   jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
+  /** Share image (path or full URL) for LinkedIn/X/Slack previews. */
+  image?: string;
 }
+
+const DEFAULT_IMAGE = '/lovable-uploads/284a223f-a649-48c8-adfb-b59481cce7ba.png';
+
+const absolute = (url: string) => (url.startsWith('http') ? url : `${SITE_URL}${url}`);
 
 function upsertMeta(attr: 'name' | 'property', key: string, content?: string) {
   if (!content) return;
@@ -43,12 +49,9 @@ function upsertLink(rel: string, href?: string) {
  * element so the prerenderer always captures it. JSON-LD is valid anywhere in
  * the document.
  */
-const Seo = ({ title, description, canonical, jsonLd }: SeoProps) => {
-  const href = canonical
-    ? canonical.startsWith('http')
-      ? canonical
-      : `${SITE_URL}${canonical}`
-    : undefined;
+const Seo = ({ title, description, canonical, jsonLd, image }: SeoProps) => {
+  const href = canonical ? absolute(canonical) : undefined;
+  const img = absolute(image || DEFAULT_IMAGE);
 
   useLayoutEffect(() => {
     if (title) document.title = title;
@@ -58,7 +61,11 @@ const Seo = ({ title, description, canonical, jsonLd }: SeoProps) => {
     upsertMeta('property', 'og:description', description);
     upsertMeta('property', 'og:url', href);
     upsertMeta('property', 'og:type', 'website');
-  }, [title, description, href]);
+    upsertMeta('property', 'og:image', img);
+    upsertMeta('name', 'twitter:title', title);
+    upsertMeta('name', 'twitter:description', description);
+    upsertMeta('name', 'twitter:image', img);
+  }, [title, description, href, img]);
 
   const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 

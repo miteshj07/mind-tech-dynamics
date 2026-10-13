@@ -88,9 +88,10 @@ const DealPulseVsClari = () => {
   return (
     <>
       <Seo
-        title="DealPulse vs Clari: Native, Transparent Deal-Risk Alternative | Meet The Mind"
-        description="DealPulse vs Clari for deal risk: native to Salesforce vs synced-out, transparent editable rules vs black-box AI, a focused app vs a full revenue platform. An honest comparison."
+        title="Clari Alternative for Salesforce: DealPulse vs Clari"
+        description="Looking for a Clari alternative? DealPulse scores deal risk natively inside Salesforce with transparent rules. Free early access, no platform contract."
         canonical="/dealpulse-vs-clari"
+        image="/dealpulse/og.png"
         jsonLd={[articleSchema, faqSchema]}
       />
 

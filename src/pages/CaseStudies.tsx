@@ -243,7 +243,7 @@ const CaseStudies = () => {
   };
   return (
     <>
-      <Seo title={seoMetadata.caseStudies.title} description={seoMetadata.caseStudies.description} canonical="/case-studies" jsonLd={caseStudiesSchema} />
+      <Seo title={seoMetadata.caseStudies.title} description={seoMetadata.caseStudies.description} canonical="/case-studies" image="/case-studies/student-portal.png" jsonLd={caseStudiesSchema} />
       <PageHeader 
         title={caseStudiesSection.title}
         subtitle={caseStudiesSection.subtitle}

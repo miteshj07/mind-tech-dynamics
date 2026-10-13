@@ -142,9 +142,10 @@ const BlogPost = () => {
   return (
     <>
       <Seo
-        title={`${post.metaTitle || post.title} | Meet The Mind Blog`}
+        title={post.metaTitle || `${post.title} | Meet The Mind Blog`}
         description={post.metaDescription || post.excerpt}
         canonical={canonical}
+        image={post.image || undefined}
         jsonLd={faqSchema ? [articleSchema, faqSchema] : articleSchema}
       />
 

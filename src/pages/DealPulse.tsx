@@ -204,9 +204,10 @@ const DealPulse = () => {
   return (
     <>
       <Seo
-        title="DealPulse, Native Salesforce Deal Risk Intelligence | Meet The Mind"
-        description="DealPulse is a 100% native Salesforce app that scores every open Opportunity, shows which risk signals are firing, and tells reps what to do next. No sync-out, no black box."
+        title="DealPulse for Salesforce: Native Deal Risk Scoring App"
+        description="Spot at-risk deals before they slip. DealPulse scores every open Salesforce Opportunity with transparent, editable rules. 100% native. Free early access."
         canonical="/dealpulse"
+        image="/dealpulse/og.png"
         jsonLd={[softwareSchema, faqSchema]}
       />
 

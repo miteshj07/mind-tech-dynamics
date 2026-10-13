@@ -91,6 +91,7 @@ const GroundTruthVsDemandTools = () => {
         title="GroundTruth vs DemandTools: Readiness Scoring vs Data Cleansing | Meet The Mind"
         description="GroundTruth vs DemandTools for Salesforce data: AI readiness scoring vs cleansing, native vs connected, go-live gating vs bulk remediation. An honest, factual comparison."
         canonical="/groundtruth-vs-demandtools"
+        image="/groundtruth/teaser-poster.jpg"
         jsonLd={[articleSchema, faqSchema]}
       />
 

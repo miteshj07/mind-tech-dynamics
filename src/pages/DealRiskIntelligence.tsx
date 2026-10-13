@@ -101,6 +101,7 @@ const DealRiskIntelligence = () => {
         title="What Is Deal Risk Intelligence? A Guide for Revenue Teams | Meet The Mind"
         description="Deal risk intelligence is the practice of automatically scoring every open opportunity for the risk it stalls or slips, using CRM signals. Learn the signals, the approaches, and how to evaluate a tool."
         canonical="/deal-risk-intelligence"
+        image="/dealpulse/og.png"
         jsonLd={[articleSchema, faqSchema]}
       />
 

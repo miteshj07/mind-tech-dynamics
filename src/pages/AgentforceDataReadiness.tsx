@@ -144,6 +144,7 @@ const AgentforceDataReadiness = () => {
         title="Agentforce Data Readiness: Getting Your CRM Data AI-Ready | Meet The Mind"
         description="What Agentforce data readiness means, why AI agents fail on bad CRM data, the six dimensions of readiness, and how to measure and gate on it before go-live."
         canonical="/agentforce-data-readiness"
+        image="/groundtruth/teaser-poster.jpg"
         jsonLd={[articleSchema, faqSchema]}
       />
 
