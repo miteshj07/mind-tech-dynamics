@@ -8,6 +8,25 @@ Status: ⬜ open · 🔧 fix provided (apply pending) · ✅ done.
 1. **Tables created via the dashboard without migrations** → their RLS was never set, so several are publicly readable/writable (`inquiries`, `cms_content`, `images`, `newsletter_subscribers`; `user_roles` was outright missing). *Fix pattern: enable RLS + explicit policies, and check migrations into the repo.*
 2. **Prerendering is disabled on Vercel** (`scripts/prerender.mjs` exits when `VERCEL` is set) → every URL serves an empty `<div id="root">` shell. Non-JS crawlers (AI engines, social unfurlers, Bing first pass) see only the **homepage** `<head>` on every page. *This one fix unlocks ~half the SEO + GEO backlog.*
 
+
+## Status update, 2026-10-13
+
+All Critical and High items are done except PERF-1 (partial). Done since the audit:
+- **RENDER-1/2** prerendering via `puppeteer-core` + `@sparticuz/chromium`; blog posts wait for `article`. Content edits auto-rebuild hourly (pg_cron `rebuild-on-content-change` → Vercel deploy hook).
+- **SEC-4** email escaping + validation, and the function now only sends for a real, recent, un-notified `inquiries` row (bounded by the honeypot + rate-limit trigger on `inquiries`).
+- **SEC-6** verified: anon SELECT on `newsletter_subscribers` returns nothing.
+- **SEO-1/3/4** dynamic sitemap from prerendered output; stale `public/sitemap.xml` deleted.
+- **GEO-1** `public/llms.txt`. **GEO-2** blog authors link to the founder Person entity.
+- **SEO-2** one canonical Organization in `index.html`; self-serving ratings and the wrong X handle removed. **SEO-5** BreadcrumbList from `Seo.tsx`. **SEO-7** per-page `og:image` + X cards, 1200×630 default image.
+- **SEC-7** debug PII logs removed. **SEO-10** moot.
+
+Still open:
+- **PERF-1 (partial)** admin routes lazy-loaded (bundle −31%). Full route splitting is blocked by **HYDRATE-1**.
+- **HYDRATE-1 (new)** every prerendered page throws React hydration mismatches (#418/#425/#423), so React discards the prebuilt HTML and re-renders. Fix before further code-splitting.
+- **SEO-6** soft 404s. **SEO-8** lazy images. **SEO-9** Apps JSON-LD. **SEC-8** dependency bumps. **GEO-3** NAP. **A11Y** alt-text audit.
+- **SEO-11** non-www redirects with a temporary 307; switch to a permanent redirect in Vercel → Domains.
+- **SEC-5 follow-up** `cms` Storage bucket policy review.
+
 ---
 
 ## 🔴 CRITICAL — do first
@@ -31,16 +50,16 @@ Status: ⬜ open · 🔧 fix provided (apply pending) · ✅ done.
 
 ## 🟠 HIGH
 
-### RENDER-1 · Production ships an empty SPA shell to non-JS crawlers `[SEO][GEO]` ⬜
+### RENDER-1 · Production ships an empty SPA shell to non-JS crawlers `[SEO][GEO]` ✅
 - **Highest-leverage item.** `scripts/prerender.mjs:14-17` skips react-snap on Vercel; `vercel.json` rewrites `/(.*)` → `/index.html`. Result: every route's `<body>` is `<div id="root"></div>`, and every page inherits the **homepage** title/description/canonical. AI engines (GPTBot, ClaudeBot, PerplexityBot) and social unfurlers see no per-page content — and a canonical pointing back to `/` (self-cannibalization).
 - **Fix:** real static generation that runs on Vercel — `vite-react-ssg` (recommended), or re-enable react-snap with a Vercel-compatible headless Chromium (`puppeteer-core` + `@sparticuz/chromium`). Verify `dist/agentforce/index.html` etc. contain real body text + per-page JSON-LD.
 - **Files:** `scripts/prerender.mjs`, `vercel.json`, `index.html`, `src/components/layout/Seo.tsx`.
 
-### RENDER-2 · Blog posts are client-fetched → doubly invisible `[SEO][GEO]` ⬜
+### RENDER-2 · Blog posts are client-fetched → doubly invisible `[SEO][GEO]` ✅
 - `src/pages/BlogPost.tsx:28-59` fetches article body from Supabase in `useEffect`; blog routes aren't in `reactSnap.include`. Your most citeable/shareable content renders as a "Loading…" shell to crawlers.
 - **Fix:** generate static HTML per slug at build time (query `blog_posts` where `status='published'`), with markdown pre-rendered + `BlogPosting` JSON-LD.
 
-### SEC-4 · `send-contact-email` is an open, unauthenticated endpoint `[SEC]` ⬜
+### SEC-4 · `send-contact-email` is an open, unauthenticated endpoint `[SEC]` ✅
 - `verify_jwt=false` + CORS `*` + no rate-limit/captcha, and email HTML is built from unescaped input (`supabase/functions/send-contact-email/index.ts:42-50`). Anyone can spam `RESEND_TO` or inject phishing HTML into the admin's notification email.
 - **Fix:** HTML-escape every interpolated value; validate `email`; add abuse control (Turnstile/hCaptcha token, per-IP rate limit, or a shared header secret from the site).
 
@@ -49,11 +68,11 @@ Status: ⬜ open · 🔧 fix provided (apply pending) · ✅ done.
 - **Fix:** RLS admin-only `FOR ALL`. Also review the `cms` Storage bucket policies on `storage.objects` (uploads/deletes should be admin-only).
 - **Status 2026-08-24:** RLS applied by MJ via security-hotfix.sql; QA-verified — anon SELECT returns 0 rows. Still open: `cms` Storage bucket policy review in dashboard (hotfix SQL section 6).
 
-### PERF-1 · No code-splitting → one ~1.5 MB JS bundle `[SEO][PERF]` ⬜
+### PERF-1 · No code-splitting → one ~1.5 MB JS bundle `[SEO][PERF]` 🔧
 - `src/App.tsx` imports all ~23 pages statically; no `manualChunks`. Admin-only recharts + DealPulse media ship to every visitor. Hurts LCP/TBT (Core Web Vitals = ranking factor).
 - **Fix:** route-based `React.lazy` + `<Suspense>` (start with `Admin`, `DealPulse`, `BlogPost`); add `build.rollupOptions.manualChunks` for react/framer-motion/recharts/supabase/react-markdown. Files: `vite.config.ts`, `src/App.tsx`.
 
-### SEO-1 · Five service pages missing from the sitemap `[SEO][GEO]` ⬜
+### SEO-1 · Five service pages missing from the sitemap `[SEO][GEO]` ✅
 - `scripts/generate-sitemap.mjs:11-23` omits `/agentforce-implementation`, `/apollo-io-salesforce-integration`, `/salesforce-revops`, `/salesforce-health-check`, `/salesforce-data-cloud` — the high-intent pages your nav promotes.
 - **Fix:** add the 5 routes (and see SEO-3 to make the list dynamic).
 
@@ -61,27 +80,27 @@ Status: ⬜ open · 🔧 fix provided (apply pending) · ✅ done.
 
 ## 🟡 MEDIUM
 
-### GEO-1 · No real `llms.txt` `[GEO]` ⬜
+### GEO-1 · No real `llms.txt` `[GEO]` ✅
 - The live `HTTP 200` is a false positive — the catch-all rewrite returns the HTML shell. No file exists.
 - **Fix:** add `public/llms.txt` (served before the SPA rewrite) — a concise company/services/contact summary; later an `llms-full.txt` once RENDER-1 lands.
 
-### SEC-6 · `newsletter_subscribers` — verify no anon SELECT `[SEC]` ⬜
+### SEC-6 · `newsletter_subscribers` — verify no anon SELECT `[SEC]` ✅
 - Anon read returned `[]` (empty today, or RLS-filtered — ambiguous). Same class as `inquiries`. `src/components/blog/NewsletterSignup.tsx:23`.
 - **Fix:** RLS — anon `INSERT WITH CHECK (true)`, no anon `SELECT` (admin-only).
 
-### SEO-2 · Duplicate / inconsistent Organization schema `[SEO][GEO]` ⬜
+### SEO-2 · Duplicate / inconsistent Organization schema `[SEO][GEO]` ✅
 - `index.html` (`ProfessionalService #organization`, reviews, `sameAs`=Twitter only) vs `src/pages/Index.tsx:20-69` (`Organization` no `@id`, `sameAs`=LinkedIn/X/Trailblazer) → two unlinked org entities, conflicting handles (`@meetthemindtech` vs `x.com/MeetTheMind`), LinkedIn/Trailblazer missing from the static one.
 - **Fix:** one canonical Organization in static `index.html` with stable `@id`, full `sameAs`, `foundingDate`, `knowsAbout`; make the client graph reference the same `@id`. Also drop the self-serving org-level `aggregateRating` (against Google guidelines).
 
-### SEO-3 · Hardcoded route/slug lists drift `[SEO]` ⬜
+### SEO-3 · Hardcoded route/slug lists drift `[SEO]` ✅
 - `generate-sitemap.mjs` hardcodes `STATIC_ROUTES` (already 5 behind) and `BLOG_SLUGS` (7 slugs) while posts live in Supabase → new posts never enter the sitemap.
 - **Fix:** derive routes from `App.tsx`; fetch published slugs from Supabase at build.
 
-### SEO-4 · Stale committed `public/sitemap.xml` `[SEO]` ⬜
+### SEO-4 · Stale committed `public/sitemap.xml` `[SEO]` ✅
 - 9 URLs, no `<lastmod>`; overwritten at build but misleading and the fallback if `postbuild` fails.
 - **Fix:** delete it (rely on the generator) or keep it in sync.
 
-### SEO-5 · No `BreadcrumbList` schema/UI `[SEO][GEO]` ⬜
+### SEO-5 · No `BreadcrumbList` schema/UI `[SEO][GEO]` ✅
 - Missed rich-result + internal-linking signal for Services→page, Blog→post, Apps→DealPulse.
 - **Fix:** breadcrumb component + `BreadcrumbList` JSON-LD on nested pages.
 
@@ -89,11 +108,11 @@ Status: ⬜ open · 🔧 fix provided (apply pending) · ✅ done.
 - `vercel.json` rewrites everything to 200; `NotFound.tsx` and blog-not-found have no `noindex`.
 - **Fix:** `noindex` meta on those states (via `Seo`); ideally a real 404 status (needs SSR/edge).
 
-### SEO-7 · No per-page `og:image` / Twitter card `[SEO]` ⬜
+### SEO-7 · No per-page `og:image` / Twitter card `[SEO]` ✅
 - `Seo.tsx` sets `og:title/description/url` but not `og:image` or `twitter:*`; deep links unfurl with homepage image.
 - **Fix:** extend `Seo.tsx` to set `og:image` + `twitter:card/title/description/image` per page (blog → `featured_image`). Depends on RENDER-1 to reach unfurlers.
 
-### GEO-2 · Blog author E-E-A-T is generic `[GEO][SEO]` ⬜
+### GEO-2 · Blog author E-E-A-T is generic `[GEO][SEO]` ✅
 - `BlogPost.tsx:47/90` defaults author to `'MeetTheMind'` generic `Person`. The real asset — Mitesh Jain, 5× Salesforce certified, Agentblazer Innovator 2025 — isn't surfaced.
 - **Fix:** attribute posts to a named `Person` with `sameAs` (LinkedIn, Trailblazer) + credentials.
 

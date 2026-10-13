@@ -324,35 +324,6 @@ serve(async (req) => {
   // GET ?latest=1 — read-only: return the most recent stored snapshot without
   // triggering a fresh Google pull. Lets the assistant fetch current numbers
   // on request without needing admin login or a service_role key.
-  // GET ?tech=1 — diagnostic: run the browser/OS/device report in several
-  // dimension combos and return raw row counts + the first rows, to find out
-  // why tech_breakdown comes back empty.
-  if (req.method === "GET" && url.searchParams.get("tech") === "1") {
-    try {
-      const propertyId = Deno.env.get("GA4_PROPERTY_ID")!;
-      const token = await getAccessToken();
-      const combos = [["browser"], ["deviceCategory"], ["operatingSystem"], ["browser", "operatingSystem", "deviceCategory"]];
-      const out: Record<string, unknown> = {};
-      for (const dims of combos) {
-        const rep = await ga4RunReport(token, propertyId, {
-          dateRanges: [{ startDate: "28daysAgo", endDate: "yesterday" }],
-          dimensions: dims.map((name) => ({ name })),
-          metrics: [{ name: "sessions" }],
-          orderBys: [{ metric: { metricName: "sessions" }, desc: true }],
-          limit: 10,
-        });
-        out[dims.join("+")] = {
-          rowCount: rep.rowCount ?? null,
-          rows: (rep.rows ?? []).slice(0, 8),
-          metadata: rep.metadata ?? null,
-        };
-      }
-      return json({ success: true, out });
-    } catch (e) {
-      return json({ success: false, error: (e as Error).message }, 500);
-    }
-  }
-
   if (req.method === "GET" && url.searchParams.get("latest") === "1") {
     try {
       const supabase = createClient(
