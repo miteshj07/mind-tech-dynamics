@@ -32,6 +32,9 @@ export function initAnalytics(): void {
   if (started) return;
   started = true;
   if (isOptedOut()) return;
+  // Automation tools (Puppeteer, Playwright, Selenium) set this flag; their
+  // visits were ~75% of GA4 sessions. Visitors still see the site normally.
+  if (typeof navigator !== 'undefined' && navigator.webdriver) return;
   initGA();
   initLinkedIn();
 }
