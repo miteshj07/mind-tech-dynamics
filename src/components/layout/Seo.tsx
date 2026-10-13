@@ -13,7 +13,7 @@ interface SeoProps {
   image?: string;
 }
 
-const DEFAULT_IMAGE = '/lovable-uploads/284a223f-a649-48c8-adfb-b59481cce7ba.png';
+const DEFAULT_IMAGE = '/brand/og-default.png';
 
 const absolute = (url: string) => (url.startsWith('http') ? url : `${SITE_URL}${url}`);
 
