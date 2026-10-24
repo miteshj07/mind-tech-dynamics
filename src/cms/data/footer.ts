@@ -34,6 +34,7 @@ export const footerSection = {
   },
   legalLinks: [
     { title: "Privacy Policy", url: "/privacy-policy" },
+    { title: "Anti-spam policy", url: "/anti-spam-policy" },
     { title: "Terms of Service", url: "/terms-of-service" },
     { title: "Sitemap", url: "/sitemap" }
   ],

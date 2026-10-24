@@ -42,6 +42,7 @@ const EXCLUDE = new Set([
   '/admin',
   '/admin-login',
   '/privacy-policy',
+  '/anti-spam-policy',
   '/terms-of-service',
   '/sitemap',
 ]);

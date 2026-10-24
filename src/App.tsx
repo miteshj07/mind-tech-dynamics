@@ -46,6 +46,7 @@ import ContactUsPage from "@/pages/ContactUs";
 const AdminPage = React.lazy(() => import("@/pages/Admin"));
 const AdminLogin = React.lazy(() => import("@/pages/AdminLogin"));
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
+import AntiSpamPolicy from "@/pages/AntiSpamPolicy";
 import TermsOfService from "@/pages/TermsOfService";
 import SitemapPage from "@/pages/SitemapPage";
 import NotFound from "@/pages/NotFound";
@@ -91,6 +92,7 @@ const App = () => {
                 <Route path="/contact-us" element={<PageTransition><ContactUsPage /></PageTransition>} />
                 <Route path="/contact" element={<Navigate to="/contact-us" replace />} />
                 <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
+                <Route path="/anti-spam-policy" element={<PageTransition><AntiSpamPolicy /></PageTransition>} />
                 <Route path="/terms-of-service" element={<PageTransition><TermsOfService /></PageTransition>} />
                 <Route path="/sitemap" element={<PageTransition><SitemapPage /></PageTransition>} />
                 <Route path="/admin-login" element={<PageTransition><React.Suspense fallback={null}><AdminLogin /></React.Suspense></PageTransition>} />

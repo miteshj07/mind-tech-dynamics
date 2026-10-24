@@ -61,6 +61,7 @@ const STATIC_ROUTES = [
   '/careers',
   '/contact-us',
   '/privacy-policy',
+  '/anti-spam-policy',
   '/terms-of-service',
   '/sitemap',
 ];
