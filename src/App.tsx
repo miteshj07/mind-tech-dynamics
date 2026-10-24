@@ -47,6 +47,7 @@ const AdminPage = React.lazy(() => import("@/pages/Admin"));
 const AdminLogin = React.lazy(() => import("@/pages/AdminLogin"));
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import AntiSpamPolicy from "@/pages/AntiSpamPolicy";
+import { Analytics } from "@vercel/analytics/react";
 import TermsOfService from "@/pages/TermsOfService";
 import SitemapPage from "@/pages/SitemapPage";
 import NotFound from "@/pages/NotFound";
@@ -107,6 +108,7 @@ const App = () => {
                 <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
               </Routes>
               <Footer />
+              <Analytics />
               <Toaster />
               <Sonner />
             </TooltipProvider>
