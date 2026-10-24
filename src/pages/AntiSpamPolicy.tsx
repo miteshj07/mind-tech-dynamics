@@ -23,7 +23,7 @@ const AntiSpamPolicy = () => {
             </p>
             <p>
               If you received an email you believe breaks this policy, write to{' '}
-              <a href="mailto:abuse@meethemind.com" className="text-brand">abuse@meethemind.com</a>{' '}
+              <a href="mailto:support@meethemind.com" className="text-brand">support@meethemind.com</a>{' '}
               with the message and we will investigate and respond within two business days.
             </p>
             <p className="text-sm text-gray-500">Last updated: 24 October 2026</p>
