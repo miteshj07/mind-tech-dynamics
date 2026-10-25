@@ -48,6 +48,7 @@ const AdminLogin = React.lazy(() => import("@/pages/AdminLogin"));
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import AntiSpamPolicy from "@/pages/AntiSpamPolicy";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import TermsOfService from "@/pages/TermsOfService";
 import SitemapPage from "@/pages/SitemapPage";
 import NotFound from "@/pages/NotFound";
@@ -109,6 +110,7 @@ const App = () => {
               </Routes>
               <Footer />
               <Analytics />
+              <SpeedInsights />
               <Toaster />
               <Sonner />
             </TooltipProvider>
