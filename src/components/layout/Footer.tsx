@@ -113,6 +113,10 @@ const Footer = () => {
                 {link.title}
               </Link>
             ))}
+            {/* Hard-coded: the stored CMS footer replaces the code defaults, so a link added only there never shows */}
+            <Link to="/anti-spam-policy" className="text-gray-400 text-sm hover:text-brand transition-colors">
+              Anti-spam policy
+            </Link>
           </div>
         </div>
       </div>

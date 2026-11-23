@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { ArrowLeft, AlertCircle } from "lucide-react";
+import Seo from "@/components/layout/Seo";
 
 const NotFound = () => {
   const location = useLocation();
@@ -15,6 +16,7 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <Seo title="Page not found | Meet The Mind" />
       <div className="text-center max-w-md">
         <div className="flex justify-center mb-6">
           <div className="bg-red-100 p-4 rounded-full">

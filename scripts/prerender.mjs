@@ -18,13 +18,18 @@
 // FAILS SAFE: if Chromium can't launch, it logs a warning and exits 0, leaving
 // the plain SPA build intact, so it can never break the deploy. The app's
 // main.tsx hydrates the prerendered HTML (hydrateRoot when #root has markup).
+//
+// vercel.json has no catch-all rewrite, so unknown paths get a real 404
+// (dist/404.html). That means every known route must exist as a file: each one
+// is written as the plain shell first, then overwritten with its prerendered
+// HTML. dist/spa.html is the shell for client-only routes (admin, new posts).
 // ============================================================
 
 import http from 'node:http';
 import {
   existsSync, mkdirSync, readFileSync, statSync, writeFileSync,
 } from 'node:fs';
-import { extname, join } from 'node:path';
+import { dirname, extname, join } from 'node:path';
 
 const DIST = 'dist';
 const PORT = 45678;
@@ -135,6 +140,18 @@ async function launchBrowser() {
 // prerendered per-route files during this run doesn't change what the server
 // returns for still-to-be-rendered routes.
 const SHELL = readFileSync(join(DIST, 'index.html'));
+writeFileSync(join(DIST, 'spa.html'), SHELL);
+
+// Rendered by the app's "*" route and served by Vercel with a 404 status.
+const NOT_FOUND = '/404';
+
+function writeRoute(route, html = SHELL) {
+  const file = route === '/' ? join(DIST, 'index.html')
+    : route === NOT_FOUND ? join(DIST, '404.html')
+    : join(DIST, route, 'index.html');
+  mkdirSync(dirname(file), { recursive: true });
+  writeFileSync(file, html);
+}
 
 function startServer() {
   return http.createServer((req, res) => {
@@ -153,6 +170,9 @@ function startServer() {
 }
 
 async function main() {
+  const routes = [...STATIC_ROUTES, NOT_FOUND, ...(await fetchBlogRoutes())];
+  routes.forEach((route) => writeRoute(route));
+
   let browser;
   try {
     browser = await launchBrowser();
@@ -164,7 +184,6 @@ async function main() {
   const server = startServer();
   await new Promise((resolve) => server.listen(PORT, resolve));
 
-  const routes = [...STATIC_ROUTES, ...(await fetchBlogRoutes())];
   let ok = 0;
   let failed = 0;
 
@@ -210,9 +229,7 @@ async function main() {
       });
       const html = await page.content();
 
-      const outDir = route === '/' ? DIST : join(DIST, route);
-      mkdirSync(outDir, { recursive: true });
-      writeFileSync(join(outDir, 'index.html'), html);
+      writeRoute(route, html);
       ok += 1;
       console.log(`  ✓ ${route}`);
     } catch (e) {

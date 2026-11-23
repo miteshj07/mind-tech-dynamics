@@ -63,8 +63,23 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/admin",
+      "destination": "/spa.html"
+    },
+    {
+      "source": "/admin-login",
+      "destination": "/spa.html"
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/spa.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/contact",
+      "destination": "/contact-us",
+      "permanent": true
     }
   ]
 }
