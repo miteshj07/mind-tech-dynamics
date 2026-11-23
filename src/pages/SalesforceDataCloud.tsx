@@ -117,8 +117,8 @@ const SalesforceDataCloud = () => {
   return (
     <>
       <Seo
-        title="Salesforce Data Cloud Consulting, B2B Implementation | Meet The Mind"
-        description="Salesforce Data Cloud implementation for B2B teams. Unified customer profiles, real-time lead scoring, Apollo.io integration, and Agentforce AI grounding. US, UK, UAE & Australia."
+        title="Salesforce Data Cloud Consulting for B2B Teams"
+        description="Salesforce Data Cloud implementation for B2B teams: unified customer profiles, real-time lead scoring and trusted grounding data for Agentforce."
         canonical="/salesforce-data-cloud"
         jsonLd={[serviceSchema, faqSchema]}
       />

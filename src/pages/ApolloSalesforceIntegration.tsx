@@ -114,8 +114,8 @@ const ApolloSalesforceIntegration = () => {
   return (
     <>
       <Seo
-        title="Apollo.io Salesforce Integration, Custom Bi-Directional Sync | Meet The Mind"
-        description="Custom Apollo.io to Salesforce integration: bi-directional lead sync, enrichment, sequence activity logging, and Flow-based routing. Built for B2B revenue teams. US, UK, UAE & Australia."
+        title="Apollo.io Salesforce Integration: Custom Two-Way Sync"
+        description="Custom Apollo.io to Salesforce integration: two-way lead sync, enrichment, sequence activity logging and Flow-based routing for B2B revenue teams."
         canonical="/apollo-io-salesforce-integration"
         jsonLd={[serviceSchema, faqSchema]}
       />

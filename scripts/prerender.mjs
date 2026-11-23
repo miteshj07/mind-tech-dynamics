@@ -204,6 +204,11 @@ async function main() {
       });
       // Ensure React has rendered something into #root.
       await page.waitForSelector('#root > *', { timeout: 15000 }).catch(() => {});
+      // networkidle2 tolerates two open connections, so it can fire while the
+      // CMS fetch is still in flight and we'd snapshot the bundled defaults
+      // instead of what visitors see. Wait for CmsContext to say it settled.
+      await page.waitForFunction('window.__CMS_READY__ === true', { timeout: 20000 })
+        .catch(() => console.warn(`  ! ${route}, CMS data not loaded in time, snapshot uses defaults`));
       // Blog detail pages fetch their body from Supabase after mount, wait for
       // the article to render (and for Seo.tsx to set the per-post canonical)
       // before snapshotting, or we'd capture just the page chrome. networkidle2

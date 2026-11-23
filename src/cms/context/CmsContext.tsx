@@ -96,6 +96,12 @@ export const CmsProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     fetchCmsContent();
   }, []);
 
+  // Tells scripts/prerender.mjs the CMS fetch has settled (loaded or failed)
+  // and the page has re-rendered with it, so it is safe to snapshot.
+  useEffect(() => {
+    if (!isLoading) (window as any).__CMS_READY__ = true;
+  }, [isLoading]);
+
   // Helper function to set a value at a specific path in an object
   const setValueAtPath = (obj: any, path: string[], value: any): any => {
     // If we've reached the end of the path, return the value

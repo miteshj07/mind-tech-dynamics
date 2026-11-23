@@ -39,7 +39,7 @@ const Apps = () => {
     <>
       <Seo
         title="Salesforce Apps | DealPulse & Native Apps by Meet The Mind"
-        description="Product-grade native Salesforce apps built, run, and supported by Meet The Mind, DealPulse for deal-risk intelligence and GroundTruth for Agentforce data readiness."
+        description="Native Salesforce apps built, run and supported by Meet The Mind: DealPulse for deal risk intelligence and GroundTruth for Agentforce data readiness."
         canonical="/apps"
       />
 

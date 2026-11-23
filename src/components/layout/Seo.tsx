@@ -17,6 +17,13 @@ const DEFAULT_IMAGE = '/brand/og-default.png';
 
 const absolute = (url: string) => (url.startsWith('http') ? url : `${SITE_URL}${url}`);
 
+// Google cuts titles at about 60 characters and already shows the site name
+// above every result, so a title that is too long gives up its brand suffix.
+// Covers blog posts, whose titles come from the database.
+const BRAND_SUFFIX = /\s*[|,]\s*(Meet The Mind( Technologies| Blog)?|MeetTheMind)$/;
+const fitTitle = (title: string) =>
+  title.length > 60 ? title.replace(BRAND_SUFFIX, '') : title;
+
 // Breadcrumb trail per page: [parent name, parent path, own short name].
 const SERVICES = ['Services', '/services'] as const;
 const APPS = ['Apps', '/apps'] as const;
@@ -82,7 +89,8 @@ function upsertLink(rel: string, href?: string) {
  * element so the prerenderer always captures it. JSON-LD is valid anywhere in
  * the document.
  */
-const Seo = ({ title, description, canonical, jsonLd, image }: SeoProps) => {
+const Seo = ({ title: rawTitle, description, canonical, jsonLd, image }: SeoProps) => {
+  const title = fitTitle(rawTitle);
   const href = canonical ? absolute(canonical) : undefined;
   const img = absolute(image || DEFAULT_IMAGE);
 

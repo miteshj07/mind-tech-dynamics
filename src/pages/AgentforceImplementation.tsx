@@ -114,7 +114,7 @@ const AgentforceImplementation = () => {
     <>
       <Seo
         title="Salesforce Agentforce Implementation Partner, Meet The Mind"
-        description="Certified Agentforce implementation partner. We design, build, and deploy Salesforce AI agents for B2B lead qualification, customer service, and sales ops automation. US, UK, UAE & Australia."
+        description="Certified Agentforce implementation partner. We design, build and deploy Salesforce AI agents for lead qualification, customer service and sales ops."
         canonical="/agentforce-implementation"
         jsonLd={[serviceSchema, faqSchema]}
       />

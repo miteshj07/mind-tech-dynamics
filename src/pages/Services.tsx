@@ -217,8 +217,8 @@ const Services = () => {
   return (
     <>
       <Seo
-        title="Salesforce, Agentforce & Lead-Gen Automation Services | Meet The Mind"
-        description="Salesforce implementation, Agentforce AI agents, Apollo.io integration and B2B lead-generation automation. End-to-end CRM services for US, UK, UAE & Australian teams."
+        title="Salesforce Consulting Services: Agentforce, CRM, Lead Gen"
+        description="Salesforce implementation, Agentforce AI agents, Apollo.io integration and B2B lead generation automation from a 5x certified Salesforce consultant."
         canonical="/services"
         jsonLd={serviceListSchema}
       />

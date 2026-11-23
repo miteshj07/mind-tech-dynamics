@@ -86,8 +86,8 @@ const Agentforce = () => {
   return (
     <>
       <Seo
-        title="Agentforce Implementation | Salesforce AI Agents for B2B, Meet The Mind"
-        description="Salesforce Agentforce implementation partner. We build AI agents that qualify leads, resolve service cases 24/7, and automate CRM tasks for B2B teams in the US, UK, UAE & Australia."
+        title="Agentforce Consulting: Salesforce AI Agents for B2B Teams"
+        description="We build Salesforce Agentforce agents that qualify leads, resolve service cases around the clock and automate CRM work for B2B teams."
         canonical="/agentforce"
         jsonLd={[serviceSchema, faqSchema]}
       />

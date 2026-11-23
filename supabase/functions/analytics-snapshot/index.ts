@@ -274,16 +274,20 @@ async function pullGsc(token: string, siteUrl: string) {
     startDate: start,
     endDate: end,
     dimensions: ["query"],
-    rowLimit: 25,
+    rowLimit: 1000,
     type: "web",
   });
+  // The API orders by clicks only. With few or no clicks that is an arbitrary
+  // (alphabetical) slice, so rank by impressions here and keep the top 25.
   const topQueries = (queryReport.rows ?? []).map((r: any) => ({
     query: r?.keys?.[0] ?? "",
     clicks: num(r?.clicks),
     impressions: num(r?.impressions),
     ctr: num(r?.ctr),
     position: num(r?.position),
-  }));
+  }))
+    .sort((a: any, b: any) => b.clicks - a.clicks || b.impressions - a.impressions)
+    .slice(0, 25);
 
   const totalReport = await gscQuery(token, siteUrl, {
     startDate: start,

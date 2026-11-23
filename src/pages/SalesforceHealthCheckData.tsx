@@ -44,7 +44,7 @@ const SalesforceHealthCheckData = () => {
   return (
     <>
       <Seo
-        title="What the health check reads, keeps and deletes | Meet The Mind Technologies"
+        title="What the Salesforce health check reads, keeps and deletes"
         description="Exactly which Salesforce objects and fields the free health check reads, what it keeps, for how long, and how to revoke it yourself."
         canonical="/salesforce-health-check/data"
       />

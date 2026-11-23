@@ -126,8 +126,8 @@ const SalesforceDealRiskApps = () => {
   return (
     <>
       <Seo
-        title="Native Salesforce Deal-Risk Apps: The Alternatives Compared | Meet The Mind"
-        description="A fair comparison of deal-risk and opportunity-risk tools for Salesforce: automatic native apps, rep questionnaires, and sync-out revenue platforms like Clari and Gong. How to choose."
+        title="Salesforce Deal Risk Apps: The Alternatives Compared"
+        description="A fair comparison of deal risk tools for Salesforce: native apps, rep questionnaires and sync-out revenue platforms like Clari and Gong. How to choose."
         canonical="/salesforce-deal-risk-apps"
         image="/dealpulse/og.png"
         jsonLd={[articleSchema, faqSchema]}

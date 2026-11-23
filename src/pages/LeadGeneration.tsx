@@ -84,8 +84,8 @@ const LeadGeneration = () => {
   return (
     <>
       <Seo
-        title="B2B Lead-Generation Automation (Apollo.io → Salesforce) | Meet The Mind"
-        description="We build automated B2B lead-generation workflows connecting Apollo.io to Salesforce, enrichment, deduplication, routing and scoring. Serving the US, UK, UAE & Australia."
+        title="B2B Lead Generation Automation: Apollo.io to Salesforce"
+        description="Automated B2B lead generation that connects Apollo.io to Salesforce: enrichment, deduplication, routing and scoring, built by a Salesforce partner."
         canonical="/b2b-lead-generation"
         jsonLd={[serviceSchema, faqSchema]}
       />

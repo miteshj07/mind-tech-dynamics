@@ -223,8 +223,8 @@ const GroundTruth = () => {
   return (
     <>
       <Seo
-        title="GroundTruth, Trusted Data Layer for Agentforce | Meet The Mind"
-        description="GroundTruth scores your Salesforce data's readiness for Agentforce across six dimensions, shows which records will trip an agent up, and helps you fix them, without data leaving your org."
+        title="GroundTruth: Agentforce Data Readiness for Salesforce"
+        description="GroundTruth scores your Salesforce data's readiness for Agentforce across six dimensions and shows which records will trip an agent up. Fully native."
         canonical="/groundtruth"
         image="/groundtruth/teaser-poster.jpg"
         jsonLd={[softwareSchema, faqSchema]}

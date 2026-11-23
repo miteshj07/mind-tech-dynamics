@@ -75,8 +75,8 @@ const DealRiskGlossary = () => {
   return (
     <>
       <Seo
-        title="Deal Risk Glossary: Opportunity Risk, Slippage & More | Meet The Mind"
-        description="Plain-English definitions of deal risk and opportunity risk terms for Salesforce: activity gap, close-date slippage, stage regression, deterministic scoring, and more."
+        title="Deal Risk Glossary: Opportunity Risk, Slippage & More"
+        description="Plain-English definitions of deal risk terms for Salesforce: activity gap, close-date slippage, stage regression, deterministic scoring and more."
         canonical="/deal-risk-glossary"
         image="/dealpulse/og.png"
         jsonLd={definedTermSet}

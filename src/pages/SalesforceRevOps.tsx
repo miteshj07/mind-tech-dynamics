@@ -113,8 +113,8 @@ const SalesforceRevOps = () => {
   return (
     <>
       <Seo
-        title="Salesforce RevOps Automation, Revenue Operations Consulting | Meet The Mind"
-        description="Salesforce Revenue Operations (RevOps) consulting for B2B teams. Lead-to-close automation, Apollo.io integration, pipeline reporting, and Agentforce AI. US, UK, UAE & Australia."
+        title="Salesforce RevOps Consulting: Lead-to-Close Automation"
+        description="Salesforce Revenue Operations consulting for B2B teams: lead-to-close automation, Apollo.io integration, pipeline reporting and Agentforce AI."
         canonical="/salesforce-revops"
         jsonLd={[serviceSchema, faqSchema]}
       />

@@ -145,8 +145,8 @@ const SalesforceHealthCheck = () => {
   return (
     <>
       <Seo
-        title="Free Salesforce Org Health Check | Meet The Mind Technologies"
-        description="A free check of your Salesforce org: integrations that stop working on Salesforce's upcoming deadlines, admin access, outside apps, idle licenses and automation Salesforce no longer fixes. Reviewed by a Salesforce partner and emailed to you."
+        title="Free Salesforce Org Health Check | Meet The Mind"
+        description="A free check of your Salesforce org: integrations that break on Salesforce's upcoming deadlines, admin access, outside apps and idle licenses."
         canonical="/salesforce-health-check"
         jsonLd={faqSchema}
       />
