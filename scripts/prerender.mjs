@@ -29,7 +29,7 @@ import http from 'node:http';
 import {
   existsSync, mkdirSync, readFileSync, statSync, writeFileSync,
 } from 'node:fs';
-import { dirname, extname, join } from 'node:path';
+import { dirname, extname, join, resolve, sep } from 'node:path';
 
 const DIST = 'dist';
 const PORT = 45678;
@@ -149,6 +149,11 @@ function writeRoute(route, html = SHELL) {
   const file = route === '/' ? join(DIST, 'index.html')
     : route === NOT_FOUND ? join(DIST, '404.html')
     : join(DIST, route, 'index.html');
+  // Blog slugs come from the database: never write outside dist/.
+  if (!resolve(file).startsWith(resolve(DIST) + sep)) {
+    console.warn(`  ✗ ${route}, resolves outside ${DIST}/, skipped`);
+    return;
+  }
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, html);
 }
