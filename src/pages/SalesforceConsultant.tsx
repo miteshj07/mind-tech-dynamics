@@ -6,7 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useContactForm } from '@/hooks/useContactForm';
 import { CALENDLY_URL, useCalendly } from '@/hooks/useCalendly';
 
-// Paid-traffic landing page: one offer (Salesforce integrations), one action
+// Paid-traffic landing page: one offer (senior Salesforce help), one action
 // (book a call or send a note). No site menu or footer, see BARE_ROUTES in App.tsx.
 
 const BookButton = ({ label = 'Book a free 30-minute call' }: { label?: string }) => (
@@ -16,27 +16,45 @@ const BookButton = ({ label = 'Book a free 30-minute call' }: { label?: string }
 );
 
 const problems = [
-  'Someone re-types invoices, payments or customers from Salesforce into your accounting system.',
-  'Sales and support cannot see who has paid, who is overdue or what was refunded without asking finance.',
-  'A sync or connector you already have keeps failing, and nobody knows until the numbers do not match.',
+  'Salesforce is in place, but nobody on your team owns it and requests keep piling up.',
+  'You need something built, such as a portal, an automation or an app, and it is beyond what your admin can do.',
+  'Your other systems do not talk to Salesforce, so people re-type data or work from spreadsheets.',
 ];
 
 const builds = [
   {
-    title: 'Accounting and billing',
-    body: 'QuickBooks Online, Chargent, Recurly, Authorize.net. Invoices, payments, refunds and subscriptions move both ways on their own.',
+    title: 'Sales Cloud',
+    body: 'Leads, opportunities, pipeline, reports and the automation that keeps reps out of admin work.',
   },
   {
-    title: 'Microsoft 365 and sign-in',
-    body: 'Microsoft 365 accounts created from a Salesforce record in one click, and single sign-on with Okta.',
+    title: 'Service Cloud',
+    body: 'Cases, queues, routing and support automation so customers get answers faster.',
   },
   {
-    title: 'Any system with an API',
-    body: 'Learning platforms, storefronts, file storage and in-house tools, connected with REST or SOAP and built in Apex so you own the code.',
+    title: 'Experience Cloud and portals',
+    body: 'Self-service portals where your customers, partners or students sign in and see their own data.',
+  },
+  {
+    title: 'Custom apps',
+    body: 'Apps built on Salesforce with Apex and Lightning Web Components, including two products of our own, DealPulse and GroundTruth.',
+  },
+  {
+    title: 'Integrations',
+    body: 'Accounting, billing, Microsoft 365 and any system with an API, connected so data moves on its own.',
+  },
+  {
+    title: 'AI on Salesforce',
+    body: 'Agentforce agents and prompt templates, and Salesforce connected to Claude so your team can ask questions of its own data.',
   },
 ];
 
 const cases = [
+  {
+    client: 'Lakewood University',
+    title: 'Student self-service portal',
+    before: 'Students emailed their coach to ask how they were doing, and coaches answered one email at a time.',
+    after: 'Each student signs in to a portal on Salesforce and sees their own progress, schedule and what is due next.',
+  },
   {
     client: 'Lakewood University',
     title: 'QuickBooks Online and Salesforce, two-way',
@@ -44,23 +62,17 @@ const cases = [
     after: 'Enrollment creates the invoice automatically, and payments, refunds and balances show on each student record.',
   },
   {
-    client: 'Stock News Network',
-    title: 'Recurly subscriptions inside Salesforce',
-    before: 'Billing ran on a separate platform, so payment status and invoices never reached sales or finance in Salesforce.',
-    after: 'Subscriptions, upgrades, cancellations and invoices stay in step across both systems.',
-  },
-  {
     client: 'Adam Mesh Trading Group',
-    title: 'Recurring billing with Chargent',
+    title: 'Recurring billing inside Sales Cloud',
     before: 'Renewals were processed manually and failed card payments were never followed up.',
     after: 'Renewals run on their own across four subscription terms, and failed payments are retried automatically.',
   },
 ];
 
 const steps = [
-  { title: 'A 30-minute call', body: 'You show me the two systems and what should move between them. I tell you plainly whether I can build it.' },
+  { title: 'A 30-minute call', body: 'You tell me what you need in Salesforce. I tell you plainly whether I can do it and how.' },
   { title: 'A written scope', body: 'You get the plan, a fixed price and a delivery date before any work starts.' },
-  { title: 'Build, test, go live', body: 'I build it in a sandbox, your team tests it with real scenarios, then it goes live. Most integrations take 7 to 10 days.' },
+  { title: 'Build, test, go live', body: 'I build in a sandbox, your team tests it with real scenarios, then it goes live. A typical integration takes 7 to 10 days.' },
 ];
 
 const certifications = [
@@ -71,7 +83,7 @@ const certifications = [
   'Einstein Analytics',
 ];
 
-const SalesforceIntegrationConsulting = () => {
+const SalesforceConsultant = () => {
   useCalendly();
   const { handleSubmit, isSubmitting, formSuccess } = useContactForm();
   const [form, setForm] = useState({ name: '', email: '', message: '', website: '' });
@@ -90,15 +102,15 @@ const SalesforceIntegrationConsulting = () => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    handleSubmit({ ...form, company: '', phone: '', service: 'Integration' });
+    handleSubmit({ ...form, company: '', phone: '', service: 'Other' });
   };
 
   return (
     <>
       <Seo
-        title="Salesforce Integration Consultant | Meet The Mind"
-        description="Connect Salesforce to QuickBooks, your billing system and the tools your team already uses. Fixed price, built by one senior Salesforce developer."
-        canonical="/salesforce-integration-consulting"
+        title="Salesforce Consultant and Developer | Meet The Mind"
+        description="Sales Cloud, Service Cloud, Experience Cloud, custom apps, integrations and AI. Fixed price, delivered by one senior Salesforce developer."
+        canonical="/salesforce-consultant"
       />
 
       <header className="border-b border-gray-100 bg-white">
@@ -115,14 +127,14 @@ const SalesforceIntegrationConsulting = () => {
         <section className="bg-gradient-to-b from-brand/10 to-white py-14 md:py-20">
           <div className="container mx-auto px-4 max-w-3xl text-center">
             <p className="text-brand font-semibold uppercase tracking-wide text-sm mb-4">
-              Salesforce integration consultant
+              Salesforce consultant and developer
             </p>
             <h1 className="text-3xl md:text-5xl font-bold leading-tight text-gray-900 mb-5">
-              Connect Salesforce to QuickBooks, your billing system and the tools your team already uses
+              Whatever you need built, fixed or connected in Salesforce, I do it myself
             </h1>
             <p className="text-lg text-gray-600 mb-8">
-              I build the integration so data moves on its own, with no re-typing and no spreadsheets in
-              between. You work with me directly: one senior Salesforce developer, 10+ years on the platform.
+              Sales Cloud, Service Cloud, Experience Cloud, custom apps, integrations and AI. You work with me
+              directly: one senior Salesforce developer, 10+ years on the platform.
             </p>
             <BookButton />
             <p className="text-sm text-gray-500 mt-4">Fixed price and date agreed before any work starts.</p>
@@ -147,7 +159,7 @@ const SalesforceIntegrationConsulting = () => {
         {/* What I build */}
         <section className="py-12 md:py-16 bg-gray-50">
           <div className="container mx-auto px-4 max-w-5xl">
-            <h2 className="heading-md mb-8 text-gray-900">What I connect to Salesforce</h2>
+            <h2 className="heading-md mb-8 text-gray-900">What I do in Salesforce</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {builds.map((b) => (
                 <div key={b.title} className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm">
@@ -162,7 +174,7 @@ const SalesforceIntegrationConsulting = () => {
         {/* Proof */}
         <section className="py-12 md:py-16">
           <div className="container mx-auto px-4 max-w-5xl">
-            <h2 className="heading-md mb-8 text-gray-900">Integrations I have delivered for US clients</h2>
+            <h2 className="heading-md mb-8 text-gray-900">Work I have delivered for US clients</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {cases.map((c) => (
                 <div key={c.title} className="rounded-xl border border-gray-100 p-6 shadow-sm">
@@ -219,7 +231,7 @@ const SalesforceIntegrationConsulting = () => {
               <h2 className="heading-md text-gray-900 mb-2">You work with me, not a team of juniors</h2>
               <p className="text-gray-600 mb-4">
                 I am Mitesh Jain, founder of Meet The Mind. I have built on Salesforce for more than 10 years and
-                I write and test every integration myself, so the person on your call is the person doing the work.
+                I do the building and testing myself, so the person on your call is the person doing the work.
               </p>
               <ul className="flex flex-wrap gap-2">
                 {certifications.map((c) => (
@@ -233,7 +245,7 @@ const SalesforceIntegrationConsulting = () => {
         {/* Book */}
         <section id="book" className="py-12 md:py-16 bg-gray-50 scroll-mt-4">
           <div className="container mx-auto px-4 max-w-5xl">
-            <h2 className="heading-md text-gray-900 mb-2 text-center">Tell me what you want connected</h2>
+            <h2 className="heading-md text-gray-900 mb-2 text-center">Tell me what you need in Salesforce</h2>
             <p className="text-gray-600 text-center mb-8">
               Pick a time for a free 30-minute call, or send a short note and I will reply within one business day.
             </p>
@@ -277,7 +289,7 @@ const SalesforceIntegrationConsulting = () => {
                     </div>
                     <div>
                       <label htmlFor="lp-message" className="block text-sm font-medium text-gray-700 mb-1">
-                        What should Salesforce be connected to? *
+                        What do you need help with? *
                       </label>
                       <Textarea id="lp-message" name="message" rows={4} value={form.message} onChange={onChange} required />
                     </div>
@@ -301,4 +313,4 @@ const SalesforceIntegrationConsulting = () => {
   );
 };
 
-export default SalesforceIntegrationConsulting;
+export default SalesforceConsultant;

@@ -41,7 +41,7 @@ import AgentforceDataReadinessPage from "@/pages/AgentforceDataReadiness";
 import GroundTruthVsDemandToolsPage from "@/pages/GroundTruthVsDemandTools";
 import CareersPage from "@/pages/Careers";
 import ContactUsPage from "@/pages/ContactUs";
-import IntegrationLandingPage from "@/pages/SalesforceIntegrationConsulting";
+import IntegrationLandingPage from "@/pages/SalesforceConsultant";
 // Admin is never prerendered (always a fresh client render), so it can load on
 // demand without hydration mismatches; keeps recharts out of visitors' bundle.
 const AdminPage = React.lazy(() => import("@/pages/Admin"));
@@ -55,7 +55,7 @@ import SitemapPage from "@/pages/SitemapPage";
 import NotFound from "@/pages/NotFound";
 
 // Ad landing pages: no site menu or footer, so the only action is to get in touch.
-const BARE_ROUTES = ["/salesforce-integration-consulting"];
+const BARE_ROUTES = ["/salesforce-consultant"];
 const SiteChrome = ({ children }: { children: React.ReactNode }) =>
   BARE_ROUTES.includes(useLocation().pathname.replace(/\/$/, "")) ? null : <>{children}</>;
 
@@ -98,7 +98,7 @@ const App = () => {
                 <Route path="/groundtruth-vs-demandtools" element={<PageTransition><GroundTruthVsDemandToolsPage /></PageTransition>} />
                 <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
                 <Route path="/contact-us" element={<PageTransition><ContactUsPage /></PageTransition>} />
-                <Route path="/salesforce-integration-consulting" element={<PageTransition><IntegrationLandingPage /></PageTransition>} />
+                <Route path="/salesforce-consultant" element={<PageTransition><IntegrationLandingPage /></PageTransition>} />
                 <Route path="/contact" element={<Navigate to="/contact-us" replace />} />
                 <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
                 <Route path="/anti-spam-policy" element={<PageTransition><AntiSpamPolicy /></PageTransition>} />
