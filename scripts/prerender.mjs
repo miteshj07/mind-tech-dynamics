@@ -65,6 +65,7 @@ const STATIC_ROUTES = [
   '/groundtruth-vs-demandtools',
   '/careers',
   '/contact-us',
+  '/salesforce-integration-consulting',
   '/privacy-policy',
   '/anti-spam-policy',
   '/terms-of-service',

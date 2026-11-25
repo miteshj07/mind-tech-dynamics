@@ -1,6 +1,6 @@
 
 import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
@@ -41,6 +41,7 @@ import AgentforceDataReadinessPage from "@/pages/AgentforceDataReadiness";
 import GroundTruthVsDemandToolsPage from "@/pages/GroundTruthVsDemandTools";
 import CareersPage from "@/pages/Careers";
 import ContactUsPage from "@/pages/ContactUs";
+import IntegrationLandingPage from "@/pages/SalesforceIntegrationConsulting";
 // Admin is never prerendered (always a fresh client render), so it can load on
 // demand without hydration mismatches; keeps recharts out of visitors' bundle.
 const AdminPage = React.lazy(() => import("@/pages/Admin"));
@@ -52,6 +53,11 @@ import { SpeedInsights } from "@vercel/speed-insights/react";
 import TermsOfService from "@/pages/TermsOfService";
 import SitemapPage from "@/pages/SitemapPage";
 import NotFound from "@/pages/NotFound";
+
+// Ad landing pages: no site menu or footer, so the only action is to get in touch.
+const BARE_ROUTES = ["/salesforce-integration-consulting"];
+const SiteChrome = ({ children }: { children: React.ReactNode }) =>
+  BARE_ROUTES.includes(useLocation().pathname.replace(/\/$/, "")) ? null : <>{children}</>;
 
 // Create a QueryClient instance
 const queryClient = new QueryClient();
@@ -65,7 +71,7 @@ const App = () => {
             <TooltipProvider>
               <RouteAnalytics />
               <CtaTracker />
-              <Navigation />
+              <SiteChrome><Navigation /></SiteChrome>
               <Routes>
                 <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
                 <Route path="/services" element={<PageTransition><ServicesPage /></PageTransition>} />
@@ -92,6 +98,7 @@ const App = () => {
                 <Route path="/groundtruth-vs-demandtools" element={<PageTransition><GroundTruthVsDemandToolsPage /></PageTransition>} />
                 <Route path="/careers" element={<PageTransition><CareersPage /></PageTransition>} />
                 <Route path="/contact-us" element={<PageTransition><ContactUsPage /></PageTransition>} />
+                <Route path="/salesforce-integration-consulting" element={<PageTransition><IntegrationLandingPage /></PageTransition>} />
                 <Route path="/contact" element={<Navigate to="/contact-us" replace />} />
                 <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
                 <Route path="/anti-spam-policy" element={<PageTransition><AntiSpamPolicy /></PageTransition>} />
@@ -108,7 +115,7 @@ const App = () => {
                 />
                 <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
               </Routes>
-              <Footer />
+              <SiteChrome><Footer /></SiteChrome>
               <Analytics />
               <SpeedInsights />
               <Toaster />

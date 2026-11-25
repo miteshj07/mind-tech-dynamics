@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Seo from '@/components/layout/Seo';
 import PageHeader from '@/components/layout/PageHeader';
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
@@ -8,8 +8,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { useCms } from '@/cms/context/CmsContext';
 import { useContactForm } from '@/hooks/useContactForm';
 import { trackEvent } from '@/lib/analytics';
+import { CALENDLY_URL, useCalendly } from '@/hooks/useCalendly';
 
-const CALENDLY_URL = 'https://calendly.com/mitesh-meethemind/30min';
 
 const contactSchema = {
   '@context': 'https://schema.org',
@@ -46,29 +46,7 @@ const ContactUs = () => {
 
   const { handleSubmit, isSubmitting, formSuccess, setFormSuccess } = useContactForm();
 
-  useEffect(() => {
-    // Skip during prerender: the widget's injected iframe would be baked into
-    // the snapshot and break hydration (prerender.mjs sets this user agent).
-    if (navigator.userAgent === 'ReactSnap') return;
-    if (document.querySelector('script[src*="calendly"]')) return;
-    const script = document.createElement('script');
-    script.src = 'https://assets.calendly.com/assets/external/widget.js';
-    script.async = true;
-    document.head.appendChild(script);
-    return () => { script.remove(); };
-  }, []);
-
-  // Record a conversion when a visitor books a call through the Calendly widget.
-  useEffect(() => {
-    const onMessage = (e: MessageEvent) => {
-      if (e.origin !== 'https://calendly.com') return;
-      if (e.data?.event === 'calendly.event_scheduled') {
-        trackEvent('book_consultation', { method: 'calendly' });
-      }
-    };
-    window.addEventListener('message', onMessage);
-    return () => window.removeEventListener('message', onMessage);
-  }, []);
+  useCalendly();
 
   const [formState, setFormState] = useState({
     name: '',
