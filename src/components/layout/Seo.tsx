@@ -80,7 +80,7 @@ function upsertLink(rel: string, href?: string) {
 }
 
 /**
- * Centralised <head> + structured data management.
+ * Centralized <head> + structured data management.
  *
  * Title, description, canonical and Open Graph tags are written imperatively in
  * useLayoutEffect (synchronous, before paint) instead of via react-helmet-async

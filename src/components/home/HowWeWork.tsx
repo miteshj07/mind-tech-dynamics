@@ -17,8 +17,8 @@ const STEPS = [
     icon: ClipboardList,
     title: 'Audit & Assessment',
     description:
-      'We conduct a structured Salesforce health check, reviewing your data model, automation flows, lead routing logic, and Apollo.io integration points. We identify exactly what needs to be built, fixed, or optimised before writing a single line of code.',
-    deliverable: 'Prioritised action plan with effort estimates',
+      'We conduct a structured Salesforce health check, reviewing your data model, automation flows, lead routing logic, and Apollo.io integration points. We identify exactly what needs to be built, fixed, or optimized before writing a single line of code.',
+    deliverable: 'Prioritized action plan with effort estimates',
   },
   {
     number: '03',
@@ -31,7 +31,7 @@ const STEPS = [
   {
     number: '04',
     icon: LifeBuoy,
-    title: 'Support & Optimisation',
+    title: 'Support & Optimization',
     description:
       'Post-launch, we monitor performance, fine-tune automation rules, and ensure your team can use what we built. Ongoing retainer options available for continuous RevOps improvements as your pipeline scales.',
     deliverable: 'Ongoing performance monitoring & iteration',
@@ -57,7 +57,7 @@ const HowWeWork = () => {
           <p className="text-gray-400 text-lg">
             Every engagement follows the same four-phase process, designed for
             B2B revenue teams that need measurable results, not months of
-            discovery theatre.
+            discovery theater.
           </p>
         </motion.div>
 

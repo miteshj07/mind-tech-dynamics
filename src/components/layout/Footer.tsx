@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Linkedin, Twitter, Award } from 'lucide-react';
+import { Mail, Globe, Linkedin, Twitter, Award } from 'lucide-react';
 import { useCms } from '@/cms/context/CmsContext';
 
 const Footer = () => {
@@ -88,18 +88,17 @@ const Footer = () => {
           {/* Contact Information */}
           <div>
             <h3 className="text-xl font-bold mb-4">Contact Us</h3>
+            {/* The street address and phone number are shown on /contact-us only, not on
+                every page: clients are in the US, UK, UAE and Australia, and a Chennai
+                address site-wide tells search engines the business is local to India. */}
             <div className="space-y-4">
-              <div className="flex items-start">
-                <MapPin size={20} className="mr-2 mt-1 text-brand" />
-                <p className="text-gray-300">{footerSection.contactInfo.address}</p>
-              </div>
-              <div className="flex items-center">
-                <Phone size={20} className="mr-2 text-brand" />
-                <p className="text-gray-300">{footerSection.contactInfo.phone}</p>
-              </div>
               <div className="flex items-center">
                 <Mail size={20} className="mr-2 text-brand" />
                 <p className="text-gray-300">{footerSection.contactInfo.email}</p>
+              </div>
+              <div className="flex items-start">
+                <Globe size={20} className="mr-2 mt-1 shrink-0 text-brand" />
+                <p className="text-gray-300">Remote-first, timezone-friendly delivery for teams in the US, UK, UAE and Australia.</p>
               </div>
             </div>
           </div>

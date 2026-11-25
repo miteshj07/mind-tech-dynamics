@@ -109,7 +109,7 @@ const faqs = [
   },
   {
     q: 'Is this GDPR compliant, and will you sign a DPA?',
-    a: 'We do not read your customers\' personal data, because we do not read records. We do read setup data that includes Salesforce user IDs and login times, which count as personal data of your staff under UK and EU law, and we keep the name and email of the person who approves the check. The privacy notice and a data processing agreement are covered on the data and privacy page. UK and EU organisations can ask for the DPA to be signed before they approve the check.',
+    a: 'We do not read your customers\' personal data, because we do not read records. We do read setup data that includes Salesforce user IDs and login times, which count as personal data of your staff under UK and EU law, and we keep the name and email of the person who approves the check. The privacy notice and a data processing agreement are covered on the data and privacy page. UK and EU organizations can ask for the DPA to be signed before they approve the check.',
   },
   {
     q: 'Production or sandbox?',

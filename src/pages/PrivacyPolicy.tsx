@@ -47,7 +47,7 @@ const PrivacyPolicy = () => {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">2. How We Use Your Information</h2>
               <p className="mb-3">We use the information we collect to:</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li>Respond to your enquiries and provide the services you request</li>
+                <li>Respond to your inquiries and provide the services you request</li>
                 <li>Send you updates about our services, case studies, or blog content where you have consented</li>
                 <li>Improve the content and functionality of our website</li>
                 <li>Comply with legal obligations</li>
@@ -61,7 +61,7 @@ const PrivacyPolicy = () => {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Legal Basis for Processing (GDPR)</h2>
               <p className="mb-3">For visitors in the European Economic Area, we process personal data under the following lawful bases:</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Legitimate interests</strong>, responding to your enquiries and running our business</li>
+                <li><strong>Legitimate interests</strong>, responding to your inquiries and running our business</li>
                 <li><strong>Consent</strong>, where you have explicitly opted in to receive communications</li>
                 <li><strong>Contractual necessity</strong>, when processing is required to deliver services you have engaged us for</li>
               </ul>
@@ -78,9 +78,9 @@ const PrivacyPolicy = () => {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Third-Party Services</h2>
               <p className="mb-3">We use the following third-party services, each governed by their own privacy policies:</p>
               <ul className="list-disc pl-6 space-y-1">
-                <li><strong>Supabase</strong>, database and backend infrastructure (EU and US data centres)</li>
+                <li><strong>Supabase</strong>, database and backend infrastructure (EU and US data centers)</li>
                 <li><strong>Vercel</strong>, website hosting and CDN</li>
-                <li><strong>Google Analytics</strong> (if enabled), anonymised website traffic analytics</li>
+                <li><strong>Google Analytics</strong> (if enabled), anonymized website traffic analytics</li>
               </ul>
             </div>
 
@@ -107,7 +107,7 @@ const PrivacyPolicy = () => {
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Security</h2>
               <p>
-                We implement appropriate technical and organisational measures to protect your personal data against unauthorised access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.
+                We implement appropriate technical and organizational measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.
               </p>
             </div>
 

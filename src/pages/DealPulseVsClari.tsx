@@ -10,7 +10,7 @@ const UPDATED = 'July 2026';
 const rows = [
   { label: 'What it is', dp: 'A focused, native deal-risk app', clari: 'A full revenue-operations platform' },
   { label: 'Where it runs', dp: '100% inside Salesforce', clari: 'A separate platform with bi-directional CRM sync' },
-  { label: 'Your pipeline data', dp: 'Never leaves your Salesforce org', clari: 'Mirrored out into Clari to be analysed' },
+  { label: 'Your pipeline data', dp: 'Never leaves your Salesforce org', clari: 'Mirrored out into Clari to be analyzed' },
   { label: 'How risk is scored', dp: 'Deterministic, admin-editable rules that show which signals fired', clari: 'AI and machine-learning models over activity and CRM signals' },
   { label: 'Can you read and edit the logic?', dp: 'Yes, every rule is transparent and tunable', clari: 'No, the model is proprietary' },
   { label: 'Scope', dp: 'Deal risk on every open Opportunity', clari: 'Forecasting, pipeline, conversation intelligence, activity capture' },
@@ -39,7 +39,7 @@ const faqs = [
   },
   {
     q: 'Does Clari keep my data inside Salesforce?',
-    a: 'No. Clari uses a bi-directional sync that mirrors your deal data, activity, and forecast submissions into the Clari platform to analyse them. DealPulse runs entirely inside your Salesforce org and makes no external callouts, so your pipeline never leaves.',
+    a: 'No. Clari uses a bi-directional sync that mirrors your deal data, activity, and forecast submissions into the Clari platform to analyze them. DealPulse runs entirely inside your Salesforce org and makes no external callouts, so your pipeline never leaves.',
   },
   {
     q: 'Is DealPulse cheaper than Clari?',

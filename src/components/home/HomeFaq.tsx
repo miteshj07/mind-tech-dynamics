@@ -15,7 +15,7 @@ const faqs = [
   {
     question: 'How does the Apollo.io to Salesforce lead-generation automation work?',
     answer:
-      'We connect Apollo.io\'s prospecting database to your Salesforce CRM using a 6-step automated workflow: Apollo identifies and enriches contacts based on your ICP, sequences them with personalised outreach, and automatically creates Leads or Contacts in Salesforce, complete with engagement history, scoring, and owner assignment, so your reps only touch warm, qualified prospects.',
+      'We connect Apollo.io\'s prospecting database to your Salesforce CRM using a 6-step automated workflow: Apollo identifies and enriches contacts based on your ICP, sequences them with personalized outreach, and automatically creates Leads or Contacts in Salesforce, complete with engagement history, scoring, and owner assignment, so your reps only touch warm, qualified prospects.',
   },
   {
     question: 'Do you work with businesses outside Australia?',

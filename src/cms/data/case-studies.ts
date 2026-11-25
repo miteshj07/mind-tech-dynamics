@@ -2,11 +2,12 @@
 // Case Studies
 export const caseStudiesSection = {
   title: "Case Studies",
-  subtitle: "Real Salesforce integration and automation projects delivered by Meet The Mind, connecting billing, finance, and subscription systems directly into the CRM.",
+  subtitle: "Real Salesforce integration and automation projects delivered by Meet The Mind for clients in the United States, connecting billing, finance, and subscription systems directly into the CRM.",
   studies: [
     {
       title: "Automated Subscription Billing with Chargent",
       client: "Adam Mesh Trading Group",
+      location: "New York, USA",
       industry: "Financial Services",
       metric: "100% of recurring renewals automated across all 4 subscription tenures",
       image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
@@ -24,6 +25,7 @@ export const caseStudiesSection = {
     {
       title: "Recurly–Salesforce Subscription Integration",
       client: "Stock News Network LLC",
+      location: "United States",
       industry: "Financial Services",
       metric: "Instant subscription activation with real-time, two-way Recurly ↔ Salesforce sync",
       image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
@@ -41,6 +43,7 @@ export const caseStudiesSection = {
     {
       title: "Two-Way QuickBooks–Salesforce Integration",
       client: "Lakewood University",
+      location: "Ohio, USA",
       industry: "Education",
       metric: "Manual double-entry between Salesforce and QuickBooks eliminated",
       image: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
@@ -58,6 +61,7 @@ export const caseStudiesSection = {
     {
       title: "Moodle Course Progress, Live in Salesforce",
       client: "Lakewood University",
+      location: "Ohio, USA",
       industry: "Education",
       metric: "Weekly Moodle course-progress now on every student record, with no logging into Moodle",
       image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
@@ -79,6 +83,7 @@ export const caseStudiesSection = {
     {
       title: "One-Click Microsoft 365 Provisioning from Salesforce",
       client: "Lakewood University",
+      location: "Ohio, USA",
       industry: "Education",
       metric: "Manual Microsoft 365 account setup replaced with one click, delivered to production in 3 days",
       image: "https://images.unsplash.com/photo-1633419461186-7d40a38105ec?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
@@ -93,12 +98,13 @@ export const caseStudiesSection = {
         "The work surfaced 1,613 inactive records still holding licensed Microsoft 365 accounts that can now be reclaimed"
       ],
       images: [
-        { src: "/case-studies/m365-provisioning.png", caption: "One button on the student record provisions the Microsoft 365 account end to end: username, licence, unique password, welcome email, and a full audit log, all via Microsoft Graph inside Salesforce. Demo data." }
+        { src: "/case-studies/m365-provisioning.png", caption: "One button on the student record provisions the Microsoft 365 account end to end: username, license, unique password, welcome email, and a full audit log, all via Microsoft Graph inside Salesforce. Demo data." }
       ]
     },
     {
       title: "A Student Self-Service Portal on a Salesforce Site",
       client: "Lakewood University",
+      location: "Ohio, USA",
       industry: "Education",
       metric: "Students see their own progress, schedule and standing, without emailing a coach",
       image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
@@ -119,6 +125,7 @@ export const caseStudiesSection = {
     {
       title: "A Phone Readiness Interview, Scored in Salesforce",
       client: "Private online university (VA VET TEC program)",
+      location: "United States",
       industry: "Education",
       metric: "Every applicant sits the same interview, with a readiness score the admissions team can explain",
       image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",

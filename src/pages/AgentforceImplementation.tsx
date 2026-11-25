@@ -37,7 +37,7 @@ const deliverables = [
   'Guardrails, escalation rules, and tone configuration',
   'UAT testing against real lead/case scenarios',
   'Go-live support and performance monitoring',
-  'Post-launch optimisation and deflection reporting',
+  'Post-launch optimization and deflection reporting',
 ];
 
 const whyUs = [
@@ -69,8 +69,8 @@ const faqs = [
     a: 'Yes, Agentforce runs natively inside Salesforce. If you\'re not yet on Salesforce, we can implement Sales Cloud and Agentforce together as a combined engagement.',
   },
   {
-    q: 'What Salesforce licences are needed for Agentforce?',
-    a: 'Agentforce requires an Einstein platform licence or Agentforce add-on, depending on your edition. We\'ll assess your current licence and advise on the most cost-effective path during discovery.',
+    q: 'What Salesforce licenses are needed for Agentforce?',
+    a: 'Agentforce requires an Einstein platform license or Agentforce add-on, depending on your edition. We\'ll assess your current license and advise on the most cost-effective path during discovery.',
   },
   {
     q: 'Can Agentforce integrate with Apollo.io?',
@@ -97,7 +97,7 @@ const AgentforceImplementation = () => {
     },
     areaServed: ['United States', 'United Kingdom', 'United Arab Emirates', 'Australia'],
     description:
-      'End-to-end Salesforce Agentforce implementation, scoping, agent design, Flow/Apex integration, grounding, testing, and launch. Specialising in lead qualification agents and B2B sales automation.',
+      'End-to-end Salesforce Agentforce implementation, scoping, agent design, Flow/Apex integration, grounding, testing, and launch. Specializing in lead qualification agents and B2B sales automation.',
   };
 
   const faqSchema = {
@@ -135,7 +135,7 @@ const AgentforceImplementation = () => {
           </p>
           <p className="text-lg text-gray-700 leading-relaxed mb-8">
             Every Agentforce engagement is led personally by Mitesh Jain, Salesforce-certified with 10+
-            years of implementation experience, from use-case scoping through to post-launch optimisation.
+            years of implementation experience, from use-case scoping through to post-launch optimization.
           </p>
           <div className="flex flex-wrap gap-3">
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand/10 text-brand text-sm font-semibold">
@@ -174,7 +174,7 @@ const AgentforceImplementation = () => {
       <section className="py-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="heading-md mb-4 text-center">What's included in every engagement</h2>
-          <p className="text-gray-500 text-center mb-10">End-to-end delivery, no separate change orders for testing, go-live, or optimisation.</p>
+          <p className="text-gray-500 text-center mb-10">End-to-end delivery, no separate change orders for testing, go-live, or optimization.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {deliverables.map((d, i) => (
               <div key={i} className="flex items-start gap-3">

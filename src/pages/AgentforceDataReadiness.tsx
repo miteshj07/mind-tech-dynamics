@@ -65,7 +65,7 @@ const approaches = [
   },
   {
     label: 'Traditional data-quality tools',
-    how: 'Deduplicate and standardise records with a cleansing toolkit.',
+    how: 'Deduplicate and standardize records with a cleansing toolkit.',
     problem: 'They clean data, but they were built for humans and reports, not to answer the question "is this record safe for an agent to act on right now?"',
   },
   {

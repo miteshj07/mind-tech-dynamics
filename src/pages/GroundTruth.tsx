@@ -30,7 +30,7 @@ const INK = '#0F172A';
 
 const gradientStrip = 'linear-gradient(135deg, #159AA0 0%, #2E63B0 50%, #7A3B9D 100%)';
 
-// The six dimensions, colour-ramped along the logo's teal → purple network gradient
+// The six dimensions, color-ramped along the logo's teal → purple network gradient
 const dimensions = [
   {
     icon: ClipboardCheck,
@@ -109,7 +109,7 @@ const capabilities = [
   {
     icon: Lock,
     title: 'Security-respecting by design',
-    desc: 'Scores reflect the whole org, but per-record detail honours each viewer’s record access, even for administrators.',
+    desc: 'Scores reflect the whole org, but per-record detail honors each viewer’s record access, even for administrators.',
   },
   {
     icon: Bot,

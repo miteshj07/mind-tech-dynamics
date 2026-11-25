@@ -9,7 +9,7 @@ const UPDATED = 'July 2026';
 // At-a-glance comparison rows
 const rows = [
   { label: 'What it is', gt: 'A native readiness layer that scores CRM data for AI agents', dt: 'A data-quality toolkit for cleansing and deduplication' },
-  { label: 'Primary question it answers', gt: 'Is this data safe for an agent to act on right now?', dt: 'Is this data clean, deduplicated, and standardised?' },
+  { label: 'Primary question it answers', gt: 'Is this data safe for an agent to act on right now?', dt: 'Is this data clean, deduplicated, and standardized?' },
   { label: 'Built for', gt: 'Agentforce and AI readiness', dt: 'Admins and data stewards doing bulk cleansing' },
   { label: 'How it scores', gt: 'A 0-100 readiness score across six dimensions, per record', dt: 'No readiness score; it finds and fixes issues in bulk jobs' },
   { label: 'Where it runs', gt: '100% native, no data leaves Salesforce', dt: 'A desktop and cloud toolset that connects to your org' },
@@ -28,14 +28,14 @@ const gtBest = [
 
 const dtBest = [
   'You run large, ongoing data-cleansing operations and need deep dedup and mass-edit power.',
-  'Your priority is standardising and maintaining records for human users and reporting.',
+  'Your priority is standardizing and maintaining records for human users and reporting.',
   'You have data stewards who live in a dedicated cleansing toolkit day to day.',
 ];
 
 const faqs = [
   {
     q: 'Is GroundTruth a DemandTools alternative?',
-    a: 'They solve adjacent but different problems. DemandTools is a mature data-quality toolkit for cleansing, deduplicating, and standardising Salesforce records. GroundTruth is a readiness layer that scores whether your data is safe for an AI agent to act on. If your goal is getting data ready for Agentforce and gating go-live on a score, GroundTruth is purpose-built for that. If your goal is heavy-duty ongoing cleansing, DemandTools is built for that.',
+    a: 'They solve adjacent but different problems. DemandTools is a mature data-quality toolkit for cleansing, deduplicating, and standardizing Salesforce records. GroundTruth is a readiness layer that scores whether your data is safe for an AI agent to act on. If your goal is getting data ready for Agentforce and gating go-live on a score, GroundTruth is purpose-built for that. If your goal is heavy-duty ongoing cleansing, DemandTools is built for that.',
   },
   {
     q: 'Does GroundTruth deduplicate records like DemandTools?',
@@ -118,7 +118,7 @@ const GroundTruthVsDemandTools = () => {
           <div className="rounded-2xl bg-brand/5 border border-brand/20 p-6 md:p-8">
             <p className="text-xs font-semibold tracking-widest uppercase text-brand mb-3">In short</p>
             <p className="text-lg md:text-xl text-gray-800 leading-relaxed">
-              <strong>DemandTools</strong> is a mature toolkit for cleansing, deduplicating, and standardising
+              <strong>DemandTools</strong> is a mature toolkit for cleansing, deduplicating, and standardizing
               Salesforce data. <strong>GroundTruth</strong> is a native readiness layer that scores whether your data
               is safe for an AI agent to act on and gates go-live on that score. One cleans your data. The other tells
               you, and your agents, whether it is ready. Many teams will use both.
@@ -162,7 +162,7 @@ const GroundTruthVsDemandTools = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">The core difference: readiness vs. cleansing</h2>
             <p className="mb-4">
               DemandTools is one of the longest-standing data-quality toolkits in the Salesforce ecosystem. Its job is
-              to find and fix data problems in bulk: deduplicate, standardise, mass-edit, and maintain records at
+              to find and fix data problems in bulk: deduplicate, standardize, mass-edit, and maintain records at
               scale. If you have a data steward whose day is spent cleaning the org, it is a serious tool for that.
             </p>
             <p>

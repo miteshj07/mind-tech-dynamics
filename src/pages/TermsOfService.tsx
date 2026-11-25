@@ -32,8 +32,8 @@ const TermsOfService = () => {
               <p className="mb-3">You agree to use this website only for lawful purposes and in a manner that does not infringe the rights of others. You must not:</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>Use the site in any way that violates applicable local, national, or international laws or regulations</li>
-                <li>Transmit unsolicited or unauthorised advertising or promotional material</li>
-                <li>Attempt to gain unauthorised access to any part of our systems or servers</li>
+                <li>Transmit unsolicited or unauthorized advertising or promotional material</li>
+                <li>Attempt to gain unauthorized access to any part of our systems or servers</li>
                 <li>Engage in any conduct that restricts or inhibits others from using or enjoying the website</li>
               </ul>
             </div>

@@ -171,7 +171,7 @@ const SalesforceHealthCheckData = () => {
           <Section title="DPA and privacy">
             <p>
               Our <Link to="/privacy-policy" className="text-brand hover:underline">privacy notice</Link> covers how
-              we handle this data. A data processing agreement is available on request. UK and EU organisations can
+              we handle this data. A data processing agreement is available on request. UK and EU organizations can
               ask for the DPA to be signed before approving; reply to any email from us or write to{' '}
               <a href={CONTACT} className="text-brand hover:underline">partners@meethemind.com</a>.
             </p>

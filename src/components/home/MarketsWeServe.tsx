@@ -13,7 +13,7 @@ const markets = [
     flag: '🇬🇧',
     region: 'United Kingdom',
     cities: 'London · Manchester · Birmingham',
-    detail: 'Modernising CRM and lead-gen workflows for UK enterprises adopting Salesforce AI.',
+    detail: 'Modernizing CRM and lead-gen workflows for UK enterprises adopting Salesforce AI.',
   },
   {
     flag: '🇦🇪',
@@ -25,7 +25,7 @@ const markets = [
     flag: '🇦🇺',
     region: 'Australia',
     cities: 'Sydney · Melbourne · Brisbane',
-    detail: 'Partnering with Australian SMEs and enterprises to maximise their Salesforce ROI.',
+    detail: 'Partnering with Australian SMEs and enterprises to maximize their Salesforce ROI.',
   },
 ];
 

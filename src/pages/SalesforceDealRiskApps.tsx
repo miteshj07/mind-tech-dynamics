@@ -7,7 +7,7 @@ const SITE = 'https://www.meethemind.com';
 const UPDATED = 'July 2026';
 
 // App comparison data (grouped by approach). Facts reflect publicly available
-// positioning as of the update date; characterised at the category level.
+// positioning as of the update date; characterized at the category level.
 const apps = [
   {
     name: 'DealPulse',
@@ -56,7 +56,7 @@ const apps = [
     approach: 'Sync-out platform',
     native: false, automatic: true, egress: true,
     scope: 'Revenue intelligence, at-risk deals, forecasting',
-    note: 'Broad revenue-intelligence platform that pulls pipeline data out to analyse it.',
+    note: 'Broad revenue-intelligence platform that pulls pipeline data out to analyze it.',
   },
 ];
 
@@ -78,7 +78,7 @@ const faqs = [
   },
   {
     q: 'Do any deal-risk tools keep data inside Salesforce?',
-    a: 'Yes. The native apps (DealPulse, More Certainty, Altify) run on-platform and do not move your data out. The broad revenue-intelligence platforms (Clari, Gong, Revenue Grid) sync pipeline data into their own systems to analyse it.',
+    a: 'Yes. The native apps (DealPulse, More Certainty, Altify) run on-platform and do not move your data out. The broad revenue-intelligence platforms (Clari, Gong, Revenue Grid) sync pipeline data into their own systems to analyze it.',
   },
   {
     q: 'Is there a free deal-risk app for Salesforce?',

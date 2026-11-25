@@ -43,7 +43,7 @@ const capabilities = [
   {
     icon: <Zap size={28} />,
     title: 'Agentforce AI Layer (Optional)',
-    description: 'Layer Agentforce AI agents on top of the integration, agents that qualify inbound enriched leads, prioritise high-intent contacts, and trigger personalised follow-up sequences automatically.',
+    description: 'Layer Agentforce AI agents on top of the integration, agents that qualify inbound enriched leads, prioritize high-intent contacts, and trigger personalized follow-up sequences automatically.',
   },
 ];
 
@@ -129,7 +129,7 @@ const ApolloSalesforceIntegration = () => {
       <section className="py-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <p className="text-lg text-gray-700 leading-relaxed mb-5">
-            Meet The Mind Technologies specialises in Apollo.io–Salesforce integration for B2B revenue teams.
+            Meet The Mind Technologies specializes in Apollo.io–Salesforce integration for B2B revenue teams.
             We design and build custom integrations that go far beyond Apollo.io's native connector, giving you full control over field mapping, deduplication, enrichment triggers, and
             Salesforce Flow-based lead routing.
           </p>
@@ -195,7 +195,7 @@ const ApolloSalesforceIntegration = () => {
       <section className="py-12 bg-gray-900 text-white">
         <div className="container mx-auto px-4 max-w-3xl text-center">
           <p className="text-brand font-semibold uppercase tracking-widest text-sm mb-4">Why Meet The Mind</p>
-          <h2 className="text-2xl font-bold mb-4">The only Salesforce consultancy that specialises in Apollo.io + Agentforce automation</h2>
+          <h2 className="text-2xl font-bold mb-4">The only Salesforce consultancy that specializes in Apollo.io + Agentforce automation</h2>
           <p className="text-gray-400 leading-relaxed mb-8">
             Most Salesforce partners don't use Apollo.io. Most Apollo.io agencies don't know Salesforce Apex.
             Meet The Mind sits at the intersection, 10+ years of Salesforce implementation experience,

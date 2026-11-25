@@ -11,6 +11,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 interface CaseStudy {
   title: string;
   client: string;
+  /** Where the client is based, e.g. "New York, USA". */
+  location?: string;
   industry: string;
   metric?: string;
   challenge: string;
@@ -59,7 +61,7 @@ const CaseStudyCard = ({ study, index, onViewDetails }: CaseStudyCardProps) => {
             </span>
           ))}
         </div>
-        <p className="text-brand font-medium">{study.client}</p>
+        <p className="text-brand font-medium">{study.client}{study.location ? ` · ${study.location}` : ''}</p>
         <h3 className="text-xl font-bold mb-2">{study.title}</h3>
         <p className="text-gray-500 text-sm mb-4">Industry: {study.industry}</p>
 
@@ -107,7 +109,7 @@ const CaseStudyDialog = ({ study, open, onOpenChange }: {
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">{study.title}</DialogTitle>
-          <DialogDescription className="text-brand font-medium">{study.client} | {study.industry}</DialogDescription>
+          <DialogDescription className="text-brand font-medium">{study.client}{study.location ? ` · ${study.location}` : ''} | {study.industry}</DialogDescription>
         </DialogHeader>
         
         <div className="mt-4">
@@ -208,6 +210,7 @@ const CaseStudies = () => {
           '@type': 'Organization',
           name: study.client,
           industry: study.industry,
+          ...(study.location ? { address: study.location } : {}),
         },
         keywords: study.tags.join(', '),
         publisher: {

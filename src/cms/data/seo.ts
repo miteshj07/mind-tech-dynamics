@@ -7,7 +7,7 @@ export const seoMetadata = {
   },
   services: {
     title: "Salesforce, Agentforce & Lead-Gen Automation Services | Meet The Mind",
-    description: "End-to-end Salesforce services: Agentforce AI agent implementation, Apollo.io lead-generation automation, CRM implementation, customisation and integration for B2B teams."
+    description: "End-to-end Salesforce services: Agentforce AI agent implementation, Apollo.io lead-generation automation, CRM implementation, customization and integration for B2B teams."
   },
   aboutUs: {
     title: "About Meet The Mind | 5x Certified Salesforce Consultant",

@@ -23,7 +23,7 @@ const services = [
   },
   {
     icon: <Target size={28} />,
-    title: 'Sales Velocity Optimisation',
+    title: 'Sales Velocity Optimization',
     description: 'We configure Salesforce to track deal velocity: time in stage, average sales cycle, win rate by rep and segment. This data feeds coaching decisions and pipeline forecasting with real accuracy.',
   },
   {
@@ -44,7 +44,7 @@ const services = [
   {
     icon: <TrendingUp size={28} />,
     title: 'Agentforce AI for RevOps',
-    description: 'Layer Salesforce Agentforce AI agents on top of your RevOps stack, agents that qualify inbound leads, flag at-risk deals, summarise account history for AEs, and surface next-best-action recommendations.',
+    description: 'Layer Salesforce Agentforce AI agents on top of your RevOps stack, agents that qualify inbound leads, flag at-risk deals, summarize account history for AEs, and surface next-best-action recommendations.',
   },
 ];
 
@@ -62,7 +62,7 @@ const faqs = [
   },
   {
     q: 'How is this different from a standard Salesforce implementation?',
-    a: 'A standard implementation configures Salesforce objects and users. A RevOps implementation goes further, designing the full lead-to-cash process, connecting outbound tools like Apollo.io, building Flow-based automation for every revenue handoff, and creating dashboards that actually drive decisions. We do both, but the RevOps layer is what changes behaviour.',
+    a: 'A standard implementation configures Salesforce objects and users. A RevOps implementation goes further, designing the full lead-to-cash process, connecting outbound tools like Apollo.io, building Flow-based automation for every revenue handoff, and creating dashboards that actually drive decisions. We do both, but the RevOps layer is what changes behavior.',
   },
   {
     q: 'Do you work with existing Salesforce orgs, or only greenfield implementations?',
@@ -70,7 +70,7 @@ const faqs = [
   },
   {
     q: 'Can you integrate Apollo.io into our RevOps stack?',
-    a: 'Yes, Apollo.io to Salesforce integration is one of our core specialisations. We sync leads bi-directionally, log sequence activity to Salesforce records, use Apollo.io firmographic data in lead scoring, and trigger Salesforce Flows based on outbound engagement signals.',
+    a: 'Yes, Apollo.io to Salesforce integration is one of our core specializations. We sync leads bi-directionally, log sequence activity to Salesforce records, use Apollo.io firmographic data in lead scoring, and trigger Salesforce Flows based on outbound engagement signals.',
   },
   {
     q: 'Which industries do you serve for Salesforce RevOps?',

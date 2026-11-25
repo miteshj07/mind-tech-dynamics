@@ -9,7 +9,7 @@ import Seo from '@/components/layout/Seo';
 const whatIsDataCloud = [
   'Unifies customer data from every source, CRM, website, marketing, support, billing, into a single real-time profile',
   'Streams data directly into Salesforce so Sales Cloud, Service Cloud, and Agentforce always work from live, complete data',
-  'Powers AI personalisation, lead scoring, and audience segmentation at scale, without a separate data warehouse',
+  'Powers AI personalization, lead scoring, and audience segmentation at scale, without a separate data warehouse',
   'Replaces fragmented CDPs and ETL pipelines with a native Salesforce platform that your team can actually use',
 ];
 
@@ -17,7 +17,7 @@ const useCases = [
   {
     icon: <Target size={28} />,
     title: 'Unified B2B Customer Profiles',
-    description: 'Merge CRM contacts, website behaviour, marketing engagement, and support history into a single Data Cloud profile. Sales reps see the full picture, not just what\'s in Salesforce.',
+    description: 'Merge CRM contacts, website behavior, marketing engagement, and support history into a single Data Cloud profile. Sales reps see the full picture, not just what\'s in Salesforce.',
   },
   {
     icon: <Zap size={28} />,
@@ -41,7 +41,7 @@ const useCases = [
   },
   {
     icon: <Database size={28} />,
-    title: 'Data Harmonisation & Governance',
+    title: 'Data Harmonization & Governance',
     description: 'Map data from disparate systems (CRM, billing, support, product analytics) to a unified data model. Enforce data quality rules, consent management, and field-level governance across every source.',
   },
 ];
@@ -66,15 +66,15 @@ const faqs = [
   },
   {
     q: 'Do we need Marketing Cloud to use Data Cloud?',
-    a: 'No. Data Cloud has its own licence and works with Sales Cloud, Service Cloud, and Agentforce independently. Marketing Cloud is one of many activation targets, not a prerequisite.',
+    a: 'No. Data Cloud has its own license and works with Sales Cloud, Service Cloud, and Agentforce independently. Marketing Cloud is one of many activation targets, not a prerequisite.',
   },
   {
     q: 'Can Data Cloud integrate with Apollo.io?',
     a: 'Yes. We use the Data Cloud ingestion API to stream Apollo.io prospect data, firmographics, intent signals, sequence engagement, into Data Cloud profiles. This enriches your Salesforce contacts automatically and powers more accurate lead scoring and Agentforce grounding.',
   },
   {
-    q: 'What licences are needed for Salesforce Data Cloud?',
-    a: 'Data Cloud has its own licence, priced on data volumes and activation targets. We assess your data sources, expected record volumes, and use cases during discovery to recommend the right licence configuration before you commit.',
+    q: 'What licenses are needed for Salesforce Data Cloud?',
+    a: 'Data Cloud has its own license, priced on data volumes and activation targets. We assess your data sources, expected record volumes, and use cases during discovery to recommend the right license configuration before you commit.',
   },
   {
     q: 'How long does a Data Cloud implementation take?',
@@ -82,7 +82,7 @@ const faqs = [
   },
   {
     q: 'Does Meet The Mind implement Data Cloud for B2B companies specifically?',
-    a: 'Yes, our Data Cloud implementations are designed entirely for B2B revenue teams. We focus on use cases that drive pipeline: lead scoring from behavioural and firmographic data, Apollo.io enrichment, Agentforce agent grounding, and outbound audience segmentation.',
+    a: 'Yes, our Data Cloud implementations are designed entirely for B2B revenue teams. We focus on use cases that drive pipeline: lead scoring from behavioral and firmographic data, Apollo.io enrichment, Agentforce agent grounding, and outbound audience segmentation.',
   },
 ];
 
