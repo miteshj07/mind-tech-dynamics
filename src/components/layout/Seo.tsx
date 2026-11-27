@@ -122,7 +122,8 @@ const Seo = ({ title: rawTitle, description, canonical, jsonLd, image }: SeoProp
         <script
           type="application/ld+json"
           key={i}
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }}
+          // CMS text must not be able to close the <script> tag.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(block).replace(/</g, '\\u003c') }}
         />
       ))}
     </>
