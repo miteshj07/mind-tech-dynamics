@@ -46,6 +46,7 @@ const STATIC_ROUTES = [
   '/agentforce',
   '/agentforce-implementation',
   '/apollo-io-salesforce-integration',
+  '/salesforce-quickbooks-integration',
   '/salesforce-revops',
   '/salesforce-health-check',
   '/salesforce-health-check/data',
@@ -102,6 +103,26 @@ async function fetchBlogRoutes() {
     return routes;
   } catch (e) {
     console.warn(`[prerender] couldn't fetch blog slugs (${e.message}), skipping blog routes`);
+    return [];
+  }
+}
+
+// One page per case study, slugged from its CMS title exactly like
+// caseStudySlug() in src/lib/utils.ts. Best-effort like the blog routes.
+async function fetchCaseStudyRoutes() {
+  try {
+    const res = await fetch(
+      `${SB_URL}/rest/v1/cms_content?select=data&section=eq.caseStudiesSection`,
+      { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } },
+    );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const [row] = await res.json();
+    const slug = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const routes = (row?.data?.studies ?? []).map((s) => `/case-studies/${slug(s.title)}`);
+    console.log(`[prerender] ${routes.length} case studies`);
+    return routes;
+  } catch (e) {
+    console.warn(`[prerender] couldn't fetch case studies (${e.message}), skipping them`);
     return [];
   }
 }
@@ -176,7 +197,7 @@ function startServer() {
 }
 
 async function main() {
-  const routes = [...STATIC_ROUTES, NOT_FOUND, ...(await fetchBlogRoutes())];
+  const routes = [...STATIC_ROUTES, NOT_FOUND, ...(await fetchBlogRoutes()), ...(await fetchCaseStudyRoutes())];
   routes.forEach((route) => writeRoute(route));
 
   let browser;

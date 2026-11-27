@@ -31,6 +31,7 @@ const CRUMBS: Record<string, readonly [string, string, string]> = {
   '/agentforce': [...SERVICES, 'Agentforce'],
   '/agentforce-implementation': [...SERVICES, 'Agentforce Implementation'],
   '/apollo-io-salesforce-integration': [...SERVICES, 'Apollo.io Salesforce Integration'],
+  '/salesforce-quickbooks-integration': [...SERVICES, 'Salesforce QuickBooks Integration'],
   '/salesforce-revops': [...SERVICES, 'Salesforce RevOps'],
   '/salesforce-health-check': [...SERVICES, 'Salesforce Health Check'],
   '/salesforce-data-cloud': [...SERVICES, 'Salesforce Data Cloud'],
@@ -41,7 +42,9 @@ const CRUMBS: Record<string, readonly [string, string, string]> = {
 
 function breadcrumbSchema(path: string, title: string) {
   const crumb = CRUMBS[path]
-    ?? (path.startsWith('/blog/') ? (['Blog', '/blog', title.split(' | ')[0]] as const) : null);
+    ?? (path.startsWith('/blog/') ? (['Blog', '/blog', title.split(' | ')[0]] as const)
+      : path.startsWith('/case-studies/') ? (['Case Studies', '/case-studies', title.split(' | ')[0]] as const)
+      : null);
   if (!crumb) return null;
   const [parentName, parentPath, name] = crumb;
   const items = [['Home', '/'], [parentName, parentPath], [name, path]];

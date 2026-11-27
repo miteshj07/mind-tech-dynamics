@@ -20,19 +20,19 @@ const sections = [
     links: [
       { label: 'Agentforce Implementation', path: '/agentforce' },
       { label: 'B2B Lead-Generation Automation', path: '/b2b-lead-generation' },
+      { label: 'Apollo.io Salesforce Integration', path: '/apollo-io-salesforce-integration' },
+      { label: 'Salesforce QuickBooks Integration', path: '/salesforce-quickbooks-integration' },
     ],
   },
   {
     heading: 'Blog & Resources',
     links: [
       { label: 'Blog', path: '/blog' },
-      { label: 'CRM Integration Mistakes to Avoid', path: '/blog/crm-integration-mistakes-to-avoid' },
-      { label: 'Agentforce: The Future of Salesforce AI Agents', path: '/blog/agentforce-future-of-salesforce-ai-agents' },
       { label: 'Apollo.io + Salesforce Integration Guide', path: '/blog/apollo-io-salesforce-integration-guide' },
-      { label: 'B2B Lead Qualification with Salesforce', path: '/blog/b2b-lead-qualification-with-salesforce' },
-      { label: 'ROI of Salesforce Implementation', path: '/blog/roi-of-salesforce-implementation' },
-      { label: 'Salesforce for Financial Services', path: '/blog/salesforce-financial-services-firms' },
-      { label: 'Salesforce CRM for Australian SMEs', path: '/blog/salesforce-crm-australian-smes' },
+      { label: 'Provision Microsoft 365 from Salesforce', path: '/blog/provision-microsoft-365-from-salesforce-graph-api' },
+      { label: 'Sync Moodle Course Progress into Salesforce', path: '/blog/sync-moodle-course-progress-into-salesforce' },
+      { label: 'Salesforce Permission Sets Guide', path: '/blog/salesforce-permission-sets-complete-guide' },
+      { label: 'Deal Risk Signals in Salesforce', path: '/blog/deal-risk-signals-salesforce' },
     ],
   },
   {

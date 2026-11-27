@@ -15,6 +15,7 @@ const STATIC_ROUTES = [
   '/agentforce',
   '/agentforce-implementation',
   '/apollo-io-salesforce-integration',
+  '/salesforce-quickbooks-integration',
   '/salesforce-revops',
   '/salesforce-health-check',
   '/salesforce-health-check/data',
@@ -47,33 +48,34 @@ const EXCLUDE = new Set([
   '/sitemap',
 ]);
 
-// ── Discover blog posts from the prerendered output (single source of truth) ──
-function findPrerenderedBlogRoutes(dir) {
-  const blogDir = join(dir, 'blog');
-  if (!existsSync(blogDir)) return [];
+// ── Discover blog posts and case studies from the prerendered output ─────────
+function findPrerenderedRoutes(dir, section) {
+  const sectionDir = join(dir, section);
+  if (!existsSync(sectionDir)) return [];
   const routes = [];
-  for (const entry of readdirSync(blogDir)) {
-    const full = join(blogDir, entry);
+  for (const entry of readdirSync(sectionDir)) {
+    const full = join(sectionDir, entry);
     if (statSync(full).isDirectory() && existsSync(join(full, 'index.html'))) {
-      routes.push(`/blog/${entry}`);
+      routes.push(`/${section}/${entry}`);
     }
   }
   return routes;
 }
 
-const blogRoutes = findPrerenderedBlogRoutes(DIST);
+const blogRoutes = findPrerenderedRoutes(DIST, 'blog');
+const caseStudyRoutes = findPrerenderedRoutes(DIST, 'case-studies');
 
-const allRoutes = [...STATIC_ROUTES, ...blogRoutes].filter(
+const allRoutes = [...STATIC_ROUTES, ...blogRoutes, ...caseStudyRoutes].filter(
   (r, i, a) => a.indexOf(r) === i && !EXCLUDE.has(r),
 );
 
 // ── Priority + changefreq ─────────────────────────────────────────────────────
-const HIGH_PRIORITY = /^\/(services|agentforce|agentforce-implementation|apollo-io-salesforce-integration|salesforce-revops|salesforce-health-check|salesforce-data-cloud|b2b-lead-generation)$/;
+const HIGH_PRIORITY = /^\/(services|agentforce|agentforce-implementation|apollo-io-salesforce-integration|salesforce-quickbooks-integration|salesforce-revops|salesforce-health-check|salesforce-data-cloud|b2b-lead-generation)$/;
 
 const priority = (r) =>
   r === '/' ? '1.0'
   : HIGH_PRIORITY.test(r) ? '0.9'
-  : r.startsWith('/blog/') ? '0.7'
+  : r.startsWith('/blog/') || r.startsWith('/case-studies/') ? '0.7'
   : '0.6';
 
 const changefreq = (r) =>
@@ -90,4 +92,4 @@ const urls = allRoutes
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 writeFileSync(join(DIST, 'sitemap.xml'), xml);
-console.log(`✓ sitemap.xml written with ${allRoutes.length} URLs (${blogRoutes.length} blog posts)`);
+console.log(`✓ sitemap.xml written with ${allRoutes.length} URLs (${blogRoutes.length} blog posts, ${caseStudyRoutes.length} case studies)`);

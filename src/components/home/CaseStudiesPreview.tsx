@@ -1,8 +1,8 @@
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Clock } from 'lucide-react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { caseStudySlug } from '@/lib/utils';
 import { useCms } from '@/cms/context/CmsContext';
 
 interface CaseStudy {
@@ -16,15 +16,7 @@ interface CaseStudy {
   tags: string[];
 }
 
-const CaseStudyCard = ({
-  study,
-  index,
-  onViewFull,
-}: {
-  study: CaseStudy;
-  index: number;
-  onViewFull: () => void;
-}) => {
+const CaseStudyCard = ({ study, index }: { study: CaseStudy; index: number }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -69,64 +61,14 @@ const CaseStudyCard = ({
           ))}
         </div>
         <p className="text-gray-600 mb-6 line-clamp-3">{study.challenge}</p>
-        <button
-          onClick={onViewFull}
+        <Link
+          to={`/case-studies/${caseStudySlug(study.title)}`}
           className="inline-flex items-center text-brand font-medium hover:text-brand-dark transition-colors"
         >
           Read Case Study <ArrowRight size={16} className="ml-1 transition-transform duration-300 group-hover:translate-x-1" />
-        </button>
+        </Link>
       </div>
     </div>
-  );
-};
-
-const CaseStudyDialog = ({
-  study,
-  open,
-  onOpenChange,
-}: {
-  study: CaseStudy | null;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) => {
-  if (!study) return null;
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">{study.title}</DialogTitle>
-          <DialogDescription className="text-brand font-medium">
-            {study.client} | {study.industry}
-          </DialogDescription>
-        </DialogHeader>
-        <div className="mt-4">
-          <img src={study.image} alt={study.title} className="w-full h-64 object-cover rounded-md mb-6" />
-          <div className="flex flex-wrap gap-2 mb-6">
-            {study.tags.map((tag, i) => (
-              <span key={i} className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full">{tag}</span>
-            ))}
-          </div>
-          <div className="space-y-6">
-            <section>
-              <h3 className="text-xl font-semibold mb-2">Challenge</h3>
-              <p className="text-gray-700">{study.challenge}</p>
-            </section>
-            <section>
-              <h3 className="text-xl font-semibold mb-2">Solution</h3>
-              <p className="text-gray-700">{study.solution}</p>
-            </section>
-            <section>
-              <h3 className="text-xl font-semibold mb-2">Results</h3>
-              <ul className="list-disc pl-5 space-y-2">
-                {study.results.map((result, i) => (
-                  <li key={i} className="text-gray-700">{result}</li>
-                ))}
-              </ul>
-            </section>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
   );
 };
 
@@ -134,8 +76,6 @@ const CaseStudiesPreview = () => {
   const { data } = useCms();
   const { caseStudiesSection } = data;
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -172,15 +112,7 @@ const CaseStudiesPreview = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {studies.map((study, index) => (
-            <CaseStudyCard
-              key={index}
-              study={study}
-              index={index}
-              onViewFull={() => {
-                setSelectedStudy(study);
-                setDialogOpen(true);
-              }}
-            />
+            <CaseStudyCard key={index} study={study} index={index} />
           ))}
         </div>
 
@@ -189,12 +121,6 @@ const CaseStudiesPreview = () => {
             View All Case Studies <ArrowRight size={20} className="ml-2" />
           </Link>
         </div>
-
-        <CaseStudyDialog
-          study={selectedStudy}
-          open={dialogOpen}
-          onOpenChange={setDialogOpen}
-        />
       </div>
     </section>
   );

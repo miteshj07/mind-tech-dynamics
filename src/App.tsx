@@ -28,6 +28,8 @@ import SalesforceDataCloudPage from "@/pages/SalesforceDataCloud";
 import LeadGenerationPage from "@/pages/LeadGeneration";
 import AboutUsPage from "@/pages/AboutUs";
 import CaseStudiesPage from "@/pages/CaseStudies";
+import CaseStudyPage from "@/pages/CaseStudy";
+import SalesforceQuickBooksIntegrationPage from "@/pages/SalesforceQuickBooksIntegration";
 import BlogPage from "@/pages/Blog";
 import BlogPostPage from "@/pages/BlogPost";
 import AppsPage from "@/pages/Apps";
@@ -78,6 +80,7 @@ const App = () => {
                 <Route path="/agentforce" element={<PageTransition><AgentforcePage /></PageTransition>} />
                 <Route path="/agentforce-implementation" element={<PageTransition><AgentforceImplementationPage /></PageTransition>} />
                 <Route path="/apollo-io-salesforce-integration" element={<PageTransition><ApolloSalesforceIntegrationPage /></PageTransition>} />
+                <Route path="/salesforce-quickbooks-integration" element={<PageTransition><SalesforceQuickBooksIntegrationPage /></PageTransition>} />
                 <Route path="/salesforce-revops" element={<PageTransition><SalesforceRevOpsPage /></PageTransition>} />
                 <Route path="/salesforce-health-check" element={<PageTransition><SalesforceHealthCheckPage /></PageTransition>} />
                 <Route path="/salesforce-health-check/data" element={<PageTransition><SalesforceHealthCheckDataPage /></PageTransition>} />
@@ -85,6 +88,7 @@ const App = () => {
                 <Route path="/b2b-lead-generation" element={<PageTransition><LeadGenerationPage /></PageTransition>} />
                 <Route path="/about-us" element={<PageTransition><AboutUsPage /></PageTransition>} />
                 <Route path="/case-studies" element={<PageTransition><CaseStudiesPage /></PageTransition>} />
+                <Route path="/case-studies/:slug" element={<PageTransition><CaseStudyPage /></PageTransition>} />
                 <Route path="/blog" element={<PageTransition><BlogPage /></PageTransition>} />
                 <Route path="/blog/:slug" element={<PageTransition><BlogPostPage /></PageTransition>} />
                 <Route path="/apps" element={<PageTransition><AppsPage /></PageTransition>} />

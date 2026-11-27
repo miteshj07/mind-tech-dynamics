@@ -6,7 +6,7 @@ import ContactCTA from '@/components/layout/ContactCTA';
 import { ArrowRight } from 'lucide-react';
 import { useCms } from '@/cms/context/CmsContext';
 import { Link } from 'react-router-dom';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { caseStudySlug } from '@/lib/utils';
 
 interface CaseStudy {
   title: string;
@@ -25,13 +25,8 @@ interface CaseStudy {
   images?: { src: string; caption?: string }[];
 }
 
-interface CaseStudyCardProps {
-  study: CaseStudy;
-  index: number;
-  onViewDetails: (study: CaseStudy) => void;
-}
-
-const CaseStudyCard = ({ study, index, onViewDetails }: CaseStudyCardProps) => {
+const CaseStudyCard = ({ study }: { study: CaseStudy }) => {
+  const href = `/case-studies/${caseStudySlug(study.title)}`;
   return (
     <div className="case-study-card overflow-hidden shadow-md rounded-lg">
       <div className="relative h-60">
@@ -62,7 +57,7 @@ const CaseStudyCard = ({ study, index, onViewDetails }: CaseStudyCardProps) => {
           ))}
         </div>
         <p className="text-brand font-medium">{study.client}{study.location ? ` · ${study.location}` : ''}</p>
-        <h3 className="text-xl font-bold mb-2">{study.title}</h3>
+        <h3 className="text-xl font-bold mb-2"><Link to={href} className="hover:text-brand">{study.title}</Link></h3>
         <p className="text-gray-500 text-sm mb-4">Industry: {study.industry}</p>
 
         {study.metric && (
@@ -72,109 +67,16 @@ const CaseStudyCard = ({ study, index, onViewDetails }: CaseStudyCardProps) => {
         )}
 
         <div className="border-t border-gray-100 pt-4">
-          <h4 className="font-medium mb-2">Challenge</h4>
-          <p className="text-gray-600 text-sm mb-4">{study.challenge}</p>
-          
-          <h4 className="font-medium mb-2">Solution</h4>
-          <p className="text-gray-600 text-sm mb-4">{study.solution}</p>
-          
-          <h4 className="font-medium mb-2">Results</h4>
-          <ul className="text-gray-600 text-sm mb-4 list-disc pl-5">
-            {study.results.map((result, i) => (
-              <li key={i}>{result}</li>
-            ))}
-          </ul>
-          
-          <button 
-            onClick={() => onViewDetails(study)}
+          <p className="text-gray-600 text-sm mb-4 line-clamp-4">{study.challenge}</p>
+          <Link
+            to={href}
             className="inline-flex items-center text-brand font-medium hover:text-brand-dark transition-colors"
           >
-            Full Case Study <ArrowRight size={16} className="ml-1" />
-          </button>
+            Read the case study <ArrowRight size={16} className="ml-1" />
+          </Link>
         </div>
       </div>
     </div>
-  );
-};
-
-const CaseStudyDialog = ({ study, open, onOpenChange }: { 
-  study: CaseStudy | null;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}) => {
-  if (!study) return null;
-  
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold">{study.title}</DialogTitle>
-          <DialogDescription className="text-brand font-medium">{study.client}{study.location ? ` · ${study.location}` : ''} | {study.industry}</DialogDescription>
-        </DialogHeader>
-        
-        <div className="mt-4">
-          <div className="mb-6">
-            <img src={study.image} alt={study.title} className="w-full h-64 object-cover rounded-md" />
-          </div>
-          
-          <div className="flex flex-wrap gap-2 mb-6">
-            {study.tags.map((tag, i) => (
-              <span key={i} className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full">
-                {tag}
-              </span>
-            ))}
-          </div>
-          
-          {study.metric && (
-            <div className="mb-6 rounded-lg bg-brand/5 border border-brand/20 px-4 py-3">
-              <p className="font-semibold text-brand-dark">{study.metric}</p>
-            </div>
-          )}
-
-          <div className="space-y-6">
-            <section>
-              <h3 className="text-xl font-semibold mb-2">Challenge</h3>
-              <p className="text-gray-700">{study.challenge}</p>
-            </section>
-            
-            <section>
-              <h3 className="text-xl font-semibold mb-2">Solution</h3>
-              <p className="text-gray-700">{study.solution}</p>
-            </section>
-            
-            <section>
-              <h3 className="text-xl font-semibold mb-2">Results</h3>
-              <ul className="list-disc pl-5 space-y-2">
-                {study.results.map((result, i) => (
-                  <li key={i} className="text-gray-700">{result}</li>
-                ))}
-              </ul>
-            </section>
-
-            {study.images && study.images.length > 0 && (
-              <section>
-                <h3 className="text-xl font-semibold mb-3">See it in action</h3>
-                <div className="space-y-6">
-                  {study.images.map((img, i) => (
-                    <figure key={i}>
-                      <img
-                        src={img.src}
-                        alt={img.caption || `${study.title} screenshot ${i + 1}`}
-                        className="w-full rounded-md border border-gray-200"
-                        loading="lazy"
-                      />
-                      {img.caption && (
-                        <figcaption className="text-sm text-gray-500 mt-2">{img.caption}</figcaption>
-                      )}
-                    </figure>
-                  ))}
-                </div>
-              </section>
-            )}
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
   );
 };
 
@@ -183,8 +85,6 @@ const CaseStudies = () => {
   const { caseStudiesSection, seoMetadata, sharedComponents } = data;
 
   const [filter, setFilter] = useState<string>("all");
-  const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
 
   // Build JSON-LD dynamically from live CMS data so it stays in sync
   const caseStudiesSchema = {
@@ -200,7 +100,6 @@ const CaseStudies = () => {
         '@type': 'Article',
         headline: study.title,
         description: study.challenge,
-        articleBody: `${study.metric ? study.metric + '. ' : ''}Challenge: ${study.challenge} Solution: ${study.solution} Results: ${study.results.join(' ')}`,
         author: {
           '@type': 'Organization',
           name: 'Meet The Mind Technologies',
@@ -222,7 +121,7 @@ const CaseStudies = () => {
             url: 'https://www.meethemind.com/og-image.png',
           },
         },
-        url: 'https://www.meethemind.com/case-studies',
+        url: `https://www.meethemind.com/case-studies/${caseStudySlug(study.title)}`,
         image: study.image,
       },
     })),
@@ -240,10 +139,6 @@ const CaseStudies = () => {
     ? caseStudiesSection.studies 
     : caseStudiesSection.studies.filter(study => study.industry.includes(filter) || study.tags.includes(filter));
 
-  const handleViewDetails = (study: CaseStudy) => {
-    setSelectedStudy(study);
-    setDialogOpen(true);
-  };
   return (
     <>
       <Seo title={seoMetadata.caseStudies.title} description={seoMetadata.caseStudies.description} canonical="/case-studies" image="/case-studies/student-portal.png" jsonLd={caseStudiesSchema} />
@@ -272,12 +167,7 @@ const CaseStudies = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredStudies.map((study, index) => (
-              <CaseStudyCard 
-                key={index} 
-                study={study} 
-                index={index} 
-                onViewDetails={handleViewDetails}
-              />
+              <CaseStudyCard key={index} study={study} />
             ))}
           </div>
           
@@ -292,12 +182,6 @@ const CaseStudies = () => {
               </button>
             </div>
           )}
-          
-          <CaseStudyDialog 
-            study={selectedStudy}
-            open={dialogOpen}
-            onOpenChange={setDialogOpen}
-          />
         </div>
       </section>
       
