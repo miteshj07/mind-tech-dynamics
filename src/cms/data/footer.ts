@@ -28,7 +28,7 @@ export const footerSection = {
     { title: "Training", url: "/services" }
   ],
   contactInfo: {
-    address: "S4, Solitaire Tower, Choolai\nChennai - 600010, India",
+    address: "S4, Solitaire Tower, Choolai\nChennai - 600112, India",
     phone: "+91-7358576420",
     email: "mitesh@meethemind.com"
   },

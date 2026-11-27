@@ -8,6 +8,8 @@ const SERVICE_LINKS = [
   { name: 'B2B Lead-Gen Automation',   path: '/b2b-lead-generation' },
   { name: 'Apollo.io Integration',     path: '/apollo-io-salesforce-integration' },
   { name: 'QuickBooks Integration',    path: '/salesforce-quickbooks-integration' },
+  { name: 'Recurly Integration',       path: '/recurly-salesforce-integration' },
+  { name: 'Chargent Integration',      path: '/chargent-salesforce-integration' },
   { name: 'Salesforce RevOps',         path: '/salesforce-revops' },
   { name: 'Data Cloud',                path: '/salesforce-data-cloud' },
   { name: 'All Services',              path: '/services' },

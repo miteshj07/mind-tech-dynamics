@@ -32,6 +32,8 @@ const CRUMBS: Record<string, readonly [string, string, string]> = {
   '/agentforce-implementation': [...SERVICES, 'Agentforce Implementation'],
   '/apollo-io-salesforce-integration': [...SERVICES, 'Apollo.io Salesforce Integration'],
   '/salesforce-quickbooks-integration': [...SERVICES, 'Salesforce QuickBooks Integration'],
+  '/recurly-salesforce-integration': [...SERVICES, 'Recurly Salesforce Integration'],
+  '/chargent-salesforce-integration': [...SERVICES, 'Chargent Salesforce Integration'],
   '/salesforce-revops': [...SERVICES, 'Salesforce RevOps'],
   '/salesforce-health-check': [...SERVICES, 'Salesforce Health Check'],
   '/salesforce-data-cloud': [...SERVICES, 'Salesforce Data Cloud'],

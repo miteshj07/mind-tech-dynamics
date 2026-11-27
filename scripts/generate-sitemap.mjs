@@ -16,6 +16,8 @@ const STATIC_ROUTES = [
   '/agentforce-implementation',
   '/apollo-io-salesforce-integration',
   '/salesforce-quickbooks-integration',
+  '/recurly-salesforce-integration',
+  '/chargent-salesforce-integration',
   '/salesforce-revops',
   '/salesforce-health-check',
   '/salesforce-health-check/data',
@@ -70,7 +72,7 @@ const allRoutes = [...STATIC_ROUTES, ...blogRoutes, ...caseStudyRoutes].filter(
 );
 
 // ── Priority + changefreq ─────────────────────────────────────────────────────
-const HIGH_PRIORITY = /^\/(services|agentforce|agentforce-implementation|apollo-io-salesforce-integration|salesforce-quickbooks-integration|salesforce-revops|salesforce-health-check|salesforce-data-cloud|b2b-lead-generation)$/;
+const HIGH_PRIORITY = /^\/(services|agentforce|agentforce-implementation|apollo-io-salesforce-integration|salesforce-quickbooks-integration|recurly-salesforce-integration|chargent-salesforce-integration|salesforce-revops|salesforce-health-check|salesforce-data-cloud|b2b-lead-generation)$/;
 
 const priority = (r) =>
   r === '/' ? '1.0'

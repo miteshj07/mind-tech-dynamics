@@ -22,7 +22,7 @@ const contactSchema = {
     '@type': 'PostalAddress',
     streetAddress: 'S4, Solitaire Tower, Choolai',
     addressLocality: 'Chennai',
-    postalCode: '600010',
+    postalCode: '600112',
     addressCountry: 'IN',
   },
   contactPoint: [

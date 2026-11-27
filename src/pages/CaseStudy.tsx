@@ -24,6 +24,8 @@ interface CaseStudy {
 
 // Where to read more about the same work, keyed by case study slug.
 const RELATED: Record<string, { label: string; path: string }> = {
+  'automated-subscription-billing-with-chargent': { label: 'Chargent Salesforce integration service', path: '/chargent-salesforce-integration' },
+  'recurly-salesforce-subscription-integration': { label: 'Recurly Salesforce integration service', path: '/recurly-salesforce-integration' },
   'two-way-quickbooks-salesforce-integration': { label: 'Salesforce QuickBooks integration service', path: '/salesforce-quickbooks-integration' },
   'moodle-course-progress-live-in-salesforce': { label: 'How we sync Moodle course progress into Salesforce', path: '/blog/sync-moodle-course-progress-into-salesforce' },
   'one-click-microsoft-365-provisioning-from-salesforce': { label: 'How to provision Microsoft 365 from Salesforce with the Graph API', path: '/blog/provision-microsoft-365-from-salesforce-graph-api' },

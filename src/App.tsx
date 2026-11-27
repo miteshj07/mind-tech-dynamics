@@ -30,6 +30,8 @@ import AboutUsPage from "@/pages/AboutUs";
 import CaseStudiesPage from "@/pages/CaseStudies";
 import CaseStudyPage from "@/pages/CaseStudy";
 import SalesforceQuickBooksIntegrationPage from "@/pages/SalesforceQuickBooksIntegration";
+import RecurlySalesforceIntegrationPage from "@/pages/RecurlySalesforceIntegration";
+import ChargentSalesforceIntegrationPage from "@/pages/ChargentSalesforceIntegration";
 import BlogPage from "@/pages/Blog";
 import BlogPostPage from "@/pages/BlogPost";
 import AppsPage from "@/pages/Apps";
@@ -81,6 +83,8 @@ const App = () => {
                 <Route path="/agentforce-implementation" element={<PageTransition><AgentforceImplementationPage /></PageTransition>} />
                 <Route path="/apollo-io-salesforce-integration" element={<PageTransition><ApolloSalesforceIntegrationPage /></PageTransition>} />
                 <Route path="/salesforce-quickbooks-integration" element={<PageTransition><SalesforceQuickBooksIntegrationPage /></PageTransition>} />
+                <Route path="/recurly-salesforce-integration" element={<PageTransition><RecurlySalesforceIntegrationPage /></PageTransition>} />
+                <Route path="/chargent-salesforce-integration" element={<PageTransition><ChargentSalesforceIntegrationPage /></PageTransition>} />
                 <Route path="/salesforce-revops" element={<PageTransition><SalesforceRevOpsPage /></PageTransition>} />
                 <Route path="/salesforce-health-check" element={<PageTransition><SalesforceHealthCheckPage /></PageTransition>} />
                 <Route path="/salesforce-health-check/data" element={<PageTransition><SalesforceHealthCheckDataPage /></PageTransition>} />

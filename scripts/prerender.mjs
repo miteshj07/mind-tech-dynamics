@@ -47,6 +47,8 @@ const STATIC_ROUTES = [
   '/agentforce-implementation',
   '/apollo-io-salesforce-integration',
   '/salesforce-quickbooks-integration',
+  '/recurly-salesforce-integration',
+  '/chargent-salesforce-integration',
   '/salesforce-revops',
   '/salesforce-health-check',
   '/salesforce-health-check/data',
@@ -88,16 +90,29 @@ if (!existsSync(join(DIST, 'index.html'))) {
   process.exit(0);
 }
 
+// GET a Supabase REST path, retrying twice: one network blip during a Vercel
+// build would otherwise ship a sitemap with every blog post missing.
+async function sbGet(path) {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      const res = await fetch(`${SB_URL}/rest/v1/${path}`, {
+        headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` },
+        signal: AbortSignal.timeout(20000),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.json();
+    } catch (e) {
+      if (attempt === 3) throw e;
+      await new Promise((r) => setTimeout(r, 2000 * attempt));
+    }
+  }
+}
+
 // Fetch published blog slugs so blog posts get prerendered too (published posts
 // are public via RLS). Best-effort, skip blog routes if the fetch fails.
 async function fetchBlogRoutes() {
   try {
-    const res = await fetch(
-      `${SB_URL}/rest/v1/blog_posts?select=slug&status=eq.published`,
-      { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } },
-    );
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const rows = await res.json();
+    const rows = await sbGet('blog_posts?select=slug&status=eq.published');
     const routes = rows.map((r) => `/blog/${r.slug}`).filter((r) => r !== '/blog/');
     console.log(`[prerender] ${routes.length} published blog posts`);
     return routes;
@@ -111,12 +126,7 @@ async function fetchBlogRoutes() {
 // caseStudySlug() in src/lib/utils.ts. Best-effort like the blog routes.
 async function fetchCaseStudyRoutes() {
   try {
-    const res = await fetch(
-      `${SB_URL}/rest/v1/cms_content?select=data&section=eq.caseStudiesSection`,
-      { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } },
-    );
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const [row] = await res.json();
+    const [row] = await sbGet('cms_content?select=data&section=eq.caseStudiesSection');
     const slug = (t) => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     const routes = (row?.data?.studies ?? []).map((s) => `/case-studies/${slug(s.title)}`);
     console.log(`[prerender] ${routes.length} case studies`);

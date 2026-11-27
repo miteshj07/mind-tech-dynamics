@@ -22,6 +22,8 @@ const sections = [
       { label: 'B2B Lead-Generation Automation', path: '/b2b-lead-generation' },
       { label: 'Apollo.io Salesforce Integration', path: '/apollo-io-salesforce-integration' },
       { label: 'Salesforce QuickBooks Integration', path: '/salesforce-quickbooks-integration' },
+      { label: 'Recurly Salesforce Integration', path: '/recurly-salesforce-integration' },
+      { label: 'Chargent Salesforce Integration', path: '/chargent-salesforce-integration' },
     ],
   },
   {
